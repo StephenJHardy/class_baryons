@@ -8,6 +8,12 @@
 > - **New experiments:** the novel direction moves to physics that *does* distinguish opaque baryonic clumps: small-scale structure (Experiment E, §11a) and energy exchange / spectral distortions (Experiment F, §11b). The formation history (Experiment D) is unchanged.
 > - **Details:** `doc/RESULTS.md` and `doc/experiment_log/2026-09-25_m3_m4_coupling_scan.md`.
 
+> **Revision 3 (2026-09-26, after M6, M12 and M13).**
+> - **The survival estimate:** M13 found that clumps heated to the CMB temperature are gravitationally bound only above a minimum mass or density. On discussion, this is treated as a caveat on the premise, alongside BBN, and not as a reason to change course.
+> - **Scope:** the project continues to answer the conditional what-if question.
+> - **Order:** the execution order returns to the likelihood work (M5 → M7 → M8 → M9), with the formation history (D) left to the M11 decision point.
+> - **Clarification:** the CMB results assume clumps throughout the acoustic epoch, while the small-scale bound (E) assumes them already by z ~ 10⁷.
+
 ### Research question
 
 This project asks:
@@ -584,7 +590,10 @@ The project does **not** establish that baryonic dark matter is viable. It does 
 - Galactic dynamics;
 - a full Boltzmann treatment of energy exchange (Experiment F is estimates first);
 - late-time gas-cloud observational constraints;
-- a full small-scale likelihood analysis (Experiment E uses literature bounds and half-mode matching).
+- a full small-scale likelihood analysis (Experiment E uses literature bounds and half-mode matching);
+- whether the clumps can form and survive. M13 estimated that a clump held at the CMB temperature is gravitationally bound only if M ≳ (kT_γ/Gμm_p)²/(πΣ). This constrains clump mass and density, which the drag bounds do not, and it is recorded as a caveat on the premise alongside BBN.
+
+**What "exist" means here.** Clumps "at recombination" must in practice exist throughout the acoustic epoch (z ≲ 10⁵ to z ≈ 1100): extra baryons that were diffuse before recombination would load the photon–baryon fluid regardless of their later coupling. The small-scale bound (Experiment E) assumes more, namely clumps already in place by z ~ 10⁷, when its scales enter the horizon, and is reported under that stronger premise.
 
 The conclusion should remain narrow:
 
@@ -682,9 +691,9 @@ CLASS execution logic lives in normal Python scripts, not only in notebooks.
 
 **Status and execution order (revision 2).** M0–M4 are done. Milestone IDs are kept stable because the logs refer to them. The execution order is now:
 
-**M6 (B, minimal) → M12 (E) → M13 (F) → M5 → M7 → M8 → M9 (C) → M10 → M11**
+~~M6 (B, minimal) → M12 (E) → M13 (F)~~ (done) **→ M5 → M7 → M8 → M9 (C) → M10 → M11** (revision 3)
 
-The cheap B confirmation and the E/F estimates come before the heavy likelihood work, because they may change which constraint is the headline.
+The formation history (D) and clump survival are assessed at M11, alongside BBN.
 
 ### M0 — Environment ✅
 - Install a pinned CLASS (≥ v3.2) / `classy`; record the git commit.
@@ -709,7 +718,7 @@ The cheap B confirmation and the E/F estimates come before the heavy likelihood 
 ### M5 — Approximate detectability
 - Cosmic-variance / covariance \(\Delta\chi^2\) relative to \(u=0\).
 
-### M6 — Experiment B, minimal check (next)
+### M6 — Experiment B, minimal check ✅
 - Patch CLASS with two kernel coefficients, and handle tight coupling for B1. With Thomson values the patch must reproduce stock CLASS.
 - Compare B1 with Thomson at equal \(u\); isolate the low-ℓ EE contribution.
 - Verdict. Expand to the full B1–B3 programme only if B1 differs materially.
@@ -733,13 +742,13 @@ The cheap B confirmation and the E/F estimates come before the heavy likelihood 
 ### M11 — Decision point
 Assess whether to proceed to Experiment D (redshift-dependent coupling, formation), a full Boltzmann treatment of energy exchange (F), a full small-scale analysis (E), recombination modifications, BBN, or other astrophysical constraints.
 
-### M12 — Experiment E: small-scale structure
+### M12 — Experiment E: small-scale structure ✅
 - E1: literature DM–photon small-scale bounds, converted to \(u\).
 - E2: P(k) to \(k\sim10^2\ h/{\rm Mpc}\), with a precision check; \(k_{\rm hm}\), \(M_{\rm hm}\) down to \(u\sim10^{-9}\).
 - E3: approximate bound via WDM half-mode matching, approximation stated.
 - E4: fluid-approximation and baryonic-clump caveats.
 
-### M13 — Experiment F: energy exchange and spectral distortions
+### M13 — Experiment F: energy exchange and spectral distortions ✅
 - F1: clump thermal locking to \(T_\gamma\).
 - F2: energy-exchange budget against \(u\), \(T_{\rm cl}-T_\gamma\) and emissivity.
 - F3: μ and y estimates against FIRAS and a future mission.
