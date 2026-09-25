@@ -104,6 +104,13 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 - **Newtonian and synchronous gauges disagree at the 10⁻³ level** at default precision (P(k) up to 5×10⁻³). Stay in the synchronous gauge, CLASS's default, for consistency.
 - **classy rejects unread parameters.** When reusing a parameter dictionary for a different output (e.g. `mTk` only), remove `lensing` and `l_max_scalars`.
 
+## High-k P(k) (M12)
+
+- For k up to a few hundred h/Mpc, set `P_k_max_h/Mpc` (300 is enough to u ~ 10⁻⁹) **and raise `k_per_decade_for_pk`**. At the default of 10, the half-mode scale of drag-suppressed models is off by ~5%, because T²(k) has damped oscillations. It is converged (≤ 0.2%) at 40; 80 is used.
+- Use `output = mPk` alone for these runs. classy then rejects `lensing` and `l_max_scalars` as unread, and with `output = ''` it also rejects `P_k_max_h/Mpc` and `z_pk`; drop them from the dictionary.
+- **CLASS thermal-relic WDM:** add it as a second ncdm species with `m_ncdm` (eV) and `T_ncdm = (4/11)^(1/3) (94.1 eV ω_x / m)^(1/3)`, and set `omega_cdm = 0`. Do **not** pass `omega_ncdm` together with `m_ncdm`: CLASS then renormalises the phase-space density at the given temperature, so the velocity distribution is wrong.
+- The Viel et al. (2005) WDM fit underestimates CLASS's k_hm by 4–17% for 1.2–6.5 keV (it was fitted at k < 5 h/Mpc).
+
 ## Analysis gotchas
 
 - **Peak finding.** Detect the peaks of D_ℓ independently in each model and match them by order. Tracking within a window around the ΛCDM peaks fails once shifts exceed the window (u ≳ 10⁻²). Strongly damped models can have fewer than 7 peaks below ℓ = 2500, so those are padded with NaN. Lensed peak 7 is poorly defined for u ≳ 5×10⁻⁴.

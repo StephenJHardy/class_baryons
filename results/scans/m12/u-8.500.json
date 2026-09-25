@@ -1,0 +1,30 @@
+{
+  "params": {
+    "omega_b": 0.02237,
+    "n_s": 0.9649,
+    "ln10^{10}A_s": 3.044,
+    "tau_reio": 0.0544,
+    "N_ur": 2.0328,
+    "N_ncdm": 1,
+    "m_ncdm": 0.06,
+    "YHe": "BBN",
+    "output": "mPk",
+    "P_k_max_h/Mpc": 300.0,
+    "z_pk": 0.0,
+    "thermo_Nz_lin": 80000,
+    "thermo_Nz_log": 20000,
+    "start_small_k_at_tau_c_over_tau_h": 0.00015,
+    "start_large_k_at_tau_h_over_tau_k": 0.007,
+    "l_linstep": 20,
+    "omega_cdm": 0.0,
+    "omega_idm": 0.12,
+    "m_idm": 1e+27,
+    "u_idm_g": 3.1622776601683795e-09,
+    "n_index_idm_g": 0,
+    "h": 0.6737666443741934,
+    "k_per_decade_for_pk": 80
+  },
+  "Omega_m": 0.31503583180779227,
+  "runtime_s": 38.13502073287964,
+  "class_build": "stock"
+}

@@ -1,0 +1,40 @@
+{
+  "rho_cl_Msun_h_per_Mpc_h3": 73363921599.18259,
+  "z_eq_estimate": 3442.414360112013,
+  "isocurvature_growth_power": 26678480.52470766,
+  "limits": {
+    "MW satellites (DES+PS1), m > 6.5 keV, 95%": {
+      "k_hm": 76.52962916139549,
+      "P_lin_at_k_hm": 0.0009336070215576936,
+      "M_cl_equal_power_Msun_h": 2.567352824707229,
+      "M_hm_Msun_h": 25335510.47895421,
+      "z_horizon_entry": 23898118.340964098,
+      "z_dec_drag_at_u_max": 7061663.205132145,
+      "T_photon_keV_at_z_enter": 5.612624721811443,
+      "clump_self_interaction_sigma_over_M_cm2_g_at_Q1": 2.2644601919537682e-11,
+      "ism_stopping_time_yr": 4.189400191638546e+19
+    },
+    "Lyman-alpha (XQ-100+HIRES/MIKE), m > 5.3 keV, 2 sigma": {
+      "k_hm": 61.015756225925685,
+      "P_lin_at_k_hm": 0.0017402185302396154,
+      "M_cl_equal_power_Msun_h": 4.785477032685799,
+      "M_hm_Msun_h": 49991076.75034222,
+      "z_horizon_entry": 19053385.687616806,
+      "z_dec_drag_at_u_max": 5613085.799279072,
+      "T_photon_keV_at_z_enter": 4.474808566791473,
+      "clump_self_interaction_sigma_over_M_cm2_g_at_Q1": 3.584283360589002e-11,
+      "ism_stopping_time_yr": 2.6467578056021856e+19
+    },
+    "Lyman-alpha, non-smooth IGM T(z), m > 3.5 keV, 2 sigma": {
+      "k_hm": 38.495619431338106,
+      "P_lin_at_k_hm": 0.006118247067431025,
+      "M_cl_equal_power_Msun_h": 16.82474373919978,
+      "M_hm_Msun_h": 199060251.8228276,
+      "z_horizon_entry": 12020708.936462814,
+      "z_dec_drag_at_u_max": 3514151.117208689,
+      "T_photon_keV_at_z_enter": 2.8231398797757388,
+      "clump_self_interaction_sigma_over_M_cm2_g_at_Q1": 9.146254184991442e-11,
+      "ism_stopping_time_yr": 1.0372257068578126e+19
+    }
+  }
+}
