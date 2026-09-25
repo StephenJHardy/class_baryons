@@ -1,0 +1,22 @@
+[project]
+name = "class-baryons"
+version = "0.1.0"
+description = "CMB constraints on compact photon-coupled baryonic clumps using CLASS"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "classy",
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "pyyaml",
+]
+
+[dependency-groups]
+dev = ["ipykernel", "pytest"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+# CLASS is cloned (not vendored) by scripts/setup_class.sh at the pinned tag.
+classy = { path = "class_public" }
