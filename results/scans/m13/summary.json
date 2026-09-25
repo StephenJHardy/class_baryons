@@ -1,0 +1,288 @@
+{
+  "assumptions": {
+    "mu_mol": 0.59,
+    "c_v_erg_g_K": 209857862.29216355,
+    "kappa_T": 0.35,
+    "z_rec": 1088.7838940415752,
+    "firas_95": {
+      "mu": 9e-05,
+      "y": 1.5e-05
+    }
+  },
+  "F1": {
+    "CMB bound (Planck)": {
+      "u": 0.000225,
+      "Sigma_over_Q_g_cm2": 1190978.8621659086,
+      "rows": [
+        {
+          "z": 9982741.203836387,
+          "T_gamma_eV": 2344.8594330963338,
+          "t_th_s": 1.3677646041429984e-05,
+          "H_t_th (lag dT/T)": 2.857670066720548e-11,
+          "M_min_bound_Msun": 437118.2528062711,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 0.18817388762672935,
+            "1 Msun": 0.033462574987359085
+          }
+        },
+        {
+          "z": 1000000.0,
+          "T_gamma_eV": 234.8915488426248,
+          "t_th_s": 0.013606913551159023,
+          "H_t_th (lag dT/T)": 2.857098326394179e-10,
+          "M_min_bound_Msun": 4386.317842441399,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 0.33379278062514794
+          }
+        },
+        {
+          "z": 99827.41203836388,
+          "T_gamma_eV": 23.448826873364148,
+          "t_th_s": 13.677239121144865,
+          "H_t_th (lag dT/T)": 2.9054443950127064e-09,
+          "M_min_bound_Msun": 43.71269227530099,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 1.0
+          }
+        },
+        {
+          "z": 39962.294188132895,
+          "T_gamma_eV": 9.38703068167332,
+          "t_th_s": 213.195035914978,
+          "H_t_th (lag dT/T)": 7.434848694550799e-09,
+          "M_min_bound_Msun": 7.005220178616709,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 1.0
+          }
+        },
+        {
+          "z": 10000.0,
+          "T_gamma_eV": 2.3491480308270596,
+          "t_th_s": 13602.873101910127,
+          "H_t_th (lag dT/T)": 3.301728918127383e-08,
+          "M_min_bound_Msun": 0.4387186375495928,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 1.0
+          }
+        }
+      ]
+    },
+    "MW satellites direct (Boehm+2014)": {
+      "u": 5.5e-07,
+      "Sigma_over_Q_g_cm2": 487218625.431508,
+      "rows": [
+        {
+          "z": 9982741.203836387,
+          "T_gamma_eV": 2344.8594330963338,
+          "t_th_s": 0.005595400653312266,
+          "H_t_th (lag dT/T)": 1.1690468454765878e-08,
+          "M_min_bound_Msun": 1068.5112846375514,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 0.23529050414218208,
+            "0.001 Msun": 0.04184122588937203,
+            "1 Msun": 0.0074405390489857785
+          }
+        },
+        {
+          "z": 1000000.0,
+          "T_gamma_eV": 234.8915488426248,
+          "t_th_s": 5.566464634565055,
+          "H_t_th (lag dT/T)": 1.1688129517067094e-07,
+          "M_min_bound_Msun": 10.722110281523419,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 0.41737072355174004,
+            "1 Msun": 0.07422017640451066
+          }
+        },
+        {
+          "z": 99827.41203836388,
+          "T_gamma_eV": 23.448826873364148,
+          "t_th_s": 5595.234185922899,
+          "H_t_th (lag dT/T)": 1.1885908888688344e-06,
+          "M_min_bound_Msun": 0.10685324778406909,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 0.7379003198978973
+          }
+        },
+        {
+          "z": 39962.294188132895,
+          "T_gamma_eV": 9.38703068167332,
+          "t_th_s": 87216.15105612736,
+          "H_t_th (lag dT/T)": 3.041529011407145e-06,
+          "M_min_bound_Msun": 0.017123871547729735,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 1.0
+          }
+        },
+        {
+          "z": 10000.0,
+          "T_gamma_eV": 2.3491480308270596,
+          "t_th_s": 5564811.723508688,
+          "H_t_th (lag dT/T)": 1.3507072846884749e-05,
+          "M_min_bound_Msun": 0.0010724233362323378,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 1.0
+          }
+        }
+      ]
+    },
+    "small-scale via WDM half-mode (M12)": {
+      "u": 6.1e-09,
+      "Sigma_over_Q_g_cm2": 43929548194.644165,
+      "rows": [
+        {
+          "z": 9982741.203836387,
+          "T_gamma_eV": 2344.8594330963338,
+          "t_th_s": 0.5045033375937289,
+          "H_t_th (lag dT/T)": 1.0540586311674152e-06,
+          "M_min_bound_Msun": 11.85076152052557,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 0.07635653050284391,
+            "0.001 Msun": 0.013578324601521629,
+            "1 Msun": 0.0024146055061710875
+          }
+        },
+        {
+          "z": 1000000.0,
+          "T_gamma_eV": 234.8915488426248,
+          "t_th_s": 501.89435229684915,
+          "H_t_th (lag dT/T)": 1.053847743342115e-05,
+          "M_min_bound_Msun": 0.11891795039507794,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 0.7616645952997142,
+            "0.001 Msun": 0.1354452467177111,
+            "1 Msun": 0.02408594934257476
+          }
+        },
+        {
+          "z": 99827.41203836388,
+          "T_gamma_eV": 23.448826873364148,
+          "t_th_s": 504488.3282389499,
+          "H_t_th (lag dT/T)": 0.00010716803096358342,
+          "M_min_bound_Msun": 0.0011850996572414937,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 0.2394635877455328
+          }
+        },
+        {
+          "z": 39962.294188132895,
+          "T_gamma_eV": 9.38703068167332,
+          "t_th_s": 7863751.324732794,
+          "H_t_th (lag dT/T)": 0.00027423622233998846,
+          "M_min_bound_Msun": 0.00018991930262027526,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 0.591015711117261
+          }
+        },
+        {
+          "z": 10000.0,
+          "T_gamma_eV": 2.3491480308270596,
+          "t_th_s": 501745319.3327505,
+          "H_t_th (lag dT/T)": 0.0012178508304568215,
+          "M_min_bound_Msun": 1.1894149729122294e-05,
+          "skin_fraction_per_Hubble_time": {
+            "1e-06 Msun": 1.0,
+            "0.001 Msun": 1.0,
+            "1 Msun": 1.0
+          }
+        }
+      ]
+    },
+    "survival_redshift": {
+      "M=1e-06 Msun, rho=0.1 g/cm3": {
+        "T_max_eV": 0.0486510681210944,
+        "z_max": 206.12161425934625
+      },
+      "M=0.001 Msun, rho=0.1 g/cm3": {
+        "T_max_eV": 4.865106812109439,
+        "z_max": 20711.16142593462
+      },
+      "M=1 Msun, rho=0.1 g/cm3": {
+        "T_max_eV": 486.5106812109437,
+        "z_max": 2071215.1425934613
+      },
+      "M=1e-06 Msun, rho=1 g/cm3": {
+        "T_max_eV": 0.10481554886719005,
+        "z_max": 445.22999081573795
+      },
+      "M=0.001 Msun, rho=1 g/cm3": {
+        "T_max_eV": 10.481554886719001,
+        "z_max": 44621.999081573784
+      },
+      "M=1 Msun, rho=1 g/cm3": {
+        "T_max_eV": 1048.1554886719002,
+        "z_max": 4462298.9081573775
+      },
+      "M=1e-06 Msun, rho=10 g/cm3": {
+        "T_max_eV": 0.22581825453420645,
+        "z_max": 960.373371946035
+      },
+      "M=0.001 Msun, rho=10 g/cm3": {
+        "T_max_eV": 22.581825453420638,
+        "z_max": 96136.33719460347
+      },
+      "M=1 Msun, rho=10 g/cm3": {
+        "T_max_eV": 2258.1825453420633,
+        "z_max": 9613732.719460346
+      }
+    }
+  },
+  "F2F3": {
+    "passive_blackbody_clumps": {
+      "mu": 1.560379092569091e-08,
+      "y": 3.0935617100885565e-09
+    },
+    "per_unit_L_over_M_in_Lsun_per_Msun": {
+      "mu": 1.0708847477897515e-09,
+      "y": 1.7659620426392963e-08
+    },
+    "FIRAS_bound_on_constant_L_over_M_Lsun_per_Msun": {
+      "mu": 84042.65742485844,
+      "y": 849.3953798453074
+    },
+    "CMB bound (Planck)": {
+      "u": 0.000225,
+      "mu_per_unit_delta": 25.775564646798156,
+      "y_per_unit_delta": 0.19449742246198315,
+      "FIRAS_bound_on_delta_from_mu": 3.491679085725861e-06,
+      "FIRAS_bound_on_delta_from_y": 7.712184465031628e-05,
+      "z_where_Gamma_gamma_equals_H": 372299.7316478565
+    },
+    "MW satellites direct (Boehm+2014)": {
+      "u": 5.5e-07,
+      "mu_per_unit_delta": 0.06300693580328438,
+      "y_per_unit_delta": 0.0004754381437959589,
+      "FIRAS_bound_on_delta_from_mu": 0.0014284141714333066,
+      "FIRAS_bound_on_delta_from_y": 0.03154984553876575,
+      "z_where_Gamma_gamma_equals_H": null
+    },
+    "small-scale via WDM half-mode (M12)": {
+      "u": 6.1e-09,
+      "mu_per_unit_delta": 0.0006988041970909723,
+      "y_per_unit_delta": 5.273041231191544e-06,
+      "FIRAS_bound_on_delta_from_mu": 0.1287914416866096,
+      "FIRAS_bound_on_delta_from_y": 2.844658204314944,
+      "z_where_Gamma_gamma_equals_H": null
+    }
+  }
+}

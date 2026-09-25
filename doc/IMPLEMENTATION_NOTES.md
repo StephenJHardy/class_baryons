@@ -111,6 +111,11 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 - **CLASS thermal-relic WDM:** add it as a second ncdm species with `m_ncdm` (eV) and `T_ncdm = (4/11)^(1/3) (94.1 eV ω_x / m)^(1/3)`, and set `omega_cdm = 0`. Do **not** pass `omega_ncdm` together with `m_ncdm`: CLASS then renormalises the phase-space density at the given temperature, so the velocity distribution is wrong.
 - The Viel et al. (2005) WDM fit underestimates CLASS's k_hm by 4–17% for 1.2–6.5 keV (it was fitted at k < 5 h/Mpc).
 
+## Distortion and thermal estimates (M13)
+
+- `src/m13_distortions.py` uses Chluba (2016) "Method C" visibility functions and FIRAS 95% limits; the constants and references are in the docstring. The background comes from CLASS, and cgs conversion of CLASS densities is ρ[g/cm³] = ρ_CLASS[Mpc⁻²]·3c²/(8πG)/Mpc².
+- The survival criterion and skin-heating estimates are deliberately simple (uniform clump at T_γ, Thomson opacity). Refine them in Experiment D before quoting them beyond order of magnitude.
+
 ## Analysis gotchas
 
 - **Peak finding.** Detect the peaks of D_ℓ independently in each model and match them by order. Tracking within a window around the ΛCDM peaks fails once shifts exceed the window (u ≳ 10⁻²). Strongly damped models can have fewer than 7 peaks below ℓ = 2500, so those are padded with NaN. Lensed peak 7 is poorly defined for u ≳ 5×10⁻⁴.
@@ -124,6 +129,8 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 - **Chasing the ℓ-node glitch** through tolerances, k and time sampling, approximation schemes, start time, thermodynamics tables and transfer cuts (all listed above). If you pick this up again, start from the ℓ-node values themselves: compare C_ℓ at the sampled nodes between a glitchy model (u = 10⁻⁶) and a clean one (u = 10^−6.1) before splining.
 
 ## Open questions
+
+- **Clump survival (M13 F1).** Can any (M, ρ, z_form) both survive at T_γ and hide the extra baryons from the acoustic epoch? This is now the central question (Experiment D).
 
 - The root cause of the ℓ-node glitch (above).
 - The small-scale diagnostics: at CMB-relevant u, k_½ ≲ 1.5 h/Mpc, well inside k ≤ 10 h/Mpc where P(k) is accurate. For u ≲ 10⁻⁷ the suppression scale lies beyond k = 10 h/Mpc, which would need `P_k_max_h/Mpc` raised and the high-k precision checked.

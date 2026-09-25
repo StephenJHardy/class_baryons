@@ -4,6 +4,9 @@
 
 ## Headline
 
+**Most important finding so far (M13, F1; order of magnitude):** opaque baryonic clumps are thermally locked to the CMB temperature at every relevant epoch. Heated to T_γ, a clump is gravitationally bound only above a minimum mass: M ≳ (kT_γ/Gμm_p)²/(πΣ), or, for internal density ρ, below a survival redshift. Earth-mass clumps at ~1 g/cm³ can be bound only at z ≲ 450, i.e. after recombination; Jupiter-mass ones at z ≲ 4.5×10⁴. **Planetary-mass baryonic clumps therefore cannot be in place during the acoustic epoch**, which both the CMB and small-scale bounds assume (z ~ 4×10⁴ and ~10⁷ respectively). Clumps that are present then must be ≳ stellar mass or degenerate. This questions the premise of Experiments A–E for planetary-mass clumps and makes the formation history (D) the central open question. See [the M13 log](experiment_log/2026-09-26_m13_energy_exchange.md).
+
+
 **Experiment A (Thomson-like clumps, stock CLASS), with fixed cosmology and no real data yet:**
 
 - **With all dark matter in clumps (f_cl = 1), the CMB becomes sensitive at u ~ 10⁻⁵**, i.e. σ/M ~ 4×10⁻⁸ cm²/g or Σ/Q ~ 2×10⁷ g/cm², *if* measurements were limited only by full-sky cosmic variance. Real noise, sky coverage and refitting the other parameters will weaken this. The published Planck bound, u < 2.25×10⁻⁴ (Σ/Q ≳ 1.2×10⁶ g/cm²), is about 20× weaker, which is as expected; reproducing it is M7.
@@ -24,7 +27,7 @@
 | M4 physical mapping | ✅ | table below | [log](experiment_log/2026-09-25_m3_m4_coupling_scan.md) |
 | M6 Experiment B, minimal | ✅ | patched CLASS bit-identical to stock for Thomson; absorber shifts the u threshold by < 1% | [log](experiment_log/2026-09-26_m6_kernel_check.md) |
 | M12 Experiment E, small scales | ✅ | u ≲ 5×10⁻⁹ (Σ/Q ≳ 5×10¹⁰ g/cm²) via WDM half-mode matching; applies if clumps exist by z ~ 10⁷ | [log](experiment_log/2026-09-26_m12_small_scale.md) |
-| M13 (F) | ⏳ next | | |
+| M13 Experiment F, energy exchange | ✅ (estimates) | passive clumps: μ ~ 2×10⁻⁸, y ~ 3×10⁻⁹ (≪ FIRAS); no-go on a full Boltzmann treatment; **clump survival (F1) is the key result** | [log](experiment_log/2026-09-26_m13_energy_exchange.md) |
 | M5, M7 – M11 | ⏳ not started | | |
 
 | Experiment | Status |
@@ -34,7 +37,7 @@
 | C: partial fraction | not started |
 | D: formation history | not started |
 | E: small-scale structure | ✅ M12 approximate bound; f_cl < 1 pending (C) |
-| F: energy exchange / spectral distortions | added in plan revision 2 (M13) |
+| F: energy exchange / spectral distortions | ✅ M13 estimates: distortions negligible for passive clumps; survival criterion is the key result |
 
 Execution order (plan §15): M6 → M12 → M13 → M5 → M7 → M8 → M9 → M10 → M11.
 
@@ -86,6 +89,24 @@ The full 33-point table is in [`results/scans/m3/summary.md`](../results/scans/m
 - **Scaling:** k_hm ≈ 10^(−2.05) u^(−0.48) h/Mpc.
 - **Validity:** the bounds assume clumps exist by z ~ 10⁷ and are lighter than ~3 M☉ (the fluid approximation). After decoupling the clumps are collisionless: σ/M ~ 10⁻¹¹ cm²/g, and the stopping time in interstellar gas is ~10¹⁹ yr.
 
+## Experiment F: energy exchange and survival (M13)
+
+![M13](../figures/m13_thermal.png)
+
+- **Distortions (FIRAS: |μ| < 9×10⁻⁵, |y| < 1.5×10⁻⁵):**
+  - Passive blackbody clumps give μ ≈ +1.6×10⁻⁸ and y ≈ +3×10⁻⁹, limited by the clumps' heat capacity and independent of u.
+  - FIRAS limits internal luminosity to L/M ≲ 850 L☉/M☉.
+  - A sustained clump–CMB temperature offset must satisfy |δ| ≲ 3.5×10⁻⁶ at the CMB-bound coupling (the limit scales as 1/u).
+  - At u ≳ 10⁻⁴ clumps thermalise the spectrum above z ≈ 4×10⁵, partially erasing μ from other sources (a future-mission signature).
+- **Survival** (the headline above): minimum bound mass at T_γ against surface density and redshift:
+
+| z | Σ/Q = 1.2×10⁶ (CMB) | 4.9×10⁸ | 4.4×10¹⁰ (small scales) |
+|---|---:|---:|---:|
+| 10⁷ | 4×10⁵ M☉ | 1×10³ M☉ | 12 M☉ |
+| 10⁵ | 44 M☉ | 0.11 M☉ | 1.2×10⁻³ M☉ |
+| 4×10⁴ | 7 M☉ | 0.017 M☉ | 1.9×10⁻⁴ M☉ |
+| 10⁴ | 0.44 M☉ | 1.1×10⁻³ M☉ | 1.2×10⁻⁵ M☉ |
+
 ## Experiment B: clump kernel (M6)
 
 ![M6](../figures/m6_absorber_vs_thomson.png)
@@ -112,5 +133,11 @@ All of the difference comes from the polarization-source term; quadrupole regene
 
 *(Recommendations arising from the work. The plan itself is changed only with the user's agreement.)*
 
+- **After M13 (most important):** reframe Experiment D around **clump survival and formation**. Minimal version, estimates first and no CLASS changes:
+  1. Map the (M, ρ or Σ, z) region where clumps can be bound at T_γ (F1 criterion), refining the binding criterion (cold cores, ablation of heated skins).
+  2. Ask when the extra baryons must be clumped to avoid loading the photon–baryon fluid before recombination. A quick test is CLASS with ω_b raised above z_form, e.g. a two-stage model.
+  3. Check whether any (M, ρ, z_form) survives *and* hides the baryons, and only then which drag bound (CMB or small-scale) applies.
+
+  If no such window exists for planetary masses, the headline result is a no-go for planetary-mass baryonic dark matter, independent of u, and the CMB-likelihood milestones (M5, M7, M8) become secondary. Recommend doing this **before** M5/M7/M8.
 - **After M12:** Experiment D (formation history) should move up. The small-scale bound, ~10⁴× tighter than the CMB, applies only if clumps exist by z ~ 10⁷, so the key open question is when compact clumps must exist. Proposed: run a minimal version of D (a clump-formation redshift z_form, with no drag before it) *before* the CMB likelihood work (M5, M7, M8), because it determines which bound is the headline.
 - **After M6:** none needed for Experiment B; the plan already treats the full B1–B3 programme as conditional. For C and the likelihood milestones, use the Thomson kernel and apply the kernel only through Q in the Σ mapping.
