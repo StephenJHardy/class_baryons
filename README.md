@@ -7,6 +7,7 @@ The central question: can a pressureless population of optically thick clumps st
 ## Documents
 
 - [Experiment plan](doc/cmb_compact_baryon_clumps_class_experiment_plan.md)
+- [Explainer (PDF)](doc/explainer/clumps_explainer.pdf): theory, what CLASS models, and results so far, for a non-specialist graduate reader (LaTeX source alongside; build with `pdflatex` twice from `doc/explainer/`)
 - [Results summary](doc/RESULTS.md): current results and milestone status
 - [Experimental record](doc/experiment_log/): dated, append-only run records
 - [Implementation notes](doc/IMPLEMENTATION_NOTES.md): lessons for future implementers

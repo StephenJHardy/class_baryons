@@ -18,3 +18,9 @@ results/scratch_*/
 # Patched CLASS (Experiment B), recreated by scripts/setup_class.sh
 class_patched/
 build/
+
+# LaTeX build products
+doc/explainer/*.aux
+doc/explainer/*.log
+doc/explainer/*.out
+doc/explainer/*.toc
