@@ -111,6 +111,15 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 - **CLASS thermal-relic WDM:** add it as a second ncdm species with `m_ncdm` (eV) and `T_ncdm = (4/11)^(1/3) (94.1 eV ω_x / m)^(1/3)`, and set `omega_cdm = 0`. Do **not** pass `omega_ncdm` together with `m_ncdm`: CLASS then renormalises the phase-space density at the given temperature, so the velocity distribution is wrong.
 - The Viel et al. (2005) WDM fit underestimates CLASS's k_hm by 4–17% for 1.2–6.5 keV (it was fitted at k < 5 h/Mpc).
 
+## Noise, detectability and Fisher forecasts (M5)
+
+- `src/m5_noise.py` builds noise spectra (in CLASS units: divide µK² by T_cmb² in µK²) and `Config`s made of sky patches. It computes Δχ² and Fisher matrices with the full 2×2 TT/TE/EE covariance per ℓ. Disjoint sky patches add, so "SO + Planck" is three patches (Planck low ℓ; SO+Planck on the SO sky; Planck on the rest).
+- For ℓ up to 3000, set `ell_max = 3000` and `l_max_scalars = 3500` (lensing needs headroom above the highest ℓ used).
+- **Fisher in u about u = 0:** u ≥ 0, so use one-sided differences. The response is linear at the Planck level but mildly sublinear at the SO level (σ changes 20% between u steps of 10⁻⁵ and 3×10⁻⁵). Use a step comparable to the expected σ(u) and quote the spread.
+- **Fixed cosmology:** the M3/M5 Δχ² grids use fixed h, while the Fisher parameters use θ_s. The two agree to 7% at Δχ² = 1 (Planck-like).
+- **Validation:** a noise-only low-ℓ EE gives σ(τ) about 2× tighter than Planck 2018; inflate the low-ℓ EE noise if τ matters. For u it doesn't (< 4%).
+- **Lensing:** lensed spectra carry most of the degeneracy-breaking power for u, especially for SO (3.7×). Never compare lensed and unlensed forecasts without saying which is which.
+
 ## Distortion and thermal estimates (M13)
 
 - `src/m13_distortions.py` uses Chluba (2016) "Method C" visibility functions and FIRAS 95% limits; the constants and references are in the docstring. The background comes from CLASS, and cgs conversion of CLASS densities is ρ[g/cm³] = ρ_CLASS[Mpc⁻²]·3c²/(8πG)/Mpc².
