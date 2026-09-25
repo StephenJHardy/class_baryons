@@ -1,0 +1,12 @@
+# class_baryons
+
+CMB constraints on compact, weakly photon-coupled matter (e.g. dense baryonic clumps) using the [CLASS](https://github.com/lesgourg/class_public) Boltzmann code.
+
+The central question: can a pressureless population of optically thick clumps stand in for some or all of the dark matter, and what minimum surface density must the clumps have for the CMB to remain CDM-like? The project also asks whether such macroscopic objects share the Thomson-like photon collision operator assumed in standard dark-matter–photon analyses.
+
+## Documents
+
+- [Experiment plan](doc/cmb_compact_baryon_clumps_class_experiment_plan.md)
+- `doc/RESULTS.md`: current results summary (to come)
+- `doc/experiment_log/`: dated experimental record (to come)
+- `doc/IMPLEMENTATION_NOTES.md`: lessons for future implementers (to come)
