@@ -35,9 +35,12 @@ precision:
   start_small_k_at_tau_c_over_tau_h: 1.5e-4
   start_large_k_at_tau_h_over_tau_k: 7.0e-3
 
-# Idm defaults (plan Sections 4-5); m_idm in eV.
+# Idm defaults (plan Sections 4-5); m_idm in eV. From M2b: outputs are
+# converged in m_idm from ~1e8 eV and bit-identical from 1e24 eV (the
+# thermal T/m terms fall below double precision), so the clump mass drops
+# out exactly. CLASS's own default is 1e9 eV.
 idm:
-  m_idm: 1.0e+9
+  m_idm: 1.0e+27
   n_index_idm_g: 0
 
 # Analysis ranges.
