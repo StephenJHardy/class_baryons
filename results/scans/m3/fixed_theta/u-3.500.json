@@ -1,0 +1,41 @@
+{
+  "params": {
+    "omega_b": 0.02237,
+    "100*theta_s": 1.0419,
+    "n_s": 0.9649,
+    "ln10^{10}A_s": 3.044,
+    "tau_reio": 0.0544,
+    "N_ur": 2.0328,
+    "N_ncdm": 1,
+    "m_ncdm": 0.06,
+    "YHe": "BBN",
+    "output": "tCl,pCl,lCl,mPk",
+    "lensing": "yes",
+    "l_max_scalars": 3000,
+    "P_k_max_h/Mpc": 20.0,
+    "z_pk": 0.0,
+    "thermo_Nz_lin": 80000,
+    "thermo_Nz_log": 20000,
+    "start_small_k_at_tau_c_over_tau_h": 0.00015,
+    "start_large_k_at_tau_h_over_tau_k": 0.007,
+    "l_linstep": 20,
+    "omega_cdm": 0.0,
+    "omega_idm": 0.12,
+    "m_idm": 1e+27,
+    "u_idm_g": 0.00031622776601683794,
+    "n_index_idm_g": 0
+  },
+  "derived": {
+    "h": 0.673716652271073,
+    "100*theta_s": 1.0418993915234296,
+    "Omega_m": 0.3150825870365924,
+    "sigma8": 0.7114315728620964,
+    "z_rec": 1088.7606155354665,
+    "rs_rec": 144.53332098877337,
+    "da_rec": 12.729492486766464,
+    "z_star": 1085.1315598439219,
+    "100*theta_star": 1.044236377658606,
+    "age": 13.796112129361253
+  },
+  "runtime_s": 3.974489212036133
+}

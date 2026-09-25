@@ -34,3 +34,10 @@ def class_params(config, f_cl=0.0, u=0.0, m_idm=None, extra=None):
     if extra:
         params.update(extra)
     return params
+
+
+def fix_h(params, h):
+    """Replace the theta_s constraint by a fixed h (for fixed-H0 comparisons)."""
+    params = {k: v for k, v in params.items() if k != "100*theta_s"}
+    params["h"] = h
+    return params

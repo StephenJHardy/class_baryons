@@ -18,6 +18,7 @@
     "thermo_Nz_log": 20000,
     "start_small_k_at_tau_c_over_tau_h": 0.00015,
     "start_large_k_at_tau_h_over_tau_k": 0.007,
+    "l_linstep": 20,
     "omega_cdm": 0.12
   },
   "derived": {
@@ -27,8 +28,11 @@
     "sigma8": 0.8107108210929515,
     "z_rec": 1088.7838940415752,
     "rs_rec": 144.53129320998454,
+    "da_rec": 12.729041928667401,
+    "z_star": 1085.1315966152235,
+    "100*theta_star": 1.0442513470394064,
     "age": 13.795665312812881
   },
-  "runtime_s": 1.1664211750030518,
+  "runtime_s": 1.2460179328918457,
   "classy_version": "v3.4.0"
 }

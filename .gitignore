@@ -11,3 +11,6 @@ venv/
 
 # Local CLASS build / checkout
 class_public/
+
+# Regenerable scratch runs (src/glitch_scan.py etc.)
+results/scratch_*/

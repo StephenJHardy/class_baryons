@@ -34,6 +34,11 @@ precision:
   # otherwise leaves ~5e-4 residuals at l < 30.
   start_small_k_at_tau_c_over_tau_h: 1.5e-4
   start_large_k_at_tau_h_over_tau_k: 7.0e-3
+  # Halve the linear l-sampling step (default 40). With 40, about a third of
+  # idm models pick up a deterministic ~1.5e-3 EE / ~5e-4 TT glitch at
+  # sampled l nodes (e.g. l = 836, 1111), switching on and off with u. Found
+  # in M3; see src/glitch_scan.py and the 2026-09-25 M3 log entry.
+  l_linstep: 20
 
 # Idm defaults (plan Sections 4-5); m_idm in eV. From M2b: outputs are
 # converged in m_idm from ~1e8 eV and bit-identical from 1e24 eV (the
