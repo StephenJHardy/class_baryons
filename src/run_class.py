@@ -1,13 +1,31 @@
 """Run CLASS for one parameter dictionary and save its observables."""
 
 import json
+import os
+import sys
 import time
 from pathlib import Path
 
 import numpy as np
-from classy import Class
 
 from cosmology import ROOT
+
+# CLASS_BUILD=patched selects the Experiment B build (class_patches/idm_g_kernel.patch),
+# installed by scripts/setup_class.sh into build/classy_patched. Default: stock CLASS.
+CLASS_BUILD = os.environ.get("CLASS_BUILD", "stock")
+if "classy" in sys.modules:
+    raise ImportError("classy was imported before run_class; import Class from run_class so "
+                      "that CLASS_BUILD selects the right build")
+if CLASS_BUILD == "patched":
+    sys.path.insert(0, str(ROOT / "build" / "classy_patched"))
+elif CLASS_BUILD != "stock":
+    raise ValueError(f"CLASS_BUILD must be 'stock' or 'patched', not {CLASS_BUILD!r}")
+import classy  # noqa: E402
+from classy import Class  # noqa: E402
+
+_expected = ROOT / "build" / "classy_patched" if CLASS_BUILD == "patched" else ROOT / ".venv"
+if not Path(classy.__file__).resolve().is_relative_to(_expected.resolve()):
+    raise ImportError(f"CLASS_BUILD={CLASS_BUILD} but classy was loaded from {classy.__file__}")
 from rates import rates_from_class
 
 SPECTRA_DIR = ROOT / "results" / "spectra"
@@ -49,7 +67,8 @@ def run(params, config, with_rates=False):
     finally:
         cosmo.struct_cleanup()
         cosmo.empty()
-    meta = {"params": params, "derived": derived, "runtime_s": runtime}
+    meta = {"params": params, "derived": derived, "runtime_s": runtime,
+            "class_build": CLASS_BUILD, "classy_path": classy.__file__}
     return out, meta
 
 

@@ -8,7 +8,6 @@ import json
 
 import matplotlib.pyplot as plt
 import numpy as np
-from classy import Class
 
 from cloud_mapping import sigma_over_m, sigma_surface_over_q
 from cosmology import ROOT, class_params, fix_h, load_config
@@ -71,6 +70,7 @@ def find_peaks(ell, d, n):
 
 def loaded_sound_horizon_ratio(config, h, z_rec):
     """r_s(z_rec) with idm loading the photon fluid, over the standard r_s."""
+    from run_class import Class   # respects CLASS_BUILD; never import classy directly
     c = Class()
     c.set({k: v for k, v in fix_h(class_params(config, f_cl=1.0, u=0.0), h).items()
            if k not in ("output", "lensing", "l_max_scalars", "P_k_max_h/Mpc", "z_pk")})

@@ -1,0 +1,253 @@
+diff --git a/include/thermodynamics.h b/include/thermodynamics.h
+index f93b38e..afe63ba 100644
+--- a/include/thermodynamics.h
++++ b/include/thermodynamics.h
+@@ -308,6 +308,8 @@ struct thermodynamics
+   double cross_idm_g;    /**< cross section between interacting dark matter and photons */
+   double u_idm_g;        /**< ratio between idm_g cross section and idm mass */
+   int n_index_idm_g;     /**< temperature dependence of the interactions between dark matter and photons */
++  double idm_g_quad_coeff; /**< [class_baryons] clump quadrupole-regeneration coefficient c_T (1 = Thomson, 0 = isotropic absorber) */
++  double idm_g_pol_coeff;  /**< [class_baryons] clump polarization-source coefficient c_E (1 = Thomson, 0 = isotropic absorber) */
+ 
+   //@}
+ 
+diff --git a/source/input.c b/source/input.c
+index d01e761..6395a0c 100644
+--- a/source/input.c
++++ b/source/input.c
+@@ -3206,6 +3206,9 @@ int input_read_parameters_species(struct file_content * pfc,
+     /** 7.2.4.b) idm_g temperature dependence */
+     if (pth->u_idm_g > 0) {
+       class_read_double("n_index_idm_g",pth->n_index_idm_g);
++      /* [class_baryons] angular/polarization kernel of the clump-photon collision term */
++      class_read_double("idm_g_quadrupole_coefficient",pth->idm_g_quad_coeff);
++      class_read_double("idm_g_polarization_coefficient",pth->idm_g_pol_coeff);
+     }
+   }
+   /* Checks on budget equation */
+@@ -6022,6 +6025,8 @@ int input_default_params(struct background *pba,
+   pth->u_idm_g = 0.;
+   /** 7.2.4.b) temperature scaling idm_g */
+   pth->n_index_idm_g = 0;
++  pth->idm_g_quad_coeff = 1.;
++  pth->idm_g_pol_coeff = 1.;
+   ppt->has_idm_soundspeed = _FALSE_;
+ 
+   /* ** ADDITIONAL SPECIES ** */
+diff --git a/source/perturbations.c b/source/perturbations.c
+index 8599f78..d805f6e 100644
+--- a/source/perturbations.c
++++ b/source/perturbations.c
+@@ -25,6 +25,32 @@
+  */
+ 
+ #include "perturbations.h"
++
++/**
++ * [class_baryons] Tight-coupling closure for a photon collision term made of
++ * Thomson scattering (rate a = kappa') plus clumps (rate b = dmu_idm_g) whose
++ * kernel has quadrupole-regeneration coefficient cT and polarization-source
++ * coefficient cE. Solving the quasi-static l=2 temperature and polarization
++ * equations gives P0 = 2 s_2 shear / (8 - 4.8 r) with r = (a + cE b)/(a + b),
++ * and shear = (4/15)(theta + metric_shear) / D with
++ * D = (a + b) - 0.8 (a + cT b)/(8 - 4.8 r). Returns tau2 = 0.75/D (so that
++ * shear = 16/45 tau2 (...), reducing to 1/(a+b) for Thomson), its conformal
++ * time derivative given da, db, and p_over_shear = 2/(8 - 4.8 r).
++ */
++static void idm_g_kernel_closure(double a, double b, double da, double db,
++                                 double cT, double cE,
++                                 double * tau2, double * dtau2, double * p_over_shear) {
++  double s = a + b, ds = da + db;
++  double r = (a + cE*b)/s;
++  double dr = ((da + cE*db)*s - (a + cE*b)*ds)/s/s;
++  double m = 8. - 4.8*r, dm = -4.8*dr;
++  double n = a + cT*b, dn = da + cT*db;
++  double D = s - 0.8*n/m;
++  double dD = ds - 0.8*(dn*m - n*dm)/m/m;
++  *tau2 = 0.75/D;
++  *dtau2 = -0.75*dD/D/D;
++  *p_over_shear = 2./m;
++}
+ #include "parallel.h"
+ 
+ 
+@@ -7325,7 +7351,11 @@ int perturbations_einstein(
+       if (ppw->approx[ppw->index_ap_tca] == (int)tca_on) {
+ 
+         if (pth->has_idm_g == _TRUE_) {
+-          shear_g = 16./45./(ppw->pvecthermo[pth->index_th_dkappa] + ppw->pvecthermo[pth->index_th_dmu_idm_g])*(y[ppw->pv->index_pt_theta_g]+k2*ppw->pvecmetric[ppw->index_mt_alpha]);
++          double tau2_kc = 1./(ppw->pvecthermo[pth->index_th_dkappa] + ppw->pvecthermo[pth->index_th_dmu_idm_g]), dtau2_kc, pos_kc;
++          if ((pth->idm_g_quad_coeff != 1.) || (pth->idm_g_pol_coeff != 1.))
++            idm_g_kernel_closure(ppw->pvecthermo[pth->index_th_dkappa], ppw->pvecthermo[pth->index_th_dmu_idm_g], 0., 0.,
++                                 pth->idm_g_quad_coeff, pth->idm_g_pol_coeff, &tau2_kc, &dtau2_kc, &pos_kc);
++          shear_g = 16./45.*tau2_kc*(y[ppw->pv->index_pt_theta_g]+k2*ppw->pvecmetric[ppw->index_mt_alpha]);
+         }
+         else {
+           shear_g = 16./45./ppw->pvecthermo[pth->index_th_dkappa]*(y[ppw->pv->index_pt_theta_g]+k2*ppw->pvecmetric[ppw->index_mt_alpha]);
+@@ -7521,7 +7551,11 @@ int perturbations_total_stress_energy(
+       /* first-order tight-coupling approximation for photon shear */
+       if (ppt->gauge == newtonian) {
+         if (pth->has_idm_g == _TRUE_) {
+-          shear_g = 16./45./(ppw->pvecthermo[pth->index_th_dkappa] + ppw->pvecthermo[pth->index_th_dmu_idm_g])*y[ppw->pv->index_pt_theta_g];
++          double tau2_kc = 1./(ppw->pvecthermo[pth->index_th_dkappa] + ppw->pvecthermo[pth->index_th_dmu_idm_g]), dtau2_kc, pos_kc;
++          if ((pth->idm_g_quad_coeff != 1.) || (pth->idm_g_pol_coeff != 1.))
++            idm_g_kernel_closure(ppw->pvecthermo[pth->index_th_dkappa], ppw->pvecthermo[pth->index_th_dmu_idm_g], 0., 0.,
++                                 pth->idm_g_quad_coeff, pth->idm_g_pol_coeff, &tau2_kc, &dtau2_kc, &pos_kc);
++          shear_g = 16./45.*tau2_kc*y[ppw->pv->index_pt_theta_g];
+         }
+         else {
+           shear_g = 16./45./ppw->pvecthermo[pth->index_th_dkappa]*y[ppw->pv->index_pt_theta_g];
+@@ -8329,10 +8363,18 @@ int perturbations_sources(
+     theta_idm= y[ppw->pv->index_pt_theta_idm];
+     theta_idm_prime = dy[ppw->pv->index_pt_theta_idm];
+   }
++  /* [class_baryons] visibility weighted by the kernel coefficients: the clump part of
++     g = (kappa' + mu') e^{-kappa-mu} contributes c_T (Pi term) or c_E (E source) */
++  double g_quad_kc = g, g_pol_kc = g;
+   if (pth->has_idm_g == _TRUE_) {
+     dmu_idm_g = pvecthermo[pth->index_th_dmu_idm_g];
+     ddmu_idm_g = pvecthermo[pth->index_th_ddmu_idm_g];
+     exp_mu_idm_g = pvecthermo[pth->index_th_exp_mu_idm_g];
++    if ((pth->idm_g_quad_coeff != 1.) || (pth->idm_g_pol_coeff != 1.)) {
++      double rate_kc = pvecthermo[pth->index_th_dkappa] + dmu_idm_g;
++      g_quad_kc = g * (pvecthermo[pth->index_th_dkappa] + pth->idm_g_quad_coeff*dmu_idm_g)/rate_kc;
++      g_pol_kc = g * (pvecthermo[pth->index_th_dkappa] + pth->idm_g_pol_coeff*dmu_idm_g)/rate_kc;
++    }
+   }
+ 
+   /** - for scalars */
+@@ -8370,7 +8412,15 @@ int perturbations_sources(
+ 	/* P^(0) during tca */
+ 	/* valid in both hierarchies: obtains from (5/2 + 1/2 + 2)*s_2*shear_g/8 (optimal),
+            or (5/2 + sqrt(6)*5*sqrt(6)/8)*s_2*shear_g/10 (tam) */
+-        P = 5.* ppw->s_l[2] * ppw->tca_shear_g/8.; /* (2.5+0.5+2)shear_g/8 */
++        {
++          P = 5.* ppw->s_l[2] * ppw->tca_shear_g/8.; /* (2.5+0.5+2)shear_g/8 */
++          if ((pth->has_idm_g == _TRUE_) && ((pth->idm_g_quad_coeff != 1.) || (pth->idm_g_pol_coeff != 1.))) {
++            double tau2_kc, dtau2_kc, pos_kc;
++            idm_g_kernel_closure(pvecthermo[pth->index_th_dkappa], pvecthermo[pth->index_th_dmu_idm_g], 0., 0.,
++                                 pth->idm_g_quad_coeff, pth->idm_g_pol_coeff, &tau2_kc, &dtau2_kc, &pos_kc);
++            P = pos_kc * ppw->s_l[2] * ppw->tca_shear_g;
++          }
++        }
+       else {
+         switch (ppt->hierarchy) {
+         case optimal:
+@@ -8431,7 +8481,7 @@ int perturbations_sources(
+           _set_source_(ppt->index_tp_t1) = switch_isw * exp_m_kappa * k* (pvecmetric[ppw->index_mt_psi]-y[ppw->pv->index_pt_phi]);
+         }
+ 
+-        _set_source_(ppt->index_tp_t2) = ppt->switch_pol * g * P;
++        _set_source_(ppt->index_tp_t2) = ppt->switch_pol * g_quad_kc * P;
+       }
+ 
+ 
+@@ -8493,7 +8543,7 @@ int perturbations_sources(
+                                             - y[ppw->pv->index_pt_eta]);
+         }
+         _set_source_(ppt->index_tp_t2) =
+-          ppt->switch_pol * g * P;
++          ppt->switch_pol * g_quad_kc * P;
+       }
+ 
+     }
+@@ -8506,7 +8556,7 @@ int perturbations_sources(
+          plus sign to comply with the 'historical convention'
+          established in CMBFAST and CAMB. */
+ 
+-      _set_source_(ppt->index_tp_p) = _SQRT6_ * g * P;
++      _set_source_(ppt->index_tp_p) = _SQRT6_ * g_pol_kc * P;
+ 
+     }
+ 
+@@ -10059,6 +10109,7 @@ int perturbations_derivs(double tau,
+   /*  for use with interacting dark matter  */
+   double c2_idm=0., S_idm_g=0.;
+   double dmu_idm_g = 0., photon_scattering_rate;
++  double photon_regen_T, photon_regen_E; /* [class_baryons] kernel-weighted source rates */
+   double S_idm_dr=0., dmu_idm_dr=0., dmu_idr=0., tca_slip_idm_dr=0.;
+   double R_idm_b = 0., dR_idm_b = 0., S_idm_b = 0.; /* these are just going to be used as a short hand notation */
+ 
+@@ -10157,6 +10208,10 @@ int perturbations_derivs(double tau,
+   R = 4./3. * pvecback[pba->index_bg_rho_g]/pvecback[pba->index_bg_rho_b];
+ 
+   photon_scattering_rate = pvecthermo[pth->index_th_dkappa];
++  photon_regen_T = pvecthermo[pth->index_th_dkappa];
++  photon_regen_E = pvecthermo[pth->index_th_dkappa];
++  /* (the regeneration rates are reset to photon_scattering_rate below when the kernel is Thomson,
++     so that stock CLASS is reproduced bit for bit) */
+ 
+   if (pba->has_idm == _TRUE_) {
+ 
+@@ -10170,6 +10225,10 @@ int perturbations_derivs(double tau,
+     if (pth->has_idm_g == _TRUE_) {
+       dmu_idm_g = pvecthermo[pth->index_th_dmu_idm_g];
+       photon_scattering_rate += pvecthermo[pth->index_th_dmu_idm_g];
++      photon_regen_T += pth->idm_g_quad_coeff * pvecthermo[pth->index_th_dmu_idm_g];
++      photon_regen_E += pth->idm_g_pol_coeff * pvecthermo[pth->index_th_dmu_idm_g];
++      if (pth->idm_g_quad_coeff == 1.) photon_regen_T = photon_scattering_rate;
++      if (pth->idm_g_pol_coeff == 1.) photon_regen_E = photon_scattering_rate;
+       S_idm_g = 4./3. * pvecback[pba->index_bg_rho_g] / pvecback[pba->index_bg_rho_idm];
+     }
+     if (pth->has_idm_dr == _TRUE_){
+@@ -10459,7 +10518,8 @@ int perturbations_derivs(double tau,
+           dy[pv->index_pt_shear_g] =
+             4./15.*(theta_g+metric_shear)
+             -3./10.*k*s_l[3]/s_l[2]*y[pv->index_pt_l3_g]
+-            -photon_scattering_rate*(y[pv->index_pt_shear_g]-2./5./s_l[2]*P0);
++            -photon_scattering_rate*(y[pv->index_pt_shear_g]-2./5./s_l[2]*P0)
++            +(photon_regen_T-photon_scattering_rate)*2./5./s_l[2]*P0;
+           break;
+ 
+         case tam:
+@@ -10467,7 +10527,8 @@ int perturbations_derivs(double tau,
+           dy[pv->index_pt_shear_g] =
+             4./15.*(theta_g+metric_shear)
+             -6./35.*k*s_l[3]/s_l[2]*y[pv->index_pt_l3_g]
+-            -photon_scattering_rate*(y[pv->index_pt_shear_g]-2./5./s_l[2]*P0);
++            -photon_scattering_rate*(y[pv->index_pt_shear_g]-2./5./s_l[2]*P0)
++            +(photon_regen_T-photon_scattering_rate)*2./5./s_l[2]*P0;
+           break;
+         }
+ 
+@@ -10536,7 +10597,8 @@ int perturbations_derivs(double tau,
+         case optimal:
+           dy[pv->index_pt_pol0_g] =
+             -k*y[pv->index_pt_pol0_g+1]
+-            -photon_scattering_rate*(y[pv->index_pt_pol0_g]-4.*P0);
++            -photon_scattering_rate*(y[pv->index_pt_pol0_g]-4.*P0)
++            +(photon_regen_E-photon_scattering_rate)*4.*P0;
+           break;
+ 
+         case tam:
+@@ -10566,12 +10628,14 @@ int perturbations_derivs(double tau,
+         case optimal:
+           dy[pv->index_pt_pol2_g] =
+             k/5.*(2.*s_l[2]*y[pv->index_pt_pol2_g-1]-3.*s_l[3]*y[pv->index_pt_pol2_g+1])
+-            -photon_scattering_rate*(y[pv->index_pt_pol2_g]-4./5.*P0);
++            -photon_scattering_rate*(y[pv->index_pt_pol2_g]-4./5.*P0)
++            +(photon_regen_E-photon_scattering_rate)*4./5.*P0;
+           break;
+ 
+         case tam:
+           dy[pv->index_pt_E2] = -twokappam[3]/7.*y[pv->index_pt_E2+1]
+-            -photon_scattering_rate*(y[pv->index_pt_E2] + _SQRT6_*P0);
++            -photon_scattering_rate*(y[pv->index_pt_E2] + _SQRT6_*P0)
++            -(photon_regen_E-photon_scattering_rate)*_SQRT6_*P0;
+           break;
+         }
+ 
+@@ -11854,6 +11918,13 @@ int perturbations_tca_slip_and_shear(double * y,
+   if (pth->has_idm_g == _TRUE_) {
+     tau_2_idm_g = 1./(pvecthermo[pth->index_th_dkappa] + dmu_idm_g);
+     dtau_2_idm_g = - (pvecthermo[pth->index_th_ddkappa] + ddmu_idm_g)*tau_2_idm_g*tau_2_idm_g;
++    if ((pth->idm_g_quad_coeff != 1.) || (pth->idm_g_pol_coeff != 1.)) {
++      double pos_kc;
++      idm_g_kernel_closure(pvecthermo[pth->index_th_dkappa], dmu_idm_g,
++                           pvecthermo[pth->index_th_ddkappa], ddmu_idm_g,
++                           pth->idm_g_quad_coeff, pth->idm_g_pol_coeff,
++                           &tau_2_idm_g, &dtau_2_idm_g, &pos_kc);
++    }
+   }
+ 
+   if (pth->has_idm_b == _TRUE_) {

@@ -15,3 +15,11 @@ if [ "$actual" != "$CLASS_COMMIT" ]; then
     exit 1
 fi
 uv sync
+
+# Experiment B: patched CLASS in a separate tree and install location, so the
+# stock build (used by default) is never modified. Select with CLASS_BUILD=patched.
+rm -rf class_patched
+cp -r class_public class_patched
+git -C class_patched apply ../class_patches/idm_g_kernel.patch
+(cd class_patched && make clean >/dev/null 2>&1 || true; rm -rf build classy.egg-info python/build)
+uv pip install --target build/classy_patched ./class_patched --no-deps --reinstall

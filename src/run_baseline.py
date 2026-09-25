@@ -1,9 +1,7 @@
 """M1: run the frozen baseline_lcdm model and save its observables."""
 
-import classy
-
 from cosmology import class_params, load_config
-from run_class import run, save
+from run_class import classy, run, save
 
 
 def main():

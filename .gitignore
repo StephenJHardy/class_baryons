@@ -14,3 +14,7 @@ class_public/
 
 # Regenerable scratch runs (src/glitch_scan.py etc.)
 results/scratch_*/
+
+# Patched CLASS (Experiment B), recreated by scripts/setup_class.sh
+class_patched/
+build/

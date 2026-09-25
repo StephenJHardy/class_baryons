@@ -1,0 +1,43 @@
+{
+  "params": {
+    "omega_b": 0.02237,
+    "n_s": 0.9649,
+    "ln10^{10}A_s": 3.044,
+    "tau_reio": 0.0544,
+    "N_ur": 2.0328,
+    "N_ncdm": 1,
+    "m_ncdm": 0.06,
+    "YHe": "BBN",
+    "output": "tCl,pCl,lCl,mPk",
+    "lensing": "yes",
+    "l_max_scalars": 3000,
+    "P_k_max_h/Mpc": 20.0,
+    "z_pk": 0.0,
+    "thermo_Nz_lin": 80000,
+    "thermo_Nz_log": 20000,
+    "start_small_k_at_tau_c_over_tau_h": 0.00015,
+    "start_large_k_at_tau_h_over_tau_k": 0.007,
+    "l_linstep": 20,
+    "omega_cdm": 0.0,
+    "omega_idm": 0.12,
+    "m_idm": 1e+27,
+    "u_idm_g": 0.0007943282347242813,
+    "n_index_idm_g": 0,
+    "h": 0.6737666443741934
+  },
+  "derived": {
+    "h": 0.6737666443741934,
+    "100*theta_s": 1.0419369658461355,
+    "Omega_m": 0.31503583180779227,
+    "sigma8": 0.6305580995824759,
+    "z_rec": 1088.7254119976458,
+    "rs_rec": 144.536387685785,
+    "da_rec": 12.729714739235432,
+    "z_star": 1085.131579226738,
+    "100*theta_star": 1.0442513583144892,
+    "age": 13.795665311580574
+  },
+  "runtime_s": 2.3625919818878174,
+  "class_build": "stock",
+  "classy_path": "/home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy/__init__.py"
+}
