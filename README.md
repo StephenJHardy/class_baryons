@@ -18,4 +18,6 @@ scripts/setup_class.sh                 # clone CLASS v3.4.0 (pinned), build clas
 uv run python src/run_baseline.py      # M1: baseline LCDM
 uv run python src/validate_m2a.py      # M2a: zero-coupling idm reproduces LCDM
 uv run python src/validate_m2b.py      # M2b: cold-mass limit in m_idm
+uv run python src/m3_coupling_scan.py  # M3: coupling scan at f_cl = 1
+uv run python src/m3_analyse.py        # M3/M4: diagnostics, physical mapping, figures
 ```
