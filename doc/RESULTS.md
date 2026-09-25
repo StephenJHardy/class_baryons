@@ -8,7 +8,7 @@
 
 - **With all dark matter in clumps (f_cl = 1), the CMB becomes sensitive at u ~ 10⁻⁵**, i.e. σ/M ~ 4×10⁻⁸ cm²/g or Σ/Q ~ 2×10⁷ g/cm², *if* measurements were limited only by full-sky cosmic variance. Real noise, sky coverage and refitting the other parameters will weaken this. The published Planck bound, u < 2.25×10⁻⁴ (Σ/Q ≳ 1.2×10⁶ g/cm²), is about 20× weaker, which is as expected; reproducing it is M7.
 - **The CMB signal comes almost entirely from radiation *dragging the clumps* before z ~ 10⁴–10⁵, not from photons scattering off clumps.** At CMB-relevant couplings the clumps contribute ≲10⁻⁴ of the Thomson opacity before recombination and an optical depth τ_cl ≲ 10⁻³ after it. The observable effects are suppressed clump perturbations on small scales, weaker potentials (damping-tail TT/EE) and much less lensing.
-- **Implication for Experiment B (open decision):** the drag depends only on the momentum-transfer cross-section, not on the angular or polarization kernel. So replacing the Thomson kernel with an opaque-clump kernel is expected to change TT/TE/EE only slightly, apart from a possible small low-ℓ EE term. See [the M3 log](experiment_log/2026-09-25_m3_m4_coupling_scan.md).
+- **Implication for Experiment B (decided 2026-09-25: minimal confirmation, then new Experiments E and F; see plan revision 2):** the drag depends only on the momentum-transfer cross-section, not on the angular or polarization kernel. So replacing the Thomson kernel with an opaque-clump kernel is expected to change TT/TE/EE only slightly, apart from a possible small low-ℓ EE term. See [the M3 log](experiment_log/2026-09-25_m3_m4_coupling_scan.md).
 - **Small scales look far more constraining than the CMB (a diagnostic, not a constraint).** At the Planck bound the linear half-mode mass is ~9×10¹³ M☉/h and σ₈ falls by 10%.
 
 ## Status of milestones and validation gates
@@ -26,10 +26,14 @@
 
 | Experiment | Status |
 |---|---|
-| A: Thomson-like clumps | scan and mapping done; likelihood (M5, M7, M8) next |
-| B: opaque-clump kernel | not started; M3 suggests its effect is small (decision needed) |
+| A: Thomson-like clumps | scan and mapping done; likelihood (M5, M7, M8) after E/F estimates |
+| B: opaque-clump kernel | **next (M6)**, cut down to a minimal confirmation (plan revision 2) |
 | C: partial fraction | not started |
 | D: formation history | not started |
+| E: small-scale structure | added in plan revision 2 (M12) |
+| F: energy exchange / spectral distortions | added in plan revision 2 (M13) |
+
+Execution order (plan §15): M6 → M12 → M13 → M5 → M7 → M8 → M9 → M10 → M11.
 
 ## Experiment A: coupling scan at f_cl = 1 (fixed H0, fixed cosmology)
 

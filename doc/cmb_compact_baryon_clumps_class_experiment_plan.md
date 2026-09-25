@@ -2,6 +2,12 @@
 
 ## Experimental Plan Using CLASS
 
+> **Revision 2 (2026-09-25, after M3/M4).**
+> - **The finding:** the M3 coupling scan showed that at CMB-allowed couplings the CMB responds to radiation *dragging the clumps*, which depends only on the momentum-transfer cross-section. Photons scattering off clumps is negligible: clump opacity is ≲10⁻⁴ of Thomson before recombination, and τ_cl ≲ 10⁻³ after.
+> - **Experiment B:** the collision-operator question it was built around is therefore expected to have a near-null answer. B is cut down to a minimal confirmation check (§7).
+> - **New experiments:** the novel direction moves to physics that *does* distinguish opaque baryonic clumps: small-scale structure (Experiment E, §11a) and energy exchange / spectral distortions (Experiment F, §11b). The formation history (Experiment D) is unchanged.
+> - **Details:** `doc/RESULTS.md` and `doc/experiment_log/2026-09-25_m3_m4_coupling_scan.md`.
+
 ### Research question
 
 This project asks:
@@ -12,6 +18,10 @@ and, more sharply:
 
 > **Does an optically thick macroscopic baryonic object have the same CMB collision operator as the particle-scattering model conventionally used to derive dark-matter–photon bounds? If not, how does the CMB constraint on its surface density \(\Sigma\) change when the correct macro-object radiative-transfer physics is used?**
 
+*(Revision 2: M3 indicates the answer is "no, but it barely matters, because the constraint is set by momentum transfer alone". Experiment B confirms this minimally.)* The questions that now carry the novelty are:
+
+> **Which observables other than the CMB anisotropies constrain opaque baryonic clumps more tightly, specifically small-scale structure (the drag-induced cutoff in P(k)) and CMB spectral distortions (absorption and re-emission exchange energy, unlike elastic Thomson scattering)? What minimum \(\Sigma\) do they require?**
+
 The project deliberately does **not** model cloud formation, Big Bang nucleosynthesis, or detailed internal cloud hydrodynamics. It asks whether compact clumps already present before the CMB acoustic epoch can behave sufficiently like cold dark matter to avoid altering the observed anisotropies.
 
 The public **CLASS** Boltzmann code already contains an interacting dark matter species (`idm`) with photon coupling (`u_idm_g` / `cross_idm_g`). That implementation follows the Stadler & Bœhm elastic DM–photon scattering formalism, i.e. a **Thomson-like angular collision operator**. It is therefore treated here as a **reference approximation** (a momentum-drag proxy), not as the physical model of an opaque cloud.
@@ -21,11 +31,13 @@ The public **CLASS** Boltzmann code already contains an interacting dark matter 
 | Experiment | Question | CLASS modification? |
 |---|---|---|
 | **A** — Thomson-like clumps | Reproduce the established interacting-DM bound at \(f_{\rm cl}=1\) and translate it into \(\Sigma\). | No |
-| **B** — Opaque-clump collision operator | Does replacing the particle-scattering kernel with a macro-object kernel materially change TT/TE/EE, and hence the \(\Sigma\) bound? | Yes (photon hierarchy) |
-| **C** — Partial clumped fraction | Map the allowed \((f_{\rm cl},\Sigma/Q)\) space, with whichever kernel(s) B shows to matter. | Only if B requires it |
+| **B** — Opaque-clump collision operator (minimal check) | Confirm that swapping the Thomson kernel for an opaque-clump kernel leaves TT/TE/EE unchanged at equal momentum transfer, and isolate the possible low-ℓ EE term. | Yes (small patch: two coefficients) |
+| **C** — Partial clumped fraction | Map the allowed \((f_{\rm cl},\Sigma/Q)\) space. | No (unless B surprises) |
 | **D** — Formation history | \(\Sigma(z)\), \(f_{\rm cl}(z)\), \(z_{\rm form}\). Only if warranted. | Yes |
+| **E** — Small-scale structure | Turn the drag-induced P(k) cutoff into a bound on u (and Σ) and compare it with the CMB bound. | No (higher k precision only) |
+| **F** — Energy exchange and spectral distortions | Do absorbing/re-emitting clumps distort the CMB spectrum during the μ and y eras, and what Σ does FIRAS (and future missions) allow? | Estimate first; possibly CLASS's distortions module |
 
-Reproducing a Planck \(u\lesssim10^{-4}\) bound is established science and serves as validation. **Experiment B is the scientifically novel core.**
+Reproducing a Planck \(u\lesssim10^{-4}\) bound is established science and serves as validation. **Revision 2: the scientifically novel content is now expected from Experiments E and F.** B is a short confirmation that the Thomson-kernel CMB bound carries over to opaque clumps.
 
 ---
 
@@ -306,7 +318,7 @@ Set \(f_{\rm cl}=1\). Concentrate the grid where the CMB is sensitive:
 \log_{10}u \in [-5,-2]\ \text{in steps of } 0.125,
 \]
 
-plus a few null-check points at \(u\sim10^{-8}\), and a few larger values to illustrate the strongly coupled regime.
+plus a few null-check points at \(u\sim10^{-8}\), and a few larger values to illustrate the strongly coupled regime. *(M3: stock CLASS v3.4.0 runs only up to \(u\approx0.13\) at \(f_{\rm cl}=1\).)*
 
 For each model record \(u\), \(\sigma/M\), \(\Sigma/Q\), \(z_{\rm dec}\).
 
@@ -365,39 +377,41 @@ Extend it to TT/TE/EE covariance, noise, sky fraction and realistic \(\ell\) ran
 
 ---
 
-## 7. Experiment B: opaque-clump collision operator
+## 7. Experiment B: opaque-clump collision operator (minimal confirmation)
 
 ### Motivation
 
-Stock `idm_g` uses the **Thomson** angular collision operator: scattered radiation partly regenerates the photon quadrupole (the \(\Pi\) term), and the Thomson polarization kernel sources E-modes. An optically thick macroscopic object exchanges momentum with radiation through a different microphysical law, and **the Thomson kernels used by stock CLASS need not apply to it**. TE and EE therefore require dedicated treatment.
+Stock `idm_g` uses the **Thomson** angular collision operator. Scattered radiation partly regenerates the photon quadrupole (the \(\Pi\) term), and the Thomson polarization kernel sources E-modes. An optically thick macroscopic object exchanges momentum with radiation through a different microphysical law, so **the Thomson kernels used by stock CLASS need not apply to it**.
 
-### Structure of the problem
+### Why this is expected to matter little (M3)
 
-For any kernel, the dipole (\(\ell=1\)) momentum exchange is fixed by \(\sigma_{\rm mt}\) and the clump velocity. That is what \(u\) encodes. For ideal instantaneous thermalisation the monopole is energy-conserving. The kernels differ in:
+- **The drag is kernel-independent.** To first order in velocity and anisotropy, the force on any scatterer is the photon momentum flux times \(\sigma_{\rm mt}=\int(1-\cos\theta)\,d\sigma\). So the clump drag, which is what produces the CMB signal, depends only on \(u\).
+- **The kernel only enters the photon-side \(\ell\ge2\) and polarization terms.** Those are weighted by clump opacity, which is ≲10⁻⁴ of Thomson before recombination and adds up to only τ_cl ≲ 10⁻³ afterwards.
+- **One exception to test.** EE departs from ΛCDM first at ℓ ≈ 7–17. This could be clump-generated polarization after recombination, and that would depend on the kernel.
 
-- the **\(\ell\ge2\) redistribution**, i.e. how much anisotropy is regenerated rather than erased (Thomson: partial quadrupole regeneration; ideal isotropic re-emission in the clump frame: none);
-- the **polarization source**. Thomson has a known one. Ideal isotropic thermal re-emission plausibly gives none, but reflection, limb effects, anisotropic incident radiation and non-instantaneous thermalisation can each change this. State the polarization law explicitly for each kernel rather than assuming it.
+### Scope
 
-### Candidate kernels
+Two kernels only:
+- **Thomson (stock).** Quadrupole-regeneration and polarization-source coefficients = 1.
+- **B1, a perfect absorber with isotropic thermal re-emission in the clump rest frame (\(Q=1\)).** Clump opacity damps every photon moment with \(\ell\ge2\) and the polarization hierarchy, with no \(\Pi\) regeneration and no polarization source. Both coefficients are 0.
 
-1. **B1 — perfect absorber, isotropic thermal re-emission in the clump rest frame** (\(Q=1\)).
-2. **B2 — diffuse (Lambertian) surface reflection** (\(Q=13/9\)).
-3. **B3 — specular reflection from a sphere** (\(Q=1\)).
-
-For each, derive the Legendre moments of the angular redistribution function and the polarization source, and express them as coefficients multiplying the \(\ell=2\) and polarization source terms in the photon hierarchy. Thomson corresponds to specific values of these coefficients, so stock CLASS is recovered as a special case.
+B1 is the extreme case: it removes every photon-side term the Thomson kernel adds. If B1 matches Thomson, any intermediate kernel will too.
+- B2 (Lambertian, \(Q=13/9\)) and B3 (specular, \(Q=1\)) enter only through their \(Q\) values in the \(\Sigma\) mapping.
+- The kernels also differ in their polarization law: ideal re-emission plausibly gives none, but reflection, limb effects and non-instantaneous thermalisation can each change that. Derive the full B2/B3 coefficients only if B1 differs materially from Thomson.
 
 ### Implementation
 
-- Add kernel coefficients (quadrupole-regeneration factor, polarization-source factor) to the idm–photon collision terms in CLASS's perturbation module. Default them to the Thomson values.
-- The idm–photon **tight-coupling approximation** also embeds the Thomson kernel (e.g. through the shear/quadrupole closure). Either rederive it for the new kernels or disable it, and verify the difference.
-- Keep \(u\) defined as the **momentum-transfer** cross-section per unit mass, so that A and B are compared at equal drag. Map to \(\Sigma\) using the kernel-appropriate \(Q\).
-- Validation: with Thomson coefficients, the modified code must reproduce stock CLASS bit-for-bit (or to numerical precision).
+- In CLASS's perturbation module, add the two coefficients (quadrupole regeneration and polarization source) to the idm–photon collision terms. Default them to the Thomson values.
+- The idm–photon **tight-coupling approximation** also embeds the Thomson kernel, through the shear/quadrupole closure. Disable it for B1, or rederive it, and check the difference with Thomson coefficients.
+- Keep \(u\) defined as the momentum-transfer cross-section per unit mass, so that Thomson and B1 are compared at equal drag.
+- Keep the patch as a versioned diff in `class_patches/`, applied by the setup script to a separate build, so stock CLASS stays available.
+- **Validation:** with Thomson coefficients, the patched code must reproduce stock CLASS to numerical precision, using the project precision settings and the `src/glitch_scan.py` smoothness check.
 
 ### Outputs
 
-- \(\Delta C_\ell^{TT,TE,EE}\) between kernels at equal \(u\).
-- The shift in the \(f_{\rm cl}=1\) upper limit on \(u\), and hence on \(\Sigma\), for each kernel.
-- A verdict: is the Thomson-kernel bound an adequate proxy for opaque clumps, or not?
+- \(\Delta C_\ell^{TT,TE,EE,\phi\phi}\) between B1 and Thomson at \(u = 10^{-5}, 10^{-4}, 2.25\times10^{-4}, 10^{-3}\), with ideal-CV \(\Delta\chi^2\).
+- An isolated low-ℓ EE contribution from clump scattering: the B1 − Thomson difference measures it directly.
+- A verdict. **Expected:** differences ≲10⁻⁴ outside low-ℓ EE, so the Thomson-kernel bound applies to opaque clumps with \(\Sigma_{\min}=Q\cdot268/u_{\max}\) and the kernel-appropriate \(Q\). If instead differences exceed the detectability threshold, restore the full B1–B3 programme and carry the kernels through C and the likelihood.
 
 ---
 
@@ -411,7 +425,7 @@ f_{\rm cl} = 0.01,\ 0.03,\ 0.1,\ 0.3,\ 0.5,\ 0.8,\ 1,
 \log_{10}u \in [-5,-1]
 \]
 
-(extending to larger \(u\) at small \(f_{\rm cl}\)). Run with the Thomson kernel and with any Experiment B kernel that differs materially.
+(extending to larger \(u\) at small \(f_{\rm cl}\)). Run with the Thomson kernel, plus any Experiment B kernel that turns out to differ materially.
 
 For each point compute TT, TE, EE, lensing, \(P(k)\), the small-scale diagnostics and \(z_{\rm dec}\).
 
@@ -428,6 +442,8 @@ Photon opacity scales as \(f_{\rm cl}u\), while the clump drag scales as \(u\) (
 \]
 
 If contours collapse approximately in \(f_{\rm cl}u\), photon opacity dominates the observable effect. Where they do not collapse, clump dynamics matters. Test this rather than assuming it; either way the result says something about the physics.
+
+*(Revision 2: M3 shows the drag dominates at f_cl = 1. Collapse in \(f_{\rm cl}u\) is therefore **not** expected. More likely the constraint behaves like \(f_{\rm cl}\times g(u)\): the drag rate depends only on \(u\), while the resulting loss of gravitational clustering scales with the clumped fraction.)*
 
 ---
 
@@ -471,17 +487,20 @@ Confidence regions in
 \boxed{f_{\rm cl}\ \text{vs}\ \Sigma/Q},
 \]
 
-for the Thomson kernel and for each physically motivated opaque-clump kernel.
+for the Thomson kernel (plus B1 only if Experiment B finds a material difference). Compare them with the bounds from Experiments E and F in the same coordinates.
 
 The headline numbers are the \(f_{\rm cl}=1\) limits:
 
 > Could all of the conventional dark-matter component be compact baryonic clumps, and if so, what minimum surface density \(\Sigma_{\min}\) do they need, **for the correct collision operator**?
 
-The expected Thomson-kernel answer is \(\Sigma/Q\gtrsim1.2\times10^6\ {\rm g\,cm^{-2}}\). The novel content is how, and whether, that changes for opaque clumps, and how it scales with \(f_{\rm cl}\).
+The expected Thomson-kernel answer is \(\Sigma/Q\gtrsim1.2\times10^6\ {\rm g\,cm^{-2}}\). Revision 2: the novel content is
+- confirming that this carries over to opaque clumps (B);
+- how it scales with \(f_{\rm cl}\) (C);
+- above all, whether small-scale structure (E) or spectral distortions (F) require a much larger \(\Sigma_{\min}\) than the CMB anisotropies do. M3's linear half-mode mass of ~10¹⁴ M☉/h at the CMB bound suggests E will.
 
 ### Control
 
-Include explicitly \(f_{\rm cl}=1,\ u=0\). After optimisation it must be observationally equivalent to CDM. This demonstrates that the primary CMB is sensitive to density, pressure, sound speed, anisotropic stress, interactions and perturbation evolution, **not** to whether collisionless pressureless matter is baryonic. The baryonic nature of a compact object becomes visible only through additional microphysics, and Experiment B is exactly a test of such microphysics.
+Include explicitly \(f_{\rm cl}=1,\ u=0\). After optimisation it must be observationally equivalent to CDM. This demonstrates that the primary CMB is sensitive to density, pressure, sound speed, anisotropic stress, interactions and perturbation evolution, **not** to whether collisionless pressureless matter is baryonic. The baryonic nature of a compact object becomes visible only through additional microphysics. Experiments B (angular kernel) and F (energy exchange) test such microphysics directly.
 
 ---
 
@@ -499,6 +518,56 @@ u_{\rm cl}, & z<z_{\rm form},
 
 or more physically \(u(z)=268\,Q/\Sigma(z)\) for a collapsing proto-cloud, possibly with \(f_{\rm cl}(z)\). The model becomes \((f_{\rm cl},\Sigma_{\rm final},z_{\rm form})\). This requires further CLASS modification and should only be attempted after A–C are complete.
 
+*(Revision 2: D gains importance if E or F turn out to be binding. A cloud that forms or compacts late avoids early drag and early energy exchange, so \(z_{\rm form}\) could relax both.)*
+
+---
+
+## 11a. Experiment E: small-scale structure
+
+### Motivation
+
+- The drag suppresses clump perturbations on scales that enter the horizon before \(z_{\rm dec}\).
+- At the published CMB bound, M3 finds a linear half-mode mass of \(M_{\rm hm}\approx9\times10^{13}\,M_\odot/h\) and a 10% drop in σ₈. Structure below galaxy-cluster scale is strongly suppressed.
+- Galaxy-scale structure exists, so small-scale observables (the Lyman-α forest, Milky Way satellite counts, strong-lensing substructure) are likely to bound \(u\), and hence \(\Sigma\), orders of magnitude more tightly than the CMB.
+
+### Steps
+
+1. **E1 — Literature.** Find analyses that constrain **DM–photon** scattering with small-scale data (a Bœhm et al. 2014 Milky Way satellite analysis is a candidate to verify) and convert their bounds to \(u\). Do not substitute DM–baryon or DM–dark-radiation bounds.
+2. **E2 — Transfer-function mapping.** Extend P(k) to \(k\sim10^2\ h/{\rm Mpc}\): raise `P_k_max_h/Mpc` and re-check the high-k precision (M2b found ~10⁻³ noise in strongly damped tails). Compute \(T^2(k)\), \(k_{\rm hm}\) and \(M_{\rm hm}\) down to \(u\sim10^{-9}\).
+3. **E3 — Approximate bound.** Match \(k_{\rm hm}\) to thermal-relic warm dark matter and apply published WDM half-mode bounds (Lyman-α, satellites, lensing) as an **approximate** constraint on \(u\). State the approximation clearly: DM–photon transfer functions have damped oscillations and are not identical in shape to WDM.
+4. **E4 — Clump-specific checks.**
+   - The fluid approximation must hold at the half-mode scale (\(M_{\rm hm}/M_{\rm cl}\gg1\)).
+   - After decoupling the clumps behave as CDM, but they are baryons: note, without yet modelling them, any late-time effects (collisions, ram pressure) that would invalidate the CDM-like treatment on galactic scales.
+
+### Outputs
+
+- \(u_{\max}\) and \(\Sigma_{\min}/Q\) from small scales at \(f_{\rm cl}=1\), with the approximation stated.
+- Their dependence on \(f_{\rm cl}\), run on the Experiment C grid; mixed CDM + suppressed-component transfer functions weaken the bound at small \(f_{\rm cl}\).
+- A comparison figure: CMB versus small-scale \(\Sigma_{\min}\) against \(f_{\rm cl}\).
+
+---
+
+## 11b. Experiment F: energy exchange and spectral distortions
+
+### Motivation
+
+- **Thomson scattering is elastic** (energy-conserving to \(O(v^2)\)). An opaque clump **absorbs** photons and re-emits them at its own temperature, with its own emissivity spectrum.
+- **At early times photons interact with clumps many times per Hubble time.** M3 finds \(\Gamma_{\gamma\to{\rm cl}}/H=1\) at \(z\approx8\times10^5\) for \(u=10^{-4}\), inside the μ era (\(5\times10^4\lesssim z\lesssim2\times10^6\)).
+- **So any departure of the re-emitted spectrum from a blackbody at \(T_\gamma\) produces a spectral distortion.** Such departures include a clump temperature different from \(T_\gamma\), non-grey emissivity, or energy sources inside the clumps. FIRAS limits (\(|\mu|\lesssim9\times10^{-5}\), \(|y|\lesssim1.5\times10^{-5}\)) are strong, and future missions would improve them by orders of magnitude.
+- This channel has no analogue for elementary-particle dark matter.
+
+### Steps
+
+1. **F1 — Thermal equilibrium.** Estimate how tightly a clump's (surface) temperature is locked to \(T_\gamma\). Compare the radiative exchange time (heat capacity over \(\sigma_{\rm SB}T^4\) × area) with the Hubble time and the adiabatic-cooling mismatch between gas and radiation. Identify the regimes where \(T_{\rm cl}\neq T_\gamma\).
+2. **F2 — Energy-exchange budget.** Derive the fractional energy exchange \(\Delta\rho_\gamma/\rho_\gamma\) per Hubble time as a function of \(u\), \(T_{\rm cl}-T_\gamma\) and emissivity. Include the kinematic (clump bulk-velocity) contribution, which is \(O(\tau_{\rm cl}v^2)\) and y-type.
+3. **F3 — Distortion estimate.** Convert F2 into \(\mu\) and \(y\) with the standard distortion visibility functions. Where needed, use CLASS's spectral-distortions module with a custom heating rate. Compare with FIRAS and with a representative future mission.
+4. **F4 — Interpretation.** Which cloud properties (temperature offset, emissivity, internal heating) would be excluded, and does a pure blackbody clump at \(T_\gamma\) escape entirely? The latter is expected, which makes F a constraint on clump **microphysics** rather than on \(u\) alone.
+
+### Outputs
+
+- \(\mu(u,\ldots)\) and \(y(u,\ldots)\) estimates, and the region of cloud parameter space that FIRAS excludes.
+- A go/no-go on a full treatment. A full treatment would need a Boltzmann-level energy-exchange term and should not be started before F1–F3.
+
 ---
 
 ## 12. Explicitly excluded
@@ -508,18 +577,18 @@ The project does **not** establish that baryonic dark matter is viable. It does 
 - Big Bang nucleosynthesis;
 - the origin of baryon inhomogeneities;
 - cloud formation, cooling, ionisation or evaporation;
-- internal radiative transfer beyond the surface kernel of Experiment B;
+- internal radiative transfer beyond the surface kernel of Experiment B and the thermal estimates of Experiment F;
 - clump–clump collisions;
 - Poisson/shot-noise effects of rare massive objects;
 - microlensing or other gravitational-lensing limits;
 - Galactic dynamics;
-- spectral distortions and energy injection;
+- a full Boltzmann treatment of energy exchange (Experiment F is estimates first);
 - late-time gas-cloud observational constraints;
-- observational small-scale-structure constraints (Section 6.3 produces diagnostics only).
+- a full small-scale likelihood analysis (Experiment E uses literature bounds and half-mode matching).
 
 The conclusion should remain narrow:
 
-> **Assuming a pressureless compact component already exists before the relevant CMB epoch and exchanges momentum with photons with cross-section \(\sigma_{\rm mt}/M\) through a specified collision operator, CMB anisotropy data permit or exclude a region of \((f_{\rm cl},\sigma_{\rm mt}/M)\), equivalently \((f_{\rm cl},\Sigma/Q)\).**
+> **Assuming a pressureless compact component already exists before the relevant CMB epoch and exchanges momentum with photons with cross-section \(\sigma_{\rm mt}/M\) through a specified collision operator, CMB anisotropy data permit or exclude a region of \((f_{\rm cl},\sigma_{\rm mt}/M)\), equivalently \((f_{\rm cl},\Sigma/Q)\). Small-scale structure (approximately) and spectral distortions (by estimate) add further, clearly labelled, constraints on the same space and on clump microphysics.**
 
 ---
 
@@ -611,33 +680,39 @@ CLASS execution logic lives in normal Python scripts, not only in notebooks.
 
 **Definition of done (every milestone):** add an experiment-log entry, update `RESULTS.md` if any result or gate status changed, and add anything learned to `IMPLEMENTATION_NOTES.md` (Section 13).
 
-### M0 — Environment
+**Status and execution order (revision 2).** M0–M4 are done. Milestone IDs are kept stable because the logs refer to them. The execution order is now:
+
+**M6 (B, minimal) → M12 (E) → M13 (F) → M5 → M7 → M8 → M9 (C) → M10 → M11**
+
+The cheap B confirmation and the E/F estimates come before the heavy likelihood work, because they may change which constraint is the headline.
+
+### M0 — Environment ✅
 - Install a pinned CLASS (≥ v3.2) / `classy`; record the git commit.
 - Verify the standard example; freeze the Python environment.
 - Create `RESULTS.md`, `IMPLEMENTATION_NOTES.md` and `experiment_log/` with their templates.
 
-### M1 — Baseline
+### M1 — Baseline ✅
 - Run the reference \(\Lambda\)CDM model; save spectra, \(P(k)\) and the parameter dictionary.
 
-### M2 — Validation
+### M2 — Validation ✅ (M2a, M2b)
 - **M2a:** \(u=0\) IDM reproduces CDM.
 - **M2b:** `m_idm` scan reaches the cold-mass limit; fix `m_idm`. Set `n_index_idm_g = 0` explicitly.
 - (**M2c** is scheduled at M7.)
 
-### M3 — Experiment A scan
+### M3 — Experiment A scan ✅
 - \(f_{\rm cl}=1\), dense grid in \(10^{-5}\lesssim u\lesssim10^{-2}\) plus null checks.
 - Diagnostic plots, CLASS-native \(\Gamma/H\) rates, \(z_{\rm dec}\), small-scale diagnostics.
 
-### M4 — Physical mapping
+### M4 — Physical mapping ✅
 - Convert to \(\sigma/M\), \(\Sigma/Q\), \(z_{\rm dec}\), \(k_{1/2}\), \(M_{1/2}\).
 
 ### M5 — Approximate detectability
 - Cosmic-variance / covariance \(\Delta\chi^2\) relative to \(u=0\).
 
-### M6 — Experiment B kernels
-- Derive the B1–B3 kernel coefficients (angular redistribution + polarization).
-- Patch CLASS, including the tight-coupling treatment; verify that Thomson coefficients reproduce stock CLASS.
-- Compare TT/TE/EE between kernels at equal momentum-transfer \(u\).
+### M6 — Experiment B, minimal check (next)
+- Patch CLASS with two kernel coefficients, and handle tight coupling for B1. With Thomson values the patch must reproduce stock CLASS.
+- Compare B1 with Thomson at equal \(u\); isolate the low-ℓ EE contribution.
+- Verdict. Expand to the full B1–B3 programme only if B1 differs materially.
 
 ### M7 — Likelihood pipeline and published-bound reproduction
 - Integrate CLASS with Cobaya.
@@ -645,17 +720,30 @@ CLASS execution logic lives in normal Python scripts, not only in notebooks.
 
 ### M8 — Profile likelihoods
 - Fixed-cosmology \(\Delta\chi^2\) relative to \(u=0\).
-- Profile likelihood in \(u\) at \(f_{\rm cl}=1\), per kernel.
+- Profile likelihood in \(u\) at \(f_{\rm cl}=1\) (Thomson kernel; B1 only if M6 requires it).
 - Bayesian cross-check with linear/Jeffreys priors.
 
 ### M9 — Experiment C
 - \((f_{\rm cl},u)\) grid and profiles; degeneracy test in \(f_{\rm cl}u\).
 
 ### M10 — Principal result
-- Confidence regions in \((f_{\rm cl},\sigma_{\rm mt}/M)\) and \((f_{\rm cl},\Sigma/Q)\) per kernel; \(f_{\rm cl}=1\) limits on \(\Sigma\).
+- Confidence regions in \((f_{\rm cl},\sigma_{\rm mt}/M)\) and \((f_{\rm cl},\Sigma/Q)\); \(f_{\rm cl}=1\) limits on \(\Sigma\).
+- Overlay the small-scale (E) and spectral-distortion (F) constraints.
 
 ### M11 — Decision point
-Assess whether to proceed to Experiment D (redshift-dependent coupling, formation), recombination modifications, BBN, observational small-scale constraints for DM–photon coupling, or other astrophysical constraints.
+Assess whether to proceed to Experiment D (redshift-dependent coupling, formation), a full Boltzmann treatment of energy exchange (F), a full small-scale analysis (E), recombination modifications, BBN, or other astrophysical constraints.
+
+### M12 — Experiment E: small-scale structure
+- E1: literature DM–photon small-scale bounds, converted to \(u\).
+- E2: P(k) to \(k\sim10^2\ h/{\rm Mpc}\), with a precision check; \(k_{\rm hm}\), \(M_{\rm hm}\) down to \(u\sim10^{-9}\).
+- E3: approximate bound via WDM half-mode matching, approximation stated.
+- E4: fluid-approximation and baryonic-clump caveats.
+
+### M13 — Experiment F: energy exchange and spectral distortions
+- F1: clump thermal locking to \(T_\gamma\).
+- F2: energy-exchange budget against \(u\), \(T_{\rm cl}-T_\gamma\) and emissivity.
+- F3: μ and y estimates against FIRAS and a future mission.
+- F4: interpretation, and a go/no-go on a full treatment.
 
 ---
 
@@ -664,9 +752,10 @@ Assess whether to proceed to Experiment D (redshift-dependent coupling, formatio
 The CMB constrains how matter interacts, not what it is made of. Stock CLASS encodes that interaction with an elementary-particle (Thomson-like) collision operator. This project:
 
 1. reproduces the established DM–photon bound and translates it into a minimum clump surface density (\(\Sigma/Q\gtrsim10^6\ {\rm g\,cm^{-2}}\) expected);
-2. **tests whether an optically thick macroscopic object has the same CMB collision operator, and how the \(\Sigma\) bound changes if not**;
-3. maps the allowed \((f_{\rm cl},\Sigma/Q)\) space and tests the \(f_{\rm cl}u\) degeneracy;
-4. reports decoupling redshifts and small-scale suppression scales throughout;
-5. bases its main limits on profile likelihoods, avoiding prior-driven upper bounds.
+2. confirms, with a minimal kernel swap, that the bound depends on the momentum-transfer cross-section alone and so carries over to opaque clumps (M3 shows the CMB signal comes from drag, not photon scattering);
+3. **asks which observables distinguish opaque baryonic clumps and constrain them more tightly: small-scale structure (E) and spectral distortions from absorption and re-emission (F)**;
+4. maps the allowed \((f_{\rm cl},\Sigma/Q)\) space and tests the \(f_{\rm cl}u\) degeneracy;
+5. reports decoupling redshifts and small-scale suppression scales throughout;
+6. bases its main CMB limits on profile likelihoods, avoiding prior-driven upper bounds.
 
 Only after this should the project move on to cloud formation, early-universe baryon inhomogeneity, BBN, recombination microphysics and other astrophysical constraints.
