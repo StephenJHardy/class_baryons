@@ -10,7 +10,9 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
 
 - **With all dark matter in clumps (f_cl = 1), the CMB becomes sensitive at u ~ 10⁻⁵**, i.e. σ/M ~ 4×10⁻⁸ cm²/g or Σ/Q ~ 2×10⁷ g/cm², if measurements were limited only by full-sky cosmic variance (M3).
 - **Realistic forecasts (M5, Fisher, standard parameters free):**
-  - A Planck-like experiment gives **u < 1.1×10⁻⁴ (95%), Σ/Q > 2.4×10⁶ g/cm²**, a factor ~2 tighter than the published Planck bound u < 2.25×10⁻⁴ (Σ/Q ≳ 1.2×10⁶ g/cm²), as expected for an idealised forecast. Reproducing the published bound is M7.
+  - A Planck-like experiment gives **u < 1.1×10⁻⁴ (95%), Σ/Q > 2.4×10⁶ g/cm²**.
+  - The like-for-like published number is u < 1.58×10⁻⁴ (Planck 2015 TT,TE,EE + lowTEB; Stadler & Bœhm 2018, Table III), so the forecast agrees to within 20–30%.
+  - The often-quoted u < 2.25×10⁻⁴ (Σ/Q ≳ 1.2×10⁶ g/cm²) is their more conservative 2015 **TT + lowTEB** result, without high-ℓ polarization.
   - Simons Observatory + Planck would reach **u < 1.2×10⁻⁵ (Σ/Q > 2.2×10⁷ g/cm²)**, largely through lensing information in the damping tail.
   - The main degeneracies are with θ_s and ω_b.
 - **The CMB signal comes almost entirely from radiation *dragging the clumps* before z ~ 10⁴–10⁵, not from photons scattering off clumps.** At CMB-relevant couplings the clumps contribute ≲10⁻⁴ of the Thomson opacity before recombination and an optical depth τ_cl ≲ 10⁻³ after it. The observable effects are suppressed clump perturbations on small scales, weaker potentials (damping-tail TT/EE) and much less lensing.
@@ -28,7 +30,7 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
 | M2c reproduce published bound | ⏳ pending (at M7) | target u < 2.25×10⁻⁴ | — |
 | M3 coupling scan (f_cl = 1) | ✅ | ideal-CV onset u ≈ 1.1×10⁻⁵ | [log](experiment_log/2026-09-25_m3_m4_coupling_scan.md) |
 | M4 physical mapping | ✅ | table below | [log](experiment_log/2026-09-25_m3_m4_coupling_scan.md) |
-| M5 approximate detectability | ✅ | Planck-like Fisher u₉₅ = 1.1×10⁻⁴ (0.49 × published); SO + Planck 1.2×10⁻⁵ | [log](experiment_log/2026-09-26_m5_detectability.md) |
+| M5 approximate detectability | ✅ | Planck-like Fisher u₉₅ = 1.1–1.3×10⁻⁴, against 1.58×10⁻⁴ published for 2015 TT,TE,EE; SO + Planck 1.2×10⁻⁵ | [log](experiment_log/2026-09-26_m5_detectability.md) |
 | M6 Experiment B, minimal | ✅ | patched CLASS bit-identical to stock for Thomson; absorber shifts the u threshold by < 1% | [log](experiment_log/2026-09-26_m6_kernel_check.md) |
 | M12 Experiment E, small scales | ✅ | u ≲ 5×10⁻⁹ (Σ/Q ≳ 5×10¹⁰ g/cm²) via WDM half-mode matching; applies if clumps exist by z ~ 10⁷ | [log](experiment_log/2026-09-26_m12_small_scale.md) |
 | M13 Experiment F, energy exchange | ✅ (estimates) | passive clumps: μ ~ 2×10⁻⁸, y ~ 3×10⁻⁹ (≪ FIRAS); no-go on a full Boltzmann treatment; clump survival estimate recorded as a caveat on the premise | [log](experiment_log/2026-09-26_m13_energy_exchange.md) |
@@ -87,7 +89,8 @@ The full 33-point table is in [`results/scans/m3/summary.md`](../results/scans/m
 | **Planck-like** | 6.8×10⁻⁵ | 6.7×10⁻⁵ | **1.1×10⁻⁴** | **2.4×10⁶** |
 | Planck-like + φφ (CV-only envelope) | 3.1×10⁻⁵ | 3.4×10⁻⁵ | 5.6×10⁻⁵ | 4.8×10⁶ |
 | **SO LAT baseline + Planck** | 9.2×10⁻⁶ | 7.4×10⁻⁶ | **1.2×10⁻⁵** | **2.2×10⁷** |
-| *published Planck (Stadler & Bœhm)* | — | — | *2.25×10⁻⁴* | *1.2×10⁶* |
+| *published, Planck 2015 TT,TE,EE + lowTEB (Stadler & Bœhm)* | — | — | *1.58×10⁻⁴* | *1.7×10⁶* |
+| *published, Planck 2015 TT + lowTEB* | — | — | *2.25×10⁻⁴* | *1.2×10⁶* |
 
 **Noise specifications** (verified): Planck 2018 I (channels), the SO science-goals paper (the Planck-like set-up and SO LAT), with the Fisher set-up validated against Planck 2018 VI.
 

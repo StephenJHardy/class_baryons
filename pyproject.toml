@@ -9,10 +9,17 @@ dependencies = [
     "scipy",
     "matplotlib",
     "pyyaml",
+    "cobaya>=3.6.2",
+    "astropy>=8.0.1",
+    "py-bobyqa>=1.5.0",
 ]
 
 [dependency-groups]
-dev = ["ipykernel", "pytest"]
+dev = [
+    "ipykernel",
+    "pip>=26.2.1",
+    "pytest",
+]
 
 [tool.uv]
 package = false
