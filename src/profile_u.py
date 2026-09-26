@@ -153,6 +153,11 @@ def full_plik_check(us, seed=0):
 
 
 
+NUISANCE_COVMATS = {   # Planck supplementary covmats whose nuisance-parameter names match Cobaya's
+    "camspec_npipe": "base_planck_NPIPE_highl_CamSpec_TTTEEE_lowl_lowE.covmat",
+}
+
+
 def profile_generic(likelihoods, us, reference="plik", pinned=None, seed=0):
     """Full-likelihood profile for any likelihood set, seeded from an existing profile.
 
@@ -177,6 +182,16 @@ def profile_generic(likelihoods, us, reference="plik", pinned=None, seed=0):
         if names[i] not in rn:
             width = pinfo[names[i]].get("proposal") or (pinfo[names[i]].get("ref") or {}).get("scale", 1.0)
             cov[i, i] = float(width) ** 2
+    if likelihoods in NUISANCE_COVMATS:
+        # nuisance block (not A_planck, which the reference covariance already has) from Planck's covmat
+        path = f"{PACKAGES}/data/planck_supp_data_and_covmats/covmats/{NUISANCE_COVMATS[likelihoods]}"
+        with open(path) as fh:
+            pn = fh.readline().lstrip("#").split()
+        pc = np.loadtxt(path)
+        nuis = [n for n in names if n in pn and n not in rn]
+        for a in nuis:
+            for b in nuis:
+                cov[names.index(a), names.index(b)] = pc[pn.index(a), pn.index(b)]
 
     def ref_value(n):
         r = pinfo[n].get("ref")
@@ -193,7 +208,13 @@ def profile_generic(likelihoods, us, reference="plik", pinned=None, seed=0):
             continue
         seed_file = OUT / reference / "quadfit" / tag / "result.json"
         cosmo = json.load(open(seed_file))["best"] if seed_file.exists() else ref0["best"]
-        if previous is None:
+        coarse = OUT / likelihoods / f"coarse_start_u{u:.3e}.json"   # src/coarse_start.py
+        if previous is None and coarse.exists():
+            c0 = json.load(open(coarse))
+            start = {n: c0["best"][n] for n in names}
+            cov = np.array(c0["covariance"])
+            print(f"u = {u:g}: cold start from coarse BOBYQA minimum (-log P = {c0['minuslogpost']:.2f})", flush=True)
+        elif previous is None:
             start = {n: cosmo.get(n, ref_value(n)) for n in names}
         else:
             start = dict(previous["best"])

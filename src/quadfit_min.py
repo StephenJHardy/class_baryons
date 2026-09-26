@@ -104,11 +104,22 @@ def quadfit_minimise(info_dict, covmat_file, x0, scale=0.5, n_points=None, max_i
                 log(f"  WARNING: {100 * bad:.0f}% of evaluations failed (non-finite -log P)")
             return f
 
+        n_coef = 1 + d + d * (d + 1) // 2
         for it in range(max_iter + 1):
             final = False
-            zs = rng.normal(0, scale, size=(n_points, d))
-            f = evaluate(zs, centre)
-            ok = np.isfinite(f)
+            # sample; if the outlier cut would leave the fit underdetermined (the scale is far
+            # too wide for the posterior, e.g. a poor starting covariance), shrink and recentre
+            for _attempt in range(8):
+                zs = rng.normal(0, scale, size=(n_points, d))
+                f = evaluate(zs, centre)
+                ok = np.isfinite(f)
+                n_kept = int(np.sum(f[ok] < np.min(f[ok]) + 30.0))
+                if n_kept >= 1.5 * n_coef:
+                    break
+                best_i = np.argmin(np.where(ok, f, np.inf))
+                centre = centre + L @ zs[best_i]
+                scale /= 2
+                log(f"  only {n_kept} of {len(f)} points within 30 of the minimum: recentre, scale -> {scale:.3g}")
             c, g, A, noise, _ = fit_quadratic(zs[ok], f[ok])
             try:
                 step = -np.linalg.solve(A, g)
