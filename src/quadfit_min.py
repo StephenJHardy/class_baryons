@@ -70,23 +70,36 @@ def fit_quadratic(z, f):
 
 
 def quadfit_minimise(info_dict, covmat_file, x0, scale=0.5, n_points=None, max_iter=8,
-                     step_cap=2.0, tol_decrease=0.01, workers=4, threads_per_worker=4, seed=0, log=print,
-                     covmat=None):
+                     step_cap=2.0, tol_decrease=0.01, workers=None, threads_per_worker=None, seed=0, log=print,
+                     covmat=None, clean_step_cap=6.0, clean_noise=0.05, checkpoint=None):
     from cobaya.model import get_model
-    names = list(get_model(info_dict).parameterization.sampled_params())
+    probe = get_model(info_dict)
+    names = list(probe.parameterization.sampled_params())
+    bounds = np.array(probe.prior.bounds(confidence_for_unbounded=0.9999995))
+    probe.close()
     cov = np.array(covmat) if covmat is not None else load_covmat(covmat_file, names)
     L = np.linalg.cholesky(cov)
     d = len(names)
     n_points = n_points or 3 * (1 + d + d * (d + 1) // 2)
     rng = np.random.default_rng(seed)
     centre = np.array([x0[n] for n in names], dtype=float)
+    # QF_WORKERS x QF_THREADS should roughly equal the machine's vCPUs (default: 4 x 4 for 16 vCPUs)
+    workers = workers or int(os.environ.get("QF_WORKERS", 4))
+    threads_per_worker = threads_per_worker or int(os.environ.get("QF_THREADS", 4))
     os.environ["OMP_NUM_THREADS"] = str(threads_per_worker)
     history = []
     t0 = time.time()
     with ProcessPoolExecutor(workers, initializer=_init_worker, initargs=(info_dict,)) as pool:
         def evaluate(zs, c):
-            pts = [dict(zip(names, c + L @ z)) for z in zs]
-            return np.array(list(pool.map(_eval, pts)))
+            xs = np.array([c + L @ z for z in zs])
+            # keep sample points inside the prior box (hard priors would give -log P = inf)
+            margin = 1e-9 * (bounds[:, 1] - bounds[:, 0])
+            xs = np.clip(xs, bounds[:, 0] + margin, bounds[:, 1] - margin)
+            f = np.array(list(pool.map(_eval, [dict(zip(names, x)) for x in xs])))
+            bad = (~np.isfinite(f)).mean()
+            if bad > 0.05:
+                log(f"  WARNING: {100 * bad:.0f}% of evaluations failed (non-finite -log P)")
+            return f
 
         for it in range(max_iter + 1):
             final = False
@@ -99,8 +112,10 @@ def quadfit_minimise(info_dict, covmat_file, x0, scale=0.5, n_points=None, max_i
                 pos_def = bool(np.all(np.linalg.eigvalsh(A) > 0))
             except np.linalg.LinAlgError:
                 step, pos_def = -g, False
-            if not pos_def or np.linalg.norm(step) > step_cap:
-                step = step / max(np.linalg.norm(step), 1e-12) * min(step_cap, np.linalg.norm(step))
+            # trust region: a clean, positive-definite fit may take a longer step
+            cap = clean_step_cap if (pos_def and noise < clean_noise) else step_cap
+            if not pos_def or np.linalg.norm(step) > cap:
+                step = step / max(np.linalg.norm(step), 1e-12) * min(cap, np.linalg.norm(step))
             decrease = float(-0.5 * g @ step) if pos_def else np.inf
             history.append({"iteration": it, "min_f_sampled": float(f[ok].min()), "fit_c": float(c),
                             "predicted_decrease": decrease,
@@ -113,6 +128,11 @@ def quadfit_minimise(info_dict, covmat_file, x0, scale=0.5, n_points=None, max_i
                 # re-whiten with the fitted curvature: the true posterior covariance is L A^-1 L^T
                 cov = L @ np.linalg.inv(A) @ L.T
                 L = np.linalg.cholesky(0.5 * (cov + cov.T))
+            if checkpoint:
+                import json
+                with open(checkpoint, "w") as fh:
+                    json.dump({"names": names, "centre": centre.tolist(), "covariance": (L @ L.T).tolist(),
+                               "history": history}, fh)
             if pos_def and decrease < tol_decrease:
                 break
         # final, larger fit centred on the converged point

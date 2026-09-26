@@ -120,6 +120,17 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 - **Validation:** a noise-only low-ℓ EE gives σ(τ) about 2× tighter than Planck 2018; inflate the low-ℓ EE noise if τ matters. For u it doesn't (< 4%).
 - **Lensing:** lensed spectra carry most of the degeneracy-breaking power for u, especially for SO (3.7×). Never compare lensed and unlensed forecasts without saying which is which.
 
+## Real-data likelihoods (Cobaya + Planck 2018)
+
+- **Install.** `uv run cobaya-install <components> -p /media/stephen/astro/class_baryons/cobaya_packages --skip-global`. The full plik likelihood runs through **clipy** (Python clik), and Cobaya installs its prerequisites with `pip`. So `pip` must be present in the uv environment (a dev dependency here), and `astropy` too. Cobaya 3.6 ships **no Planck 2015 likelihoods**.
+- **Set-up.** `src/likelihood_setup.py` builds the Cobaya input from `configs/baseline.yaml`, so the M2–M5 precision settings are used as-is. Parameter names: `omega_dm` (split by lambda into `omega_cdm` and `omega_idm`), `theta_s_100` (CLASS θ_s, not θ_MC), `logA`.
+- **Speed.** One evaluation takes ≈ 1.1 s on 16 threads (lite or full). In the minimiser, 4 workers × 4 threads do ~1.4 evaluations per second in total.
+- **Noise.** The CLASS likelihood jumps by ~0.03 in −log L under tiny parameter changes (parameter-dependent sampling grids). **Don't use BOBYQA** for profiles: it stalls, and its restarts scatter by 1–2 in χ². Use `src/quadfit_min.py`, iterated least-squares quadratic fits, which reaches ±0.003.
+- **Scaling.** Planck's covmats use CosmoMC names (θ_MC, ω_cdm, and for nuisance parameters `aps143`, `kgal217`, `cal0`, ...). `src/profile_u.py` maps the nuisance names. For the cosmological block, use the covariance refined by a previous quadfit run, or the M5 Fisher matrix (`src/fisher_covmat.py`, off by up to 5× along τ–A_s).
+- **Boundary nuisance parameters.** `xi_sz_cib` (prior 0–1) and `ksz_norm` (0–10) have Cobaya reference value 0, exactly on the prior boundary. Sampling around them put 70% of points outside the prior and gave a silently underdetermined quadratic fit, reported as "residual noise 0.000". They are pinned at 0 for full-plik profiles (`PINNED_NUISANCE`). The minimiser now also clips points into the prior box and warns when > 5% of evaluations fail.
+- **Wall time.** Warm-started lite points take ~6 min. Full plik (25 free parameters, 1,053 points per iteration) takes ~27 min per iteration, several iterations from a cold nuisance start. The minimiser now takes longer steps when the fit is clean, and can checkpoint its state.
+- **Signs of trouble:** a residual noise of exactly 0 (underdetermined fit), steps stuck at the cap for many iterations (start too far away, or scaling badly off), or a Hessian that isn't positive definite.
+
 ## Distortion and thermal estimates (M13)
 
 - `src/m13_distortions.py` uses Chluba (2016) "Method C" visibility functions and FIRAS 95% limits; the constants and references are in the docstring. The background comes from CLASS, and cgs conversion of CLASS densities is ρ[g/cm³] = ρ_CLASS[Mpc⁻²]·3c²/(8πG)/Mpc².
@@ -129,7 +140,7 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 
 - **Peak finding.** Detect the peaks of D_ℓ independently in each model and match them by order. Tracking within a window around the ΛCDM peaks fails once shifts exceed the window (u ≳ 10⁻²). Strongly damped models can have fewer than 7 peaks below ℓ = 2500, so those are padded with NaN. Lensed peak 7 is poorly defined for u ≳ 5×10⁻⁴.
 - **Storage.** Don't store CLASS's full thermodynamics table (~10⁵ points) per model: that made one scan 385 MB. Scratch scans go under `results/scratch_*` (gitignored).
-- **Shell.** Never `pkill -f <pattern>` from a command whose own command line contains the pattern; it kills that shell too.
+- **Shell.** Never `pkill -f <pattern>` or `pgrep -f <pattern>` from a command whose own command line contains the pattern: it matches, and kills, that shell too. This happened three times. Find PIDs with `ps -eo pid,cmd | grep "[p]rofile_u.py"` (the bracket stops grep matching itself) and kill them explicitly.
 
 ## Dead ends
 

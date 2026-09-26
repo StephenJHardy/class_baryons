@@ -13,7 +13,10 @@ Likelihood sets (Planck 2018; installed with cobaya-install into
 
 from cosmology import load_config
 
-PACKAGES = "/media/stephen/astro/class_baryons/cobaya_packages"
+import os
+
+# Cobaya packages: local astro disk by default; override with COBAYA_PACKAGES_PATH (e.g. on a cloud VM).
+PACKAGES = os.environ.get("COBAYA_PACKAGES_PATH", "/media/stephen/astro/class_baryons/cobaya_packages")
 LIKELIHOODS = {
     "plik": ["planck_2018_lowl.TT", "planck_2018_lowl.EE", "planck_2018_highl_plik.TTTEEE"],
     "plik_lite": ["planck_2018_lowl.TT", "planck_2018_lowl.EE", "planck_2018_highl_plik.TTTEEE_lite_native"],
@@ -30,7 +33,8 @@ COSMO = {
 }
 
 
-def info(likelihoods="plik", u=0.0, f_cl=1.0, u_free=False, extra_classy=None, sampler=None, output=None):
+def info(likelihoods="plik", u=0.0, f_cl=1.0, u_free=False, extra_classy=None, sampler=None, output=None,
+         fixed_params=None):
     config = load_config()
     fixed = {k: v for k, v in config["cosmology"].items()
              if k not in ("omega_b", "omega_dm", "100*theta_s", "n_s", "ln10^{10}A_s", "tau_reio")}
@@ -60,6 +64,8 @@ def info(likelihoods="plik", u=0.0, f_cl=1.0, u_free=False, extra_classy=None, s
     params["sigma8"] = {"latex": r"\sigma_8"}
     if extra_classy:
         extra.update(extra_classy)
+    for name, value in (fixed_params or {}).items():   # e.g. pin boundary-hugging nuisance parameters
+        params[name] = value
     out = {
         "theory": {"classy": {"extra_args": extra}},
         "likelihood": {name: None for name in LIKELIHOODS[likelihoods]},
