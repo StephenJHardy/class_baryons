@@ -6,6 +6,8 @@
 
 The project answers a conditional question: *if* compact, pressureless clumps make up a fraction f_cl of the dark matter and already exist throughout the epochs that matter, what photon coupling (equivalently, what surface density Σ) leaves the observations unchanged? Whether such clumps can form or survive is a separate question, in the same category as Big Bang nucleosynthesis; it is covered under "Caveats on the premise" below.
 
+**Scope of the model.** Every limit here is conditional in a second sense as well. The clumps are the *only* departure from ΛCDM. Recombination is homogeneous, the diffuse baryons form a smooth linear fluid, there are no magnetic fields, and the initial conditions are adiabatic. So a limit reads "if clumps are the only new physics, a coupling above this worsens the Planck fit by Δχ² > 2.71". It is not a model-independent measurement of clump opacity. Physics that would plausibly accompany clump formation could move the limit in either direction; it is not modelled. The main candidates are small-scale clumping of the remaining gas, which changes recombination (Jedamzik & Saveliev 2019; Jedamzik, Pogosian & Abel 2025), primordial magnetic fields, and extra small-scale initial power. See "Caveats on the model" below and §6 of the [report](report/cmb_bound_report.pdf).
+
 **Experiment A (Thomson-like clumps, stock CLASS), with fixed cosmology and no real data yet:**
 
 - **With all dark matter in clumps (f_cl = 1), the CMB becomes sensitive at u ~ 10⁻⁵**, i.e. σ/M ~ 4×10⁻⁸ cm²/g or Σ/Q ~ 2×10⁷ g/cm², if measurements were limited only by full-sky cosmic variance (M3).
@@ -179,9 +181,27 @@ The results above are conditional on the clumps existing. Two independent lines 
   - This limits the clump *mass and density*, which the CMB and small-scale results don't constrain (they depend only on Σ). The two sets of results therefore complement each other rather than conflict. Taken together, they say that clumps satisfying the CMB must also be massive or dense enough to stay bound at the epochs in question.
   - The estimate treats a clump as uniform material at T_γ. A cold core that loses its heated outer layers by ablation would survive longer. See [the M13 log](experiment_log/2026-09-26_m13_energy_exchange.md).
 
+## Caveats on the model
+
+Separate from the premise (can the clumps exist?) is the question of whether the *rest* of the model would stay standard if they did. The calculation inserts clumps into an otherwise ΛCDM universe. A real clump population would come from large early baryon inhomogeneity, and that would probably also bring:
+
+- residual clumping of the diffuse gas;
+- a density-weighted recombination history, with Lyman-α transport between regions;
+- possibly primordial magnetic fields;
+- extra small-scale or isocurvature initial power;
+- a spread of clump masses and sizes, and a finite formation redshift.
+
+How this could interact with the limit:
+
+- The coupling is seen mainly as *less lensing and less small-scale growth*. Accompanying physics can relax the limit only by adding those back, or through the standard parameters.
+- u is most degenerate with θ_s and ω_b (M5), which recombination changes also move. So an interaction cannot be ruled out, and its sign is unknown.
+- The magnetic-field literature shows how to bring such physics into a precision fit. Small-scale simulations give effective inputs such as x_e(z); these go into CLASS and then the likelihood.
+
 ## Proposed plan changes
 
 *(Recommendations arising from the work. The plan itself is changed only with the user's agreement.)*
+
+- **Proposed (2026-09-26): a "layer 2" structural audit after the likelihood milestones.** The current work is layer 1, a clean conditional limit that isolates one effect. Layer 2 would take a specific formation scenario and quantify which standard assumptions it breaks (report Table 3): diffuse-gas clumping and recombination, magnetic fields, initial conditions, clump mass function and formation redshift, and the baryon budget. The question to ask is what physics *necessarily* accompanies the clumps, not what extra parameters would loosen the bound. A possible layer 3 would derive effective CLASS inputs from small-scale simulations of that scenario, as the primordial-magnetic-field work does.
 
 - **Withdrawn (2026-09-26, after discussion with the user):** the proposals below to promote Experiment D ahead of the likelihood work. Survival and formation stand alongside BBN as questions about the premise, and are left to the M11 decision point. The plan is updated accordingly (revision 3).
 - ~~**After M13:** reframe Experiment D around **clump survival and formation**. Minimal version, estimates first and no CLASS changes:

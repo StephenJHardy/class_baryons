@@ -21,13 +21,15 @@
 \maketitle
 
 \begin{abstract}
-We report the first real-data constraint from this project on the momentum coupling between the cosmic microwave background (CMB) photons and a population of compact, pressureless clumps that make up all of the dark matter. The coupling is expressed through the dimensionless interaction strength $u$ used by the \textsc{class} Boltzmann code, which maps directly onto the clump cross-section per unit mass and hence onto a minimum clump surface density. Profiling the likelihood over the six standard cosmological parameters and all instrumental and foreground nuisance parameters, the Planck 2018 temperature and polarization data give $u < 1.00\times10^{-4}$ at 95\% confidence, equivalent to $\sigma/M < 3.7\times10^{-7}\,\mathrm{cm^2\,g^{-1}}$ and a clump surface density $\Sigma/Q > 2.7\times10^{6}\,\mathrm{g\,cm^{-2}}$, where $Q$ is an order-unity momentum-transfer efficiency. The independent Planck PR4 (NPIPE) CamSpec high-$\ell$ likelihood gives a limit 17\% weaker, $u < 1.17\times10^{-4}$. At zero coupling the pipeline reproduces Planck's own $\Lambda$CDM fit, and the limits agree with a Fisher forecast made before any data were used. A Bayesian analysis with Markov chain Monte Carlo sampling is under way and will be added to this report.
+We report the first real-data constraint from this project on the momentum coupling between the cosmic microwave background (CMB) photons and a population of compact, pressureless clumps that make up all of the dark matter. The coupling is expressed through the dimensionless interaction strength $u$ used by the \textsc{class} Boltzmann code, which maps directly onto the clump cross-section per unit mass and hence onto a minimum clump surface density. Profiling the likelihood over the six standard cosmological parameters and all instrumental and foreground nuisance parameters, the Planck 2018 temperature and polarization data give $u < 1.00\times10^{-4}$ at 95\% confidence, equivalent to $\sigma/M < 3.7\times10^{-7}\,\mathrm{cm^2\,g^{-1}}$ and a clump surface density $\Sigma/Q > 2.7\times10^{6}\,\mathrm{g\,cm^{-2}}$, where $Q$ is an order-unity momentum-transfer efficiency. The independent Planck PR4 (NPIPE) CamSpec high-$\ell$ likelihood gives a limit 17\% weaker, $u < 1.17\times10^{-4}$. At zero coupling the pipeline reproduces Planck's own $\Lambda$CDM fit, and the limits agree with a Fisher forecast made before any data were used. These numbers are conditional on a specific and deliberately narrow model, in which the clumps are added to an otherwise standard $\Lambda$CDM universe with homogeneous recombination, a smooth diffuse baryon fluid and adiabatic initial conditions. Physics that would plausibly accompany the formation of such clumps, such as small-scale inhomogeneity in the remaining gas or primordial magnetic fields, is not included and could move the limit in either direction. A Bayesian analysis with Markov chain Monte Carlo sampling is under way and will be added to this report.
 \end{abstract}
 
 \section{The question}
 \label{sec:question}
 
 The project asks a conditional question. If a fraction $f_\cl$ of the dark matter were in compact, pressureless clumps of ordinary matter that exchange momentum with the radiation field through an effective cross-section $\sigma$, how large could the cross-section per unit mass $\sigma/M$ be before the CMB anisotropies record the interaction? Whether such clumps can form, survive and be reconciled with Big Bang nucleosynthesis is a separate question about the premise, which we set aside here. A longer explainer covering the physics from first principles accompanies this report; the present document concentrates on the likelihood analysis and its result.
+
+It is worth being explicit about what kind of statement the answer is. A likelihood analysis with \textsc{class} does not ask which universes could produce the observed sky; it asks which parameter values within one family of dynamical models do so. The family used here is $\Lambda$CDM, with its homogeneous recombination, linear perturbations of a smooth baryon fluid, standard atomic and neutrino physics, and adiabatic, nearly scale-invariant initial conditions, extended by a single new ingredient: a pressureless component that feels a drag force from the radiation. The limit on $u$ is therefore a statement of the form ``if the clumps are the only departure from $\Lambda$CDM, a coupling larger than this worsens the fit to Planck by more than $\dchi = 2.71$''. It is not a model-independent measurement of the opacity of baryonic clumps. Section~\ref{sec:scope} discusses which of the fixed assumptions a real clump population might violate, and what is known about how relaxing them changes the CMB.
 
 Following \citet{StadlerBoehm2018} and the interacting dark matter module of \textsc{class} \citep{Lesgourgues2011,Becker2021}, the interaction is described by
 \begin{equation}
@@ -144,7 +146,35 @@ Several features of the analysis give us confidence in the headline number. The 
 
 The shape of the profile deserves comment. If the spectra responded linearly to $u$ and the data were exactly those of the best-fitting $\Lambda$CDM model, $\dchi$ would rise quadratically, as the Fisher curve in Figure~\ref{fig:profiles} does. Instead it rises almost linearly from $u = 0$ and becomes gradually steeper. Two effects can produce this. The first is that the response of the spectra to $u$ is sublinear, which was already noticed in the Fisher calculation, where the derived sensitivity changed by a few per cent with the size of the finite-difference step. The second is that the data prefer the direction opposite to the one in which $u$ pushes the model, which is to say towards more lensing than $\Lambda$CDM predicts. The Planck 2018 spectra are known to show such a preference, with a phenomenological lensing amplitude $A_L = 1.18 \pm 0.07$ where unity is expected \citep{Planck2018VI}, while the PR4 CamSpec spectra show a much weaker one, $A_L \approx 1.04$ \citep{Rosenberg2022}. The initial slope of the CamSpec profile is about 20\% lower than that of \textsc{plik}, which is what the second explanation would lead one to expect. If this is the explanation, the \textsc{plik} limit is somewhat tighter than the sensitivity of the data would suggest, because a statistical fluctuation towards extra lensing counts against the clumps, and the CamSpec number is the more conservative of the two. Independent support for this interpretation comes from \citet{Zhou2022}, whose limit weakens from $1.55$ to $1.90\times10^{-4}$ when the Planck lensing reconstruction is added, since the reconstruction measures a lensing amplitude close to the $\Lambda$CDM value and so removes part of the pull that the power spectra exert against the coupling. A direct test would be to repeat the profile on simulated data generated from the best-fitting $\Lambda$CDM model, which isolates the sensitivity from the fluctuation, or to free $A_L$ alongside $u$.
 
-The result also rests on assumptions that are separate from the numerics. All the dark matter is taken to be in clumps. For a smaller clumped fraction only part of the matter is dragged, so the limit on $u$ weakens, but how quickly it does so has not yet been computed with the likelihood. The Planck lensing reconstruction is not included. Lensing is the main channel through which the coupling is seen, so one might expect the reconstruction to tighten the limit, but the published analysis of \citet{Zhou2022} found the opposite, a weakening of about 20\%, for the reason discussed above. We expect a similar effect here, which would move the \textsc{plik} limit towards the CamSpec value. Finally, the analysis answers the conditional question posed in Section~\ref{sec:question}: it says what the CMB permits if clumps exist throughout the acoustic epoch, and it is silent on whether they can.
+The result also rests on assumptions that are separate from the numerics. All the dark matter is taken to be in clumps. For a smaller clumped fraction only part of the matter is dragged, so the limit on $u$ weakens, but how quickly it does so has not yet been computed with the likelihood. The Planck lensing reconstruction is not included. Lensing is the main channel through which the coupling is seen, so one might expect the reconstruction to tighten the limit, but the published analysis of \citet{Zhou2022} found the opposite, a weakening of about 20\%, for the reason discussed above. We expect a similar effect here, which would move the \textsc{plik} limit towards the CamSpec value. 
+\section{Scope of the result: what the model leaves out}
+\label{sec:scope}
+
+The robustness checks above test the calculation within its model. A separate question is how much the answer depends on the model itself, and here the honest position is that the limit applies to a highly specialised scenario. The clumps are inserted into an otherwise standard universe, and everything else about the baryons, recombination and the initial conditions is held at its $\Lambda$CDM form. If compact baryonic clumps really made up the dark matter, they would have to form from large, early departures from homogeneity in the baryons, and it is unlikely that such a process would leave the rest of the baryonic physics untouched. The more useful question for the next stage is therefore not which arbitrary extra parameters could loosen the bound, but what additional early-universe physics necessarily accompanies the existence of the clumps, and how that physics changes the CMB.
+
+\begin{table}[t]
+\centering
+\caption{Assumptions fixed in the present calculation, and how a population of early compact baryonic clumps might violate them.}
+\label{tab:assumptions}
+\begin{tabular}{p{0.2\textwidth}p{0.3\textwidth}p{0.4\textwidth}}
+\toprule
+Ingredient & Present model & Possible departure in a clump cosmology \\
+\midrule
+Diffuse baryons & smooth fluid, linear perturbations & residual small-scale clumping of the gas that did not end up in compact objects \\
+Recombination & homogeneous, $x_e(z)$ from the mean density & density-weighted, $\langle x_e(\rho_b)\rangle$, altered by clumping and by Lyman-$\alpha$ transport between regions \\
+Magnetic fields & none & primordial fields as a formation seed, with Lorentz forces and stresses \\
+Initial conditions & adiabatic, power law & extra small-scale power or isocurvature modes from the seeding process \\
+Clumps & pressureless, point-like, fixed $\sigma/M$, present throughout & mass and size distributions, formation at a finite redshift, evolution of $\sigma/M$ \\
+Baryon budget & $\omega_b$ from the CMB equals the BBN value & compact baryons are counted as dark matter by the CMB, in tension with BBN unless formed very early \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:assumptions} lists the main candidates. The first two rows have been studied in depth for reasons unrelated to dark matter. Recombination depends on the square of the density, so unresolved small-scale inhomogeneity in the baryons changes the mean ionization history even when it is invisible as a resolved perturbation. \citet{JedamzikSaveliev2019} showed that primordial magnetic fields generate exactly this kind of clumping and used it to limit the field strength. Phenomenological descriptions of clumping, with a few zones of different density, have been fitted to the CMB \citep{Rashkovetskyi2021,Thiele2021}, and the effects are large enough to be tested. More recently, magnetohydrodynamic simulations coupled to recombination and Lyman-$\alpha$ radiative transfer have derived the ionization history from the field statistics instead of assuming a clumping law \citep{Jedamzik2023}, and fits of the resulting model to Planck, baryon acoustic oscillation and supernova data are at least as good as those of $\Lambda$CDM while favouring a different region of parameter space \citep{Jedamzik2025}. These studies show that richer, physically coupled small-scale baryon physics can change which cosmologies fit Planck, and they also show the route by which such physics can be brought into a precision analysis. The small-scale calculation produces effective quantities such as the ionization history, and these are fed into the Boltzmann code, which is then compared with the likelihood.
+
+Two points limit how far this freedom extends. First, the Planck data are heavily overdetermined, with temperature and polarization spectra over thousands of multipoles as well as lensing, and modifications that repair one feature commonly spoil the damping tail, the polarization phases or the matter power spectrum elsewhere; the clumping studies above found exactly this kind of restriction. Second, the coupling studied here is seen mainly as a suppression of small-scale growth and hence of lensing. Accompanying physics can only relax the limit by adding back lensing or small-scale growth, or by moving the standard parameters in a way that compensates. A modified recombination history does not add lensing, but it does change the damping tail and the sound horizon, and the Fisher analysis found the coupling to be most degenerate with $\theta_s$ and $\omega_b$, so an interaction between the two effects through the standard parameters cannot be ruled out. Whether the net effect of a self-consistent clump cosmology is to loosen or to tighten the limit is unknown, and cannot be established without a model of how the clumps form.
+
+For these reasons we regard the present result as the first layer of the analysis: a clean, conditional limit in which a single effect is isolated. A second layer would audit the rows of Table~\ref{tab:assumptions} quantitatively for a physically specified formation scenario, and a third would derive the effective inputs to the Boltzmann calculation from small-scale simulations of that scenario, in the manner of the magnetic-field work.
 
 \section{Bayesian analysis (in progress)}
 \label{sec:mcmc}
@@ -153,7 +183,7 @@ A Markov chain Monte Carlo analysis with the same PR4 CamSpec and low-$\ell$ lik
 
 \section{Summary}
 
-Treating all of the dark matter as compact clumps coupled to the photons through a geometric cross-section, the Planck 2018 temperature and polarization spectra require the coupling to satisfy $u < 1.0\times10^{-4}$ at 95\% confidence, or equivalently a clump surface density $\Sigma/Q > 2.7\times10^{6}\,\mathrm{g\,cm^{-2}}$. The final Planck processing gives a limit 17\% weaker, and the difference between the two likelihoods is consistent with the known difference in their preference for extra lensing. The limit agrees with an advance forecast and is tighter than the published marginalised limits from the 2015 and 2018 data, as a profile limit on a parameter with a physical boundary is expected to be. The application of the particle bound to macroscopic dark matter was first made by \citet{Jacobs2015}; what this analysis adds is a dedicated treatment of opaque clumps with current likelihoods. The main open items are the Bayesian limit, a test of how much the Planck lensing excess tightens the bound, and the extension to populations in which only part of the dark matter is clumped.
+If all of the dark matter were in compact clumps coupled to the photons through a geometric cross-section, and nothing else departed from $\Lambda$CDM, the Planck 2018 temperature and polarization spectra require the coupling to satisfy $u < 1.0\times10^{-4}$ at 95\% confidence, or equivalently a clump surface density $\Sigma/Q > 2.7\times10^{6}\,\mathrm{g\,cm^{-2}}$. The final Planck processing gives a limit 17\% weaker, and the difference between the two likelihoods is consistent with the known difference in their preference for extra lensing. The limit agrees with an advance forecast and is tighter than the published marginalised limits from the 2015 and 2018 data, as a profile limit on a parameter with a physical boundary is expected to be. The application of the particle bound to macroscopic dark matter was first made by \citet{Jacobs2015}; what this analysis adds is a dedicated treatment of opaque clumps with current likelihoods. The limit is conditional on that narrow model, and physics that plausibly accompanies clump formation, notably small-scale inhomogeneity of the remaining gas and its effect on recombination, is not included. The main open items are the Bayesian limit, a test of how much the Planck lensing excess tightens the bound, the extension to populations in which only part of the dark matter is clumped, and an audit of which standard assumptions a specific formation scenario would violate.
 
 \begin{thebibliography}{99}
 
@@ -172,6 +202,15 @@ Diacoumis J.~A.~D., Wong Y.~Y.~Y., 2019, \emph{On the prior dependence of cosmol
 \bibitem[Jacobs et~al.(2015)]{Jacobs2015}
 Jacobs D.~M., Starkman G.~D., Lynn B.~W., 2015, \emph{Macro dark matter}, MNRAS 450, 3418.
 
+\bibitem[Jedamzik \& Saveliev(2019)]{JedamzikSaveliev2019}
+Jedamzik K., Saveliev A., 2019, \emph{Stringent limit on primordial magnetic fields from the cosmic microwave background radiation}, Phys.\ Rev.\ Lett.\ 123, 021301.
+
+\bibitem[Jedamzik et~al.(2023)]{Jedamzik2023}
+Jedamzik K., Abel T., Ali-Ha\"imoud Y., 2023, \emph{Cosmic recombination in the presence of primordial magnetic fields}, arXiv:2312.11448.
+
+\bibitem[Jedamzik et~al.(2025)]{Jedamzik2025}
+Jedamzik K., Pogosian L., Abel T., 2025, \emph{Hints of primordial magnetic fields at recombination and implications for the Hubble tension}, Nature Astronomy, arXiv:2503.09599.
+
 \bibitem[Lesgourgues(2011)]{Lesgourgues2011}
 Lesgourgues J., 2011, \emph{The Cosmic Linear Anisotropy Solving System (CLASS) I: overview}, arXiv:1104.2932.
 
@@ -184,11 +223,17 @@ Planck Collaboration (Aghanim N. et~al.), 2020a, \emph{Planck 2018 results. V. C
 \bibitem[Planck Collaboration(2020b)]{Planck2018VI}
 Planck Collaboration (Aghanim N. et~al.), 2020b, \emph{Planck 2018 results. VI. Cosmological parameters}, A\&A 641, A6.
 
+\bibitem[Rashkovetskyi et~al.(2021)]{Rashkovetskyi2021}
+Rashkovetskyi M., Mu\~noz J.~B., Eisenstein D.~J., Dvorkin C., 2021, \emph{Small-scale clumping at recombination and the Hubble tension}, Phys.\ Rev.\ D 104, 103517.
+
 \bibitem[Rosenberg et~al.(2022)]{Rosenberg2022}
 Rosenberg E., Gratton S., Efstathiou G., 2022, \emph{CMB power spectra and cosmological parameters from Planck PR4 with CamSpec}, MNRAS 517, 4620.
 
 \bibitem[Stadler \& Boehm(2018)]{StadlerBoehm2018}
 Stadler J., Boehm C., 2018, \emph{Constraints on $\gamma$-CDM interactions matching the Planck data precision}, JCAP 10, 009.
+
+\bibitem[Thiele et~al.(2021)]{Thiele2021}
+Thiele L., Guan Y., Hill J.~C., Kosowsky A., Spergel D.~N., 2021, \emph{Can small-scale baryon inhomogeneities resolve the Hubble tension? An investigation with ACT DR4}, Phys.\ Rev.\ D 104, 063535.
 
 \bibitem[Torrado \& Lewis(2021)]{TorradoLewis2021}
 Torrado J., Lewis A., 2021, \emph{Cobaya: code for Bayesian analysis of hierarchical physical models}, JCAP 05, 057.
