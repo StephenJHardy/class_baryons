@@ -3,7 +3,7 @@
 # Usage on the VM:  bash bootstrap_vm.sh   (then run jobs with QF_WORKERS/QF_THREADS set)
 set -euo pipefail
 sudo apt-get update -q
-sudo apt-get install -y -q build-essential gfortran git curl rsync
+sudo apt-get install -y -q build-essential gfortran git curl rsync python3-dev
 command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
 [ -d class_baryons ] || git clone https://github.com/StephenJHardy/class_baryons.git
