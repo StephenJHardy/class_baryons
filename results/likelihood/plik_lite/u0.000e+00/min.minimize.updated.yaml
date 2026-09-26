@@ -1,0 +1,223 @@
+theory:
+  classy:
+    path: null
+    speed: 0.2
+    stop_at_error: false
+    extra_args:
+      N_ur: 2.0328
+      N_ncdm: 1
+      m_ncdm: 0.06
+      YHe: BBN
+      thermo_Nz_lin: 80000
+      thermo_Nz_log: 20000
+      start_small_k_at_tau_c_over_tau_h: 0.00015
+      start_large_k_at_tau_h_over_tau_k: 0.007
+      l_linstep: 20
+      non_linear: none
+      m_idm: 1.0e+27
+      u_idm_g: 0.0
+    ignore_obsolete: false
+    renames:
+      As: A_s
+      ns: n_s
+      nrun: alpha_s
+      nrunrun: beta_s
+      nt: n_t
+      ntrun: alpha_t
+      rdrag: rs_drag
+      omegak: Omega_k
+      omegal: Omega_Lambda
+      w: w0_fld
+      wa: wa_fld
+      omegabh2: omega_b
+      omegab: Omega_b
+      omegach2: omega_cdm
+      omegac: Omega_cdm
+      omegam: Omega_m
+      omegan: Omega_nu
+      tau: tau_reio
+      zrei: z_reio
+      deltazrei: reionization_width
+      helium_redshift: helium_fullreio_redshift
+      helium_delta_redshift: helium_fullreio_width
+      yhe: YHe
+      yheused: YHe
+    version: v3.4.0
+    input_params:
+    - omega_b
+    - n_s
+    - tau_reio
+    - A_s
+    - 100*theta_s
+    - omega_cdm
+    - omega_idm
+    output_params:
+    - H0
+    - sigma8
+likelihood:
+  planck_2018_lowl.TT:
+    lmin: 2
+    lmax: 29
+    type: CMB
+    aliases:
+    - lowT
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    output_params: []
+  planck_2018_lowl.EE:
+    type: CMB
+    aliases:
+    - lowE
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    output_params: []
+  planck_2018_highl_plik.TTTEEE_lite_native:
+    path: null
+    dataset_file: plik_lite_v22.dataset
+    dataset_params:
+      use_cl: tt te ee
+    aliases:
+    - plikHM_TTTEEE
+    speed: 200
+    type: CMB
+    stop_at_error: false
+    version: null
+    input_params:
+    - A_planck
+    output_params: []
+params:
+  omega_b:
+    prior:
+      min: 0.019
+      max: 0.026
+    ref:
+      dist: norm
+      loc: 0.02237
+      scale: 0.00015
+    proposal: 0.00015
+    latex: \omega_b
+    renames:
+    - omegabh2
+  omega_dm:
+    prior:
+      min: 0.09
+      max: 0.15
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.0012
+    proposal: 0.0012
+    latex: \omega_{\rm dm}
+    drop: true
+  theta_s_100:
+    prior:
+      min: 1.03
+      max: 1.05
+    ref:
+      dist: norm
+      loc: 1.0419
+      scale: 0.0003
+    proposal: 0.0003
+    latex: 100\theta_s
+    drop: true
+  n_s:
+    prior:
+      min: 0.9
+      max: 1.03
+    ref:
+      dist: norm
+      loc: 0.9649
+      scale: 0.004
+    proposal: 0.004
+    latex: n_s
+    renames:
+    - ns
+  logA:
+    prior:
+      min: 2.8
+      max: 3.3
+    ref:
+      dist: norm
+      loc: 3.044
+      scale: 0.014
+    proposal: 0.014
+    latex: \ln 10^{10}A_s
+    drop: true
+  tau_reio:
+    prior:
+      min: 0.01
+      max: 0.12
+    ref:
+      dist: norm
+      loc: 0.0544
+      scale: 0.007
+    proposal: 0.007
+    latex: \tau
+    renames:
+    - tau
+  A_s:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    latex: A_s
+    derived: true
+    renames:
+    - As
+  100*theta_s:
+    value: 'lambda theta_s_100: theta_s_100'
+    derived: false
+  omega_cdm:
+    value: 'lambda omega_dm: 0.0*omega_dm'
+    derived: false
+    renames:
+    - omegach2
+  omega_idm:
+    value: 'lambda omega_dm: 1.0*omega_dm'
+    derived: false
+  H0:
+    latex: H_0
+    derived: true
+  sigma8:
+    latex: \sigma_8
+    derived: true
+  A_planck:
+    prior:
+      dist: norm
+      loc: 1
+      scale: 0.0025
+    ref:
+      dist: norm
+      loc: 1
+      scale: 0.002
+    proposal: 0.0005
+    latex: y_\mathrm{cal}
+    renames: calPlanck
+  chi2__CMB:
+    latex: \chi^2_\mathrm{CMB}
+    derived: true
+sampler:
+  minimize:
+    method: bobyqa
+    ignore_prior: false
+    max_evals: 1e6d
+    best_of: 4
+    confidence_for_unbounded: 0.9999995
+    seed: null
+    override_scipy: null
+    override_bobyqa:
+      rhoend: 0.005
+      maxfun: 4000
+      objfun_has_noise: true
+    override_iminuit: null
+    covmat: /home/stephen/checkouts/class_baryons/results/likelihood/fisher_planck_like_u_fixed.covmat
+    covmat_params: null
+    version: null
+    supports_periodic_params: false
+    fallback_covmat_scale: 4
+packages_path: /media/stephen/astro/class_baryons/cobaya_packages
+output: min
+version: 3.6.2

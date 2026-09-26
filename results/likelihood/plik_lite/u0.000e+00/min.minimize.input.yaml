@@ -1,0 +1,111 @@
+theory:
+  classy:
+    extra_args:
+      N_ur: 2.0328
+      N_ncdm: 1
+      m_ncdm: 0.06
+      YHe: BBN
+      thermo_Nz_lin: 80000
+      thermo_Nz_log: 20000
+      start_small_k_at_tau_c_over_tau_h: 0.00015
+      start_large_k_at_tau_h_over_tau_k: 0.007
+      l_linstep: 20
+      non_linear: none
+      m_idm: 1.0e+27
+      u_idm_g: 0.0
+likelihood:
+  planck_2018_lowl.TT: null
+  planck_2018_lowl.EE: null
+  planck_2018_highl_plik.TTTEEE_lite_native: null
+params:
+  omega_b:
+    prior:
+      min: 0.019
+      max: 0.026
+    ref:
+      dist: norm
+      loc: 0.02237
+      scale: 0.00015
+    proposal: 0.00015
+    latex: \omega_b
+  omega_dm:
+    prior:
+      min: 0.09
+      max: 0.15
+    ref:
+      dist: norm
+      loc: 0.12
+      scale: 0.0012
+    proposal: 0.0012
+    latex: \omega_{\rm dm}
+    drop: true
+  theta_s_100:
+    prior:
+      min: 1.03
+      max: 1.05
+    ref:
+      dist: norm
+      loc: 1.0419
+      scale: 0.0003
+    proposal: 0.0003
+    latex: 100\theta_s
+    drop: true
+  n_s:
+    prior:
+      min: 0.9
+      max: 1.03
+    ref:
+      dist: norm
+      loc: 0.9649
+      scale: 0.004
+    proposal: 0.004
+    latex: n_s
+  logA:
+    prior:
+      min: 2.8
+      max: 3.3
+    ref:
+      dist: norm
+      loc: 3.044
+      scale: 0.014
+    proposal: 0.014
+    latex: \ln 10^{10}A_s
+    drop: true
+  tau_reio:
+    prior:
+      min: 0.01
+      max: 0.12
+    ref:
+      dist: norm
+      loc: 0.0544
+      scale: 0.007
+    proposal: 0.007
+    latex: \tau
+  A_s:
+    value: 'lambda logA: 1e-10*np.exp(logA)'
+    latex: A_s
+  100*theta_s:
+    value: 'lambda theta_s_100: theta_s_100'
+    derived: false
+  omega_cdm:
+    value: 'lambda omega_dm: 0.0*omega_dm'
+    derived: false
+  omega_idm:
+    value: 'lambda omega_dm: 1.0*omega_dm'
+    derived: false
+  H0:
+    latex: H_0
+  sigma8:
+    latex: \sigma_8
+sampler:
+  minimize:
+    method: bobyqa
+    best_of: 4
+    confidence_for_unbounded: 0.9999995
+    covmat: /home/stephen/checkouts/class_baryons/results/likelihood/fisher_planck_like_u_fixed.covmat
+    override_bobyqa:
+      rhoend: 0.005
+      maxfun: 4000
+      objfun_has_noise: true
+packages_path: /media/stephen/astro/class_baryons/cobaya_packages
+output: min

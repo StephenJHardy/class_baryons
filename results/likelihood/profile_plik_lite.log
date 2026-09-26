@@ -1,0 +1,72 @@
+u = 0
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 1.349 sigma, residual noise 0.015, min sampled 480.571
+  iter 1: fitted min at |step| = 0.063 sigma, residual noise 0.014, min sampled 480.478
+  -> -log P = 480.382 +- 0.003 (432 evaluations, 319 s)
+u = 2e-05
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 0.482 sigma, residual noise 0.015, min sampled 480.777
+  iter 1: fitted min at |step| = 0.018 sigma, residual noise 0.014, min sampled 480.753
+  -> -log P = 480.661 +- 0.003 (432 evaluations, 334 s)
+u = 5e-05
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 0.666 sigma, residual noise 0.014, min sampled 481.231
+  iter 1: fitted min at |step| = 0.014 sigma, residual noise 0.014, min sampled 481.130
+  -> -log P = 481.060 +- 0.003 (432 evaluations, 338 s)
+u = 0.0001
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 1.067 sigma, residual noise 0.016, min sampled 482.104
+  iter 1: fitted min at |step| = 0.038 sigma, residual noise 0.015, min sampled 481.868
+  -> -log P = 481.763 +- 0.002 (432 evaluations, 348 s)
+u = 0.00015
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 1.032 sigma, residual noise 0.015, min sampled 482.851
+  iter 1: fitted min at |step| = 0.012 sigma, residual noise 0.016, min sampled 482.605
+  -> -log P = 482.533 +- 0.003 (432 evaluations, 350 s)
+u = 0.0002
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 1.017 sigma, residual noise 0.014, min sampled 483.745
+  iter 1: fitted min at |step| = 0.043 sigma, residual noise 0.014, min sampled 483.495
+  -> -log P = 483.400 +- 0.002 (432 evaluations, 352 s)
+u = 0.0003
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 2.000 sigma, residual noise 0.014, min sampled 486.048
+  iter 1: fitted min at |step| = 0.059 sigma, residual noise 0.015, min sampled 485.542
+  -> -log P = 485.471 +- 0.002 (432 evaluations, 354 s)
+u = 0.0004
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+[classy] `classy` module loaded successfully from /home/stephen/checkouts/class_baryons/.venv/lib/python3.12/site-packages/classy
+  iter 0: fitted min at |step| = 2.000 sigma, residual noise 0.014, min sampled 488.644
+  iter 1: fitted min at |step| = 0.099 sigma, residual noise 0.013, min sampled 488.162
+  -> -log P = 488.053 +- 0.002 (432 evaluations, 355 s)
