@@ -2,6 +2,8 @@
 # Keep N resumable Cobaya MCMC chains running on a spot VM: restart the VM after preemption,
 # relaunch any chain that is not running (Cobaya resumes from its output), rsync results back.
 # Exits when every chain's log reports convergence.
+# The running-chain check skips shell processes: the remote bash -c command line itself
+# contains the chain's command text and would otherwise always match.
 # Usage: scripts/vm_mcmc_watchdog.sh <instance> <zone> <likelihoods> <n_chains> <threads_per_chain>
 set -uo pipefail
 INST=$1; ZONE=$2; LIKE=$3; N=$4; THREADS=$5
@@ -11,7 +13,7 @@ cd "$(dirname "$0")/.."
 launch_missing() {
   for i in $(seq 0 $((N - 1))); do
     ssh -n -o ConnectTimeout=15 "$HOST" "cd ~/class_baryons && \
-      if ! ps -eo cmd | grep -q '[p]ython src/mcmc_run.py $i $LIKE'; then \
+      if ! ps -eo comm=,args= | grep -Ev '^(bash|sh|ssh) ' | grep -q '[p]ython src/mcmc_run.py $i $LIKE\$'; then \
         if ! grep -q 'has converged' results/mcmc/$LIKE/log_chain_$i.txt 2>/dev/null; then \
           export PATH=\$HOME/.local/bin:\$PATH COBAYA_PACKAGES_PATH=\$HOME/cobaya_packages OMP_NUM_THREADS=$THREADS \
                  OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1; mkdir -p results/mcmc/$LIKE; \
