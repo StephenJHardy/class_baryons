@@ -21,7 +21,9 @@ PROFILES = [("plik", "Planck 2018 low-ℓ + plik TT,TE,EE", "C0", "o"),
             ("plik_lite", "Planck 2018 low-ℓ + plik-lite TT,TE,EE", "C2", "s"),
             ("camspec_npipe", "Planck 2018 low-ℓ + PR4 CamSpec TT,TE,EE", "C3", "D")]
 PUBLISHED = [("Stadler & Bœhm 2018: Planck 2015 TT,TE,EE", 1.58e-4, "0.3", "--"),
-             ("Stadler & Bœhm 2018: Planck 2015 TT", 2.25e-4, "0.3", ":")]
+             ("Stadler & Bœhm 2018: Planck 2015 TT", 2.25e-4, "0.3", ":"),
+             ("Zhou et al. 2022: Planck 2018 (lite, τ fixed)", 1.55e-4, "C1", "--"),
+             ("Zhou et al. 2022: Planck 2018 + lensing", 1.90e-4, "C1", ":")]
 FISHER_SIGMA_U = 6.7e-5
 
 
@@ -64,8 +66,10 @@ def limits():
             ("Profile: PR4 CamSpec", load("camspec_npipe")[3]["u(dchi2=2.71)"], "C3"),
             ("Published: Planck 2015 TT,TE,EE", 1.58e-4, "0.3"),
             ("Published: Planck 2015 TT", 2.25e-4, "0.3"),
+            ("Published: Planck 2018 (lite, τ fixed)", 1.55e-4, "C1"),
+            ("Published: Planck 2018 + lensing", 1.90e-4, "C1"),
             ("Forecast: SO + Planck (M5)", 1.2e-5, "0.5")]
-    fig, ax = plt.subplots(figsize=(7, 3.4), constrained_layout=True)
+    fig, ax = plt.subplots(figsize=(7, 4.0), constrained_layout=True)
     for i, (label, val, color) in enumerate(rows):
         y = len(rows) - 1 - i
         forecast = label.startswith(("Fisher", "Forecast"))

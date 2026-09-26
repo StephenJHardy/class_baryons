@@ -19,6 +19,10 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
   - At u = 0 the pipeline reproduces Planck's own ΛCDM fit (plik χ² 2344.89 against 2344.94).
   - The profile rises almost linearly from u = 0: the data lean mildly against the coupling, possibly from the 2018 spectra's preference for extra lensing.
   - **Planck PR4 (NPIPE CamSpec) gives u < 1.17×10⁻⁴ (Σ/Q > 2.3×10⁶ g/cm²)**, 17% weaker than plik, with an initial slope ~20% lower. This fits PR4's smaller lensing excess. The headline MCMC on this likelihood set is running.
+  - **Prior literature (web search, 2026-09-26):**
+    - The only Planck 2018 bound found is Zhou et al. 2022 (PRD 105, 103509): u < 1.55×10⁻⁴ (plik-lite, τ fixed, DM mass also free, MCMC). With lensing reconstruction it is u < 1.90×10⁻⁴; that loosening supports the lensing-excess reading of our profile shape.
+    - The macro-dark-matter literature already applied the Wilkinson+2014 particle bound to macroscopic objects: Jacobs, Starkman & Lynn 2015 give σ_X/M_X < 4.5×10⁻⁷ cm²/g (68%).
+    - No dedicated clump/macro likelihood analysis was found. Picker et al. 2026 (arXiv:2609.05626) explicitly leave cosmological scattering bounds for future work.
   - Write-up: [doc/report/cmb_bound_report.pdf](report/cmb_bound_report.pdf) (profile results, robustness; MCMC section to follow).
   - See [the likelihood log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) and ![profile](../figures/profile_u_plik_lite.png).
   - Simons Observatory + Planck would reach **u < 1.2×10⁻⁵ (Σ/Q > 2.2×10⁷ g/cm²)**, largely through lensing information in the damping tail.
