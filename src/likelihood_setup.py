@@ -20,6 +20,8 @@ PACKAGES = os.environ.get("COBAYA_PACKAGES_PATH", "/media/stephen/astro/class_ba
 LIKELIHOODS = {
     "plik": ["planck_2018_lowl.TT", "planck_2018_lowl.EE", "planck_2018_highl_plik.TTTEEE"],
     "plik_lite": ["planck_2018_lowl.TT", "planck_2018_lowl.EE", "planck_2018_highl_plik.TTTEEE_lite_native"],
+    # Planck PR4 (NPIPE) high-l CamSpec (Rosenberg, Gratton & Efstathiou 2022) with the 2018 low-l likelihoods
+    "camspec_npipe": ["planck_2018_lowl.TT", "planck_2018_lowl.EE", "planck_NPIPE_highl_CamSpec.TTTEEE"],
 }
 # Cosmological parameters: Planck-2018-like starting point, broad flat priors,
 # proposal widths ~ Planck 2018 errors (used by the minimiser for scaling).

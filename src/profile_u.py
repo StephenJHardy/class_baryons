@@ -152,9 +152,78 @@ def full_plik_check(us, seed=0):
               f"({res['n_evaluations']} evaluations, {res['runtime_s']:.0f} s)", flush=True)
 
 
+
+def profile_generic(likelihoods, us, reference="plik", pinned=None, seed=0):
+    """Full-likelihood profile for any likelihood set, seeded from an existing profile.
+
+    Cosmological start and covariance come from the `reference` profile (same u where
+    available, else its u = 0); nuisance parameters start at Cobaya's reference values
+    with a diagonal covariance from their proposal widths. Points are chained (warm
+    starts) and resumable, as in full_plik_check.
+    """
+    import numpy as np
+    from cobaya.model import get_model
+    from quadfit_min import quadfit_minimise
+    probe = get_model(info(likelihoods, u=0.0, fixed_params=pinned))
+    names = list(probe.parameterization.sampled_params())
+    pinfo = probe.parameterization.sampled_params_info()
+    ref0 = json.load(open(OUT / reference / "quadfit" / "u0.000e+00" / "result.json"))
+    rn, rc = ref0["names"], np.array(ref0["covariance"])
+    cov = np.zeros((len(names), len(names)))
+    for i, a in enumerate(names):
+        for j, b in enumerate(names):
+            if a in rn and b in rn:
+                cov[i, j] = rc[rn.index(a), rn.index(b)]
+        if names[i] not in rn:
+            width = pinfo[names[i]].get("proposal") or (pinfo[names[i]].get("ref") or {}).get("scale", 1.0)
+            cov[i, i] = float(width) ** 2
+
+    def ref_value(n):
+        r = pinfo[n].get("ref")
+        return r["loc"] if isinstance(r, dict) else r
+
+    previous = None
+    for u in us:
+        tag = f"u{u:.3e}"
+        directory = OUT / likelihoods / "quadfit" / tag
+        directory.mkdir(parents=True, exist_ok=True)
+        if (directory / "result.json").exists():
+            previous = json.load(open(directory / "result.json"))
+            print(f"u = {u:g}: already done, skipping", flush=True)
+            continue
+        seed_file = OUT / reference / "quadfit" / tag / "result.json"
+        cosmo = json.load(open(seed_file))["best"] if seed_file.exists() else ref0["best"]
+        if previous is None:
+            start = {n: cosmo.get(n, ref_value(n)) for n in names}
+        else:
+            start = dict(previous["best"])
+            prev_seed = OUT / reference / "quadfit" / f"u{previous['u']:.3e}" / "result.json"
+            if seed_file.exists() and prev_seed.exists():
+                prev_cosmo = json.load(open(prev_seed))["best"]
+                for n in names:
+                    if n in cosmo and n in prev_cosmo:
+                        start[n] += cosmo[n] - prev_cosmo[n]
+            cov = np.array(previous["covariance"])
+        if (directory / "checkpoint.json").exists():
+            ck = json.load(open(directory / "checkpoint.json"))
+            start, cov = dict(zip(ck["names"], ck["centre"])), np.array(ck["covariance"])
+            print(f"u = {u:g}: resuming from checkpoint", flush=True)
+        print(f"u = {u:g} ({likelihoods}, {len(names)} parameters)", flush=True)
+        res = quadfit_minimise(info(likelihoods, u=u, fixed_params=pinned), None, start, covmat=cov, seed=seed,
+                               log=lambda m: print(m, flush=True), checkpoint=str(directory / "checkpoint.json"))
+        res.update({"u": u, "likelihoods": likelihoods, "pinned": pinned or {}})
+        with open(directory / "result.json", "w") as f:
+            json.dump(res, f, indent=2, default=float)
+        print(f"  -> -log P = {res['minuslogpost']:.3f} +- {res['minuslogpost_err']:.3f} "
+              f"({res['n_evaluations']} evaluations, {res['runtime_s']:.0f} s)", flush=True)
+        previous = res
+
+
 if __name__ == "__main__":
     if sys.argv[1] == "quadfit":
         quadfit_profile(sys.argv[2], [float(x) for x in sys.argv[3:]])
+    elif sys.argv[1] == "generic":
+        profile_generic(sys.argv[2], [float(x) for x in sys.argv[3:]])
     elif sys.argv[1] == "fullplik":
         full_plik_check([float(x) for x in sys.argv[2:]])
     else:
