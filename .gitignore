@@ -22,6 +22,9 @@ build/
 # LaTeX build products
 doc/explainer/*.aux
 doc/explainer/*.log
+doc/report/*.aux
+doc/report/*.log
+doc/report/*.out
 doc/explainer/*.out
 doc/explainer/*.toc
 

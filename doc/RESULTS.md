@@ -19,6 +19,7 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
   - At u = 0 the pipeline reproduces Planck's own ΛCDM fit (plik χ² 2344.89 against 2344.94).
   - The profile rises almost linearly from u = 0: the data lean mildly against the coupling, possibly from the 2018 spectra's preference for extra lensing.
   - **Planck PR4 (NPIPE CamSpec) gives u < 1.17×10⁻⁴ (Σ/Q > 2.3×10⁶ g/cm²)**, 17% weaker than plik, with an initial slope ~20% lower. This fits PR4's smaller lensing excess. The headline MCMC on this likelihood set is running.
+  - Write-up: [doc/report/cmb_bound_report.pdf](report/cmb_bound_report.pdf) (profile results, robustness; MCMC section to follow).
   - See [the likelihood log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) and ![profile](../figures/profile_u_plik_lite.png).
   - Simons Observatory + Planck would reach **u < 1.2×10⁻⁵ (Σ/Q > 2.2×10⁷ g/cm²)**, largely through lensing information in the damping tail.
   - The main degeneracies are with θ_s and ω_b.
