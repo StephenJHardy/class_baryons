@@ -27,3 +27,4 @@ doc/explainer/*.toc
 
 # Discarded likelihood outputs kept only for the record
 results/likelihood/discarded/
+results/mcmc_watchdog.log

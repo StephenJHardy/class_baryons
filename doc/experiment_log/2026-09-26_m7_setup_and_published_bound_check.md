@@ -115,6 +115,29 @@ uv run python src/profile_analyse.py plik_lite   # -> results/likelihood/plik_li
   - validate the final fit, falling back to the last converged iteration if it fails.
 - **Clean-up:** the bad point and the contaminated checkpoints were deleted, and the discarded output is kept under `results/likelihood/discarded/` (gitignored). All eight final points have `final_fit_ok = True`.
 
-### Next (queued)
+## NPIPE (PR4) CamSpec profile (added the same day)
 
-- **NPIPE CamSpec profile:** Planck PR4 high-ℓ, 15 free parameters, with the same u grid. It tests whether the near-linear rise from u = 0, possibly from the 2018 lensing preference, softens with the newer processing.
+- **Settings:** likelihoods planck_2018_lowl.TT + lowl.EE + planck_NPIPE_highl_CamSpec.TTTEEE. There are 15 free parameters (6 cosmological + 9 nuisance), with the same u grid as plik.
+- **Start-up:**
+  - The cold start used a BOBYQA pre-minimisation (`src/coarse_start.py`).
+  - The starting covariance was Planck's NPIPE CamSpec covmat.
+  - Scale-halving was adaptive.
+- **Noise:** CamSpec evaluations are noisier than plik. The fit noise was 0.1–0.2 at most points, rising to 0.46 and 0.66 at u = 1.5×10⁻⁴ and 2×10⁻⁴. At those two points the final fit was rejected and the result fell back to the last converged iteration. Their quoted errors (± 0.003) understate the real uncertainty, which is probably ~0.05 in −log P, or ~0.1 in Δχ².
+
+| u | −log P | Δχ² (CamSpec NPIPE) | Δχ² (full plik) |
+|---:|---:|---:|---:|
+| 0 | 5468.896 ± 0.016 | 0 | 0 |
+| 2×10⁻⁵ | 5469.104 | 0.42 | 0.55 |
+| 5×10⁻⁵ | 5469.419 | 1.05 | 1.34 |
+| 10⁻⁴ | 5469.988 | 2.18 | 2.71 |
+| 1.5×10⁻⁴ | 5470.766 (fallback) | 3.74 | 4.23 |
+| 2×10⁻⁴ | 5471.530 (fallback) | 5.27 | 5.94 |
+| 3×10⁻⁴ | 5473.311 | 8.83 | 10.03 |
+| 4×10⁻⁴ | 5475.484 | 13.18 | 15.18 |
+
+- **Result:** **u < 1.17×10⁻⁴ at 95% (one-sided, Δχ² = 2.71), i.e. σ/M < 4.4×10⁻⁷ cm²/g and Σ/Q > 2.3×10⁶ g/cm².** The Δχ² = 3.84 crossing is at 1.53×10⁻⁴.
+- **Comparison with plik:** the bound is 17% weaker.
+  - Both profiles still rise almost linearly from u = 0. The initial slope is Δχ²/u ≈ 2.1×10⁴ for CamSpec against 2.7×10⁴ for plik, about 20% lower.
+  - This fits the smaller lensing excess in PR4 (A_L ≈ 1.04 against 1.18 in 2018 plik), since suppressed lensing is the main signature of u. However, it has not been tested directly, for example with A_L free.
+  - Either way the bound is robust to the choice of high-ℓ likelihood at the 20% level.
+- **Next:** the headline MCMC with this likelihood set is running on the VM (12 chains, flat prior on u in [0, 10⁻³]).
