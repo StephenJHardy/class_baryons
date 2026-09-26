@@ -24,3 +24,6 @@ doc/explainer/*.aux
 doc/explainer/*.log
 doc/explainer/*.out
 doc/explainer/*.toc
+
+# Discarded likelihood outputs kept only for the record
+results/likelihood/discarded/

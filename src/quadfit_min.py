@@ -54,7 +54,10 @@ def quad_design(z):
     return np.column_stack(cols), pairs
 
 
-def fit_quadratic(z, f):
+def fit_quadratic(z, f, outlier=30.0):
+    # drop gross outliers (far from the minimum the posterior is not quadratic)
+    keep = f < np.min(f) + outlier
+    z, f = z[keep], f[keep]
     X, pairs = quad_design(z)
     coef, *_ = np.linalg.lstsq(X, f, rcond=None)
     d = z.shape[1]
@@ -125,8 +128,12 @@ def quadfit_minimise(info_dict, covmat_file, x0, scale=0.5, n_points=None, max_i
                 f"min sampled {f[ok].min():.3f}")
             centre = centre + L @ step
             if pos_def:
-                # re-whiten with the fitted curvature: the true posterior covariance is L A^-1 L^T
-                cov = L @ np.linalg.inv(A) @ L.T
+                # re-whiten with the fitted curvature (posterior covariance = L A^-1 L^T), but let
+                # sigma change by at most 2x per iteration: noisy, weakly constrained directions
+                # would otherwise blow the sampling scale up (seen at full-plik u = 2e-5)
+                w, V = np.linalg.eigh(A)
+                A_reg = V @ np.diag(np.clip(w, 0.25, 4.0)) @ V.T
+                cov = L @ np.linalg.inv(A_reg) @ L.T
                 L = np.linalg.cholesky(0.5 * (cov + cov.T))
             if checkpoint:
                 import json
@@ -140,16 +147,29 @@ def quadfit_minimise(info_dict, covmat_file, x0, scale=0.5, n_points=None, max_i
         f = evaluate(zs, centre)
         ok = np.isfinite(f)
         c, g, A, noise, cov_coef = fit_quadratic(zs[ok], f[ok])
-        step = -np.linalg.solve(A, g)
-        f_min = float(c + 0.5 * g @ step)
-        # uncertainty of the fitted minimum value, propagated from the coefficient covariance
-        grad = np.zeros(cov_coef.shape[0])
-        grad[0] = 1.0
-        grad[1:1 + d] = 0.5 * step
-        f_min_err = float(np.sqrt(grad @ cov_coef @ grad))
-        best = centre + L @ step
-    cov_final = L @ np.linalg.inv(A) @ L.T
+        iter_noise = float(np.median([h["fit_noise"] for h in history]))
+        final_ok = bool(np.all(np.linalg.eigvalsh(A) > 0)) and noise < 3 * iter_noise + 0.01
+        if final_ok:
+            step = -np.linalg.solve(A, g)
+            f_min = float(c + 0.5 * g @ step)
+            # uncertainty of the fitted minimum value, propagated from the coefficient covariance
+            grad = np.zeros(cov_coef.shape[0])
+            grad[0] = 1.0
+            grad[1:1 + d] = 0.5 * step
+            f_min_err = float(np.sqrt(grad @ cov_coef @ grad))
+            best = centre + L @ step
+            w, V = np.linalg.eigh(A)
+            cov_final = L @ np.linalg.inv(V @ np.diag(np.clip(w, 0.25, 4.0)) @ V.T) @ L.T
+        else:
+            # fall back to the last converged iteration (its fitted minimum and the current centre)
+            last = history[-1]
+            log(f"  WARNING: final fit rejected (noise {noise:.3f} vs {iter_noise:.3f}); using last iteration")
+            f_min = float(last["fit_c"] - last["predicted_decrease"])
+            f_min_err = float(last["fit_noise"] / np.sqrt(len(zs)))
+            best = centre
+            cov_final = L @ L.T
     return {"names": names, "best": dict(zip(names, best.tolist())), "minuslogpost": f_min,
             "covariance": cov_final.tolist(),
             "minuslogpost_err": f_min_err, "fit_noise": noise, "hessian_whitened": A.tolist(),
+            "final_fit_ok": final_ok,
             "history": history, "n_evaluations": int(n_points * (len(history) + 2)), "runtime_s": time.time() - t0}
