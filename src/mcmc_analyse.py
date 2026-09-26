@@ -15,7 +15,7 @@ import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
-from getdist import loadMCSamples, plots
+from getdist import MCSamples, loadMCSamples, plots
 
 from cloud_mapping import sigma_over_m, sigma_surface_over_q
 from cosmology import ROOT
@@ -27,7 +27,7 @@ PARAMS = ["u_idm_g", "omega_b", "omega_dm", "theta_s_100", "n_s", "logA", "tau_r
 
 def upper_limit(samples, name, level):
     x = samples[name]
-    w = samples.getWeights()
+    w = samples.weights
     order = np.argsort(x)
     cdf = np.cumsum(w[order]) / w.sum()
     return float(np.interp(level, cdf, x[order]))
@@ -39,14 +39,17 @@ def main(likelihoods="camspec_npipe"):
     per_chain = []
     for c in chains:
         s = loadMCSamples(str(c).removesuffix(".1.txt"), settings={"ignore_rows": BURN})
-        per_chain.append({"chain": c.name, "n_accepted": int(s.numrows), "weight": float(s.getWeights().sum()),
+        per_chain.append({"chain": c.name, "n_accepted": int(s.numrows), "weight": float(s.weights.sum()),
                           "u_mean": float(s.mean("u_idm_g")), "u95": upper_limit(s, "u_idm_g", 0.95)})
-    # combined samples: getdist treats the chain_<i> files as one set only if they share a root,
-    # so combine explicitly
+    # combined samples, built from the arrays (getCombinedSamplesWithSamples trips over
+    # Cobaya's dotted chi2__ parameter names)
     all_s = [loadMCSamples(str(c).removesuffix(".1.txt"), settings={"ignore_rows": BURN}) for c in chains]
-    combined = all_s[0].copy()
-    for s in all_s[1:]:
-        combined = combined.getCombinedSamplesWithSamples(s)
+    names = [p.name for p in all_s[0].paramNames.names]
+    combined = MCSamples(samples=np.vstack([s.samples for s in all_s]),
+                         weights=np.concatenate([s.weights for s in all_s]),
+                         loglikes=np.concatenate([s.loglikes for s in all_s]),
+                         names=names, labels=[p.label for p in all_s[0].paramNames.names],
+                         ranges={"u_idm_g": [0, 1e-3]}, label=likelihoods, ignore_rows=0)
     means = np.array([s.mean("u_idm_g") for s in all_s])
     variances = np.array([s.var("u_idm_g") for s in all_s])
     rminus1_mean = float(np.var(means, ddof=1) / np.mean(variances)) if len(all_s) > 1 else None
