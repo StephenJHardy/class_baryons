@@ -21,6 +21,10 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
   - At u = 0 the pipeline reproduces Planck's own ΛCDM fit (plik χ² 2344.89 against 2344.94).
   - The profile rises almost linearly from u = 0: the data lean mildly against the coupling, possibly from the 2018 spectra's preference for extra lensing.
   - **Planck PR4 (NPIPE CamSpec) gives u < 1.17×10⁻⁴ (Σ/Q > 2.3×10⁶ g/cm²)**, 17% weaker than plik, with an initial slope ~20% lower. This fits PR4's smaller lensing excess. The headline MCMC on this likelihood set is running.
+  - **Headline Bayesian result (MCMC, PR4 CamSpec + 2018 low-ℓ, flat prior on u):**
+    - **u < 1.69×10⁻⁴ at 95% (σ/M < 6.3×10⁻⁷ cm²/g, Σ/Q > 1.6×10⁶ g/cm²)**, close to the published Bayesian limits of 1.55×10⁻⁴ (2018) and 1.58×10⁻⁴ (2015).
+    - It is 45% above the profile limit for the same data. That follows from the near-linear Δχ²(u), which makes the likelihood roughly exponential; there is no volume effect.
+    - u is strongly anticorrelated with σ8 (r = −0.92) and correlated with θ_s (+0.73), and does not move H0. See [the MCMC log](experiment_log/2026-09-26_headline_mcmc.md) and ![MCMC](../figures/report_mcmc.png).
   - **Prior literature (web search, 2026-09-26):**
     - The only Planck 2018 bound found is Zhou et al. 2022 (PRD 105, 103509): u < 1.55×10⁻⁴ (plik-lite, τ fixed, DM mass also free, MCMC). With lensing reconstruction it is u < 1.90×10⁻⁴; that loosening supports the lensing-excess reading of our profile shape.
     - The macro-dark-matter literature already applied the Wilkinson+2014 particle bound to macroscopic objects: Jacobs, Starkman & Lynn 2015 give σ_X/M_X < 4.5×10⁻⁷ cm²/g (68%).
@@ -48,7 +52,8 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
 | M6 Experiment B, minimal | ✅ | patched CLASS bit-identical to stock for Thomson; absorber shifts the u threshold by < 1% | [log](experiment_log/2026-09-26_m6_kernel_check.md) |
 | M12 Experiment E, small scales | ✅ | u ≲ 5×10⁻⁹ (Σ/Q ≳ 5×10¹⁰ g/cm²) via WDM half-mode matching; applies if clumps exist by z ~ 10⁷ | [log](experiment_log/2026-09-26_m12_small_scale.md) |
 | M13 Experiment F, energy exchange | ✅ (estimates) | passive clumps: μ ~ 2×10⁻⁸, y ~ 3×10⁻⁹ (≪ FIRAS); no-go on a full Boltzmann treatment; clump survival estimate recorded as a caveat on the premise | [log](experiment_log/2026-09-26_m13_energy_exchange.md) |
-| M7/M8 first step: profile by minimisation | 🟡 in progress | Planck 2018 full plik: u < 1.0×10⁻⁴; PR4 CamSpec: u < 1.17×10⁻⁴ (Δχ² = 2.71); headline MCMC running | [log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) |
+| M7/M8 first step: profile by minimisation | ✅ | Planck 2018 full plik: u < 1.0×10⁻⁴; PR4 CamSpec: u < 1.17×10⁻⁴ (Δχ² = 2.71) | [log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) |
+| Headline MCMC (PR4 CamSpec, flat prior) | ✅ | u < 1.69×10⁻⁴ (95%), Σ/Q > 1.6×10⁶ g/cm²; R−1 = 0.02; u–σ8 correlation −0.92 | [log](experiment_log/2026-09-26_headline_mcmc.md) |
 | M9 – M11 | ⏳ | | |
 
 | Experiment | Status |

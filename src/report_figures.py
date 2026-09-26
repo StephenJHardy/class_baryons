@@ -3,6 +3,8 @@
   figures/report_profiles.pdf : Delta chi^2(u) profiles for Planck 2018 plik (full and
       lite) and PR4 CamSpec, with the 95% one-sided level and the published bounds
   figures/report_limits.pdf   : summary of 95% upper limits on u (and Sigma/Q)
+  figures/report_mcmc.pdf     : MCMC marginal posterior of u, and posterior samples of u
+      against the parameters it correlates with
 
 Usage: uv run python src/report_figures.py
 """
@@ -59,17 +61,48 @@ def profiles():
     fig.savefig(FIG / "report_profiles.png", dpi=150)
 
 
+def mcmc(likelihoods="camspec_npipe"):
+    from mcmc_analyse import load_combined
+    _, comb = load_combined(likelihoods)
+    summary = json.load(open(ROOT / "results" / "mcmc" / likelihoods / "mcmc_summary.json"))
+    u95, u_prof = summary["u95"], load(likelihoods)[3]["u(dchi2=2.71)"]
+    u = comb["u_idm_g"]
+    rng = np.random.default_rng(1)
+    pick = rng.choice(len(u), size=6000, p=comb.weights / comb.weights.sum())
+    fig, axes = plt.subplots(2, 3, figsize=(10, 6.2), constrained_layout=True)
+    ax = axes[0, 0]
+    density = comb.get1DDensity("u_idm_g", boundaries=True)
+    xs = np.linspace(0, 4e-4, 300)
+    ax.plot(xs * 1e4, density(xs) / density(xs).max(), color="C3")
+    ax.axvline(u95 * 1e4, color="C3", ls="--", lw=0.9, label=f"MCMC 95%: {u95 * 1e4:.2f}")
+    ax.axvline(u_prof * 1e4, color="C3", ls=":", lw=0.9, label=f"profile 95%: {u_prof * 1e4:.2f}")
+    ax.axvline(1.55, color="C1", ls="--", lw=0.9, label="Zhou+22: 1.55")
+    ax.set(xlabel="u  [10⁻⁴]", ylabel="P(u) / P$_{max}$", xlim=(0, 4), ylim=(0, 1.05))
+    ax.legend(fontsize=7.5, title="PR4 CamSpec, u₉₅ [10⁻⁴]", title_fontsize=7.5)
+    for ax, (name, label) in zip(axes.flat[1:], [("sigma8", "σ₈"), ("theta_s_100", "100 θ$_s$"),
+                                                 ("omega_dm", "ω$_{dm}$"), ("omega_b", "ω$_b$"), ("H0", "H₀")]):
+        r = summary["correlation_with_u"][name]
+        ax.scatter(u[pick] * 1e4, comb[name][pick], s=1.5, alpha=0.25, color="C0", rasterized=True)
+        ax.axvline(u95 * 1e4, color="C3", ls="--", lw=0.9)
+        ax.set(xlabel="u  [10⁻⁴]", ylabel=label, xlim=(0, 4))
+        ax.text(0.97, 0.95, f"r = {r:+.2f}", transform=ax.transAxes, ha="right", va="top", fontsize=8)
+    fig.savefig(FIG / "report_mcmc.pdf", dpi=200)
+    fig.savefig(FIG / "report_mcmc.png", dpi=150)
+
+
 def limits():
     rows = [("Fisher forecast, Planck-like (M5)", 1.1e-4, "0.5"),
             ("Profile: plik-lite", load("plik_lite")[3]["u(dchi2=2.71)"], "C2"),
             ("Profile: plik (full)", load("plik")[3]["u(dchi2=2.71)"], "C0"),
             ("Profile: PR4 CamSpec", load("camspec_npipe")[3]["u(dchi2=2.71)"], "C3"),
+            ("MCMC (flat prior): PR4 CamSpec", json.load(open(ROOT / "results" / "mcmc" / "camspec_npipe"
+                                                               / "mcmc_summary.json"))["u95"], "C4"),
             ("Published: Planck 2015 TT,TE,EE", 1.58e-4, "0.3"),
             ("Published: Planck 2015 TT", 2.25e-4, "0.3"),
             ("Published: Planck 2018 (lite, τ fixed)", 1.55e-4, "C1"),
             ("Published: Planck 2018 + lensing", 1.90e-4, "C1"),
             ("Forecast: SO + Planck (M5)", 1.2e-5, "0.5")]
-    fig, ax = plt.subplots(figsize=(7, 4.0), constrained_layout=True)
+    fig, ax = plt.subplots(figsize=(7, 4.3), constrained_layout=True)
     for i, (label, val, color) in enumerate(rows):
         y = len(rows) - 1 - i
         forecast = label.startswith(("Fisher", "Forecast"))
@@ -89,3 +122,4 @@ def limits():
 if __name__ == "__main__":
     profiles()
     limits()
+    mcmc()

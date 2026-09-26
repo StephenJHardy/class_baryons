@@ -31,3 +31,7 @@ doc/explainer/*.toc
 # Discarded likelihood outputs kept only for the record
 results/likelihood/discarded/
 results/mcmc_watchdog.log
+# MCMC chains are archived on /media/stephen/astro/class_baryons/mcmc (22 MB); commit summaries only
+results/mcmc/*/chain_*
+results/mcmc/*/log_chain_*
+results/mcmc_test/

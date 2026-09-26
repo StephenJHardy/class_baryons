@@ -33,6 +33,38 @@ def upper_limit(samples, name, level):
     return float(np.interp(level, cdf, x[order]))
 
 
+def load_combined(likelihoods="camspec_npipe"):
+    """Per-chain samples (burn-in removed) and all chains combined into one MCSamples.
+
+    Built from the arrays, because getCombinedSamplesWithSamples trips over Cobaya's
+    dotted chi2__ parameter names."""
+    chains = sorted((OUT / likelihoods).glob("chain_*.1.txt"))
+    all_s = [loadMCSamples(str(c).removesuffix(".1.txt"), settings={"ignore_rows": BURN}) for c in chains]
+    names = [p.name for p in all_s[0].paramNames.names]
+    combined = MCSamples(samples=np.vstack([s.samples for s in all_s]),
+                         weights=np.concatenate([s.weights for s in all_s]),
+                         loglikes=np.concatenate([s.loglikes for s in all_s]),
+                         names=names, labels=[p.label for p in all_s[0].paramNames.names],
+                         ranges={"u_idm_g": [0, 1e-3]}, label=likelihoods, ignore_rows=0)
+    return all_s, combined
+
+
+def split_half_u95(all_s):
+    """95% limit on u from the first and second halves of every chain (after burn-in)."""
+    out = []
+    for half in (0, 1):
+        u, w = [], []
+        for s in all_s:
+            n = s.numrows // 2
+            sl = slice(0, n) if half == 0 else slice(n, None)
+            u.append(s["u_idm_g"][sl])
+            w.append(s.weights[sl])
+        u, w = np.concatenate(u), np.concatenate(w)
+        order = np.argsort(u)
+        out.append(float(np.interp(0.95, np.cumsum(w[order]) / w.sum(), u[order])))
+    return out
+
+
 def main(likelihoods="camspec_npipe"):
     root = OUT / likelihoods
     chains = sorted(root.glob("chain_*.1.txt"))
@@ -41,15 +73,7 @@ def main(likelihoods="camspec_npipe"):
         s = loadMCSamples(str(c).removesuffix(".1.txt"), settings={"ignore_rows": BURN})
         per_chain.append({"chain": c.name, "n_accepted": int(s.numrows), "weight": float(s.weights.sum()),
                           "u_mean": float(s.mean("u_idm_g")), "u95": upper_limit(s, "u_idm_g", 0.95)})
-    # combined samples, built from the arrays (getCombinedSamplesWithSamples trips over
-    # Cobaya's dotted chi2__ parameter names)
-    all_s = [loadMCSamples(str(c).removesuffix(".1.txt"), settings={"ignore_rows": BURN}) for c in chains]
-    names = [p.name for p in all_s[0].paramNames.names]
-    combined = MCSamples(samples=np.vstack([s.samples for s in all_s]),
-                         weights=np.concatenate([s.weights for s in all_s]),
-                         loglikes=np.concatenate([s.loglikes for s in all_s]),
-                         names=names, labels=[p.label for p in all_s[0].paramNames.names],
-                         ranges={"u_idm_g": [0, 1e-3]}, label=likelihoods, ignore_rows=0)
+    all_s, combined = load_combined(likelihoods)
     means = np.array([s.mean("u_idm_g") for s in all_s])
     variances = np.array([s.var("u_idm_g") for s in all_s])
     rminus1_mean = float(np.var(means, ddof=1) / np.mean(variances)) if len(all_s) > 1 else None
@@ -60,7 +84,9 @@ def main(likelihoods="camspec_npipe"):
         "likelihoods": likelihoods, "burn_in_fraction": BURN, "chains": per_chain,
         "rminus1_u_mean": rminus1_mean,
         "u95_chain_scatter_over_mean": float(np.std(u95s, ddof=1) / np.mean(u95s)) if len(u95s) > 1 else None,
-        "u95": u95, "u99": u99,
+        "u95": u95, "u99": u99, "u95_split_halves": split_half_u95(all_s),
+        "correlation_with_u": {p: float(combined.corr([combined.index["u_idm_g"], combined.index[p]])[0, 1])
+                               for p in PARAMS[1:] if combined.paramNames.parWithName(p)},
         "Sigma_over_Q_min_95": sigma_surface_over_q(u95), "sigma_over_M_max_95": sigma_over_m(u95),
         "marginalised": {p: {"mean": float(combined.mean(p)), "std": float(combined.std(p))}
                          for p in PARAMS if combined.paramNames.parWithName(p)},

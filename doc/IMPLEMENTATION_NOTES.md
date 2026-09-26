@@ -136,11 +136,20 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 - `src/m13_distortions.py` uses Chluba (2016) "Method C" visibility functions and FIRAS 95% limits; the constants and references are in the docstring. The background comes from CLASS, and cgs conversion of CLASS densities is ρ[g/cm³] = ρ_CLASS[Mpc⁻²]·3c²/(8πG)/Mpc².
 - The survival criterion and skin-heating estimates are deliberately simple (uniform clump at T_γ, Thomson opacity). Refine them in Experiment D before quoting them beyond order of magnitude.
 
+## MCMC (Cobaya, no MPI, spot VM)
+
+- **Run many independent chains, not a few multi-threaded ones.** CLASS scales poorly beyond ~4–8 OpenMP threads. Twelve chains at 15 threads left the 180-vCPU VM at load ~50; 24 chains (12 at 15 threads, 12 at 7) brought it to ~145.
+- **Judge convergence across chains.** Cobaya's per-chain R−1 (split batches within one chain) was still 0.3–2 after 6 h and would need many more hours to reach 0.01. With independent chains, use R−1 of the u mean across chains (`src/mcmc_analyse.py`) plus a split-half test of the 95% limit. The watchdog's "has converged" exit condition was never reached; the chains were stopped by hand.
+- **Start from the profile.** Using the profile u = 0 covariance (with the nuisance block) as the proposal, and nuisance `ref` values at the profile best fit, gave ~25% acceptance from the first step. Cobaya's default nuisance refs can be far off (e.g. amp_143 = 10 against a best fit of 18.6).
+- **getdist:** `MCSamples` has `.weights`, not `getWeights()`. `getCombinedSamplesWithSamples` fails on Cobaya's dotted `chi2__planck_...` names, so build the combined `MCSamples` from the arrays (`load_combined` in `mcmc_analyse.py`).
+- **Copying live chains:** rsync while the chains are still writing can in principle catch a partial last line. Check that every row has the same number of fields before analysing.
+
 ## Analysis gotchas
 
 - **Peak finding.** Detect the peaks of D_ℓ independently in each model and match them by order. Tracking within a window around the ΛCDM peaks fails once shifts exceed the window (u ≳ 10⁻²). Strongly damped models can have fewer than 7 peaks below ℓ = 2500, so those are padded with NaN. Lensed peak 7 is poorly defined for u ≳ 5×10⁻⁴.
 - **Storage.** Don't store CLASS's full thermodynamics table (~10⁵ points) per model: that made one scan 385 MB. Scratch scans go under `results/scratch_*` (gitignored).
 - **Shell.** Never `pkill -f <pattern>` or `pgrep -f <pattern>` from a command whose own command line contains the pattern: it matches, and kills, that shell too. This happened three times. Find PIDs with `ps -eo pid,cmd | grep "[p]rofile_u.py"` (the bracket stops grep matching itself) and kill them explicitly.
+  - **The bracket trick is not enough when the check itself runs through `ssh host "..."`.** The remote `bash -c` command line then contains the *whole* script, including the unbracketed command being checked for (e.g. the launch line `uv run python src/mcmc_run.py 0 ...`). The check always matched, so no MCMC chain was ever launched. Fix: filter out shells first, with `ps -eo comm=,args= | grep -Ev '^(bash|sh|ssh) ' | grep -q '[p]ython src/mcmc_run.py 0 camspec_npipe$'`, and anchor the pattern at the end of the line.
 
 ## Dead ends
 
