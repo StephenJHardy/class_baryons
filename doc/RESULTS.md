@@ -13,10 +13,11 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
   - A Planck-like experiment gives **u < 1.1×10⁻⁴ (95%), Σ/Q > 2.4×10⁶ g/cm²**.
   - The like-for-like published number is u < 1.58×10⁻⁴ (Planck 2015 TT,TE,EE + lowTEB; Stadler & Bœhm 2018, Table III), so the forecast agrees to within 20–30%.
   - The often-quoted u < 2.25×10⁻⁴ (Σ/Q ≳ 1.2×10⁶ g/cm²) is their more conservative 2015 **TT + lowTEB** result, without high-ℓ polarization.
-- **First real-data result (profile likelihood, Planck 2018 low-ℓ TT and EE + plik_lite TT,TE,EE):**
-  - **u < 9.8×10⁻⁵ at 95% (one-sided, Δχ² = 2.71), i.e. Σ/Q > 2.7×10⁶ g/cm²**, consistent with the Fisher forecast.
-  - The profile rises almost linearly from u = 0: the data lean mildly against the coupling.
-  - Not yet checked with the full plik likelihood or with lensing reconstruction.
+- **Real-data result (profile likelihood, Planck 2018 low-ℓ TT and EE + full plik TT,TE,EE):**
+  - **u < 1.0×10⁻⁴ at 95% (one-sided, Δχ² = 2.71), i.e. σ/M < 3.7×10⁻⁷ cm²/g and Σ/Q > 2.7×10⁶ g/cm²**, consistent with the Fisher forecast.
+  - The lite likelihood agrees within 1.5% in Δχ².
+  - At u = 0 the pipeline reproduces Planck's own ΛCDM fit (plik χ² 2344.89 against 2344.94).
+  - The profile rises almost linearly from u = 0: the data lean mildly against the coupling, possibly from the 2018 spectra's preference for extra lensing. An NPIPE (PR4) CamSpec profile is running to test this.
   - See [the likelihood log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) and ![profile](../figures/profile_u_plik_lite.png).
   - Simons Observatory + Planck would reach **u < 1.2×10⁻⁵ (Σ/Q > 2.2×10⁷ g/cm²)**, largely through lensing information in the damping tail.
   - The main degeneracies are with θ_s and ω_b.
@@ -39,7 +40,7 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
 | M6 Experiment B, minimal | ✅ | patched CLASS bit-identical to stock for Thomson; absorber shifts the u threshold by < 1% | [log](experiment_log/2026-09-26_m6_kernel_check.md) |
 | M12 Experiment E, small scales | ✅ | u ≲ 5×10⁻⁹ (Σ/Q ≳ 5×10¹⁰ g/cm²) via WDM half-mode matching; applies if clumps exist by z ~ 10⁷ | [log](experiment_log/2026-09-26_m12_small_scale.md) |
 | M13 Experiment F, energy exchange | ✅ (estimates) | passive clumps: μ ~ 2×10⁻⁸, y ~ 3×10⁻⁹ (≪ FIRAS); no-go on a full Boltzmann treatment; clump survival estimate recorded as a caveat on the premise | [log](experiment_log/2026-09-26_m13_energy_exchange.md) |
-| M7/M8 first step: profile by minimisation | 🟡 in progress | Planck 2018 (lite): u < 9.8×10⁻⁵ (Δχ² = 2.71); full plik check pending | [log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) |
+| M7/M8 first step: profile by minimisation | 🟡 in progress | Planck 2018 full plik: u < 1.0×10⁻⁴ (Δχ² = 2.71), validated against Planck's best fit; NPIPE CamSpec profile running | [log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) |
 | M9 – M11 | ⏳ | | |
 
 | Experiment | Status |

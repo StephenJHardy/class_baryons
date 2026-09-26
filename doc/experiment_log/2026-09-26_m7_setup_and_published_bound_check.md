@@ -81,3 +81,40 @@ uv run python src/profile_analyse.py plik_lite   # -> results/likelihood/plik_li
 - **Lite likelihood.** It pre-marginalises Planck's foreground and calibration nuisance parameters. The full plik likelihood (21 nuisance parameters) has not yet been profiled; with the quadratic-fit method it costs ~1,200 evaluations per iteration (~1–1.5 h per u point here). A check at u = 0 and u = 10⁻⁴ would show whether lite and full agree at the crossing.
 - **No lensing reconstruction.** Adding it would likely tighten the bound (Stadler & Bœhm find ~6% with 2015 data).
 - **Minimisation only (no MCMC),** as requested pending a decision on compute.
+
+## Full plik likelihood profile (added the same day)
+
+- **Where it ran:** on a GCP spot VM (`class-baryons-c`, c3d-highcpu-180, us-central1-c; ~8.6 evaluations/s, ~6× the local machine), under `scripts/vm_watchdog.sh`, which handles preemption and copies results back.
+- **Settings:** likelihoods planck_2018_lowl.TT + lowl.EE + highl_plik.TTTEEE. There are 25 free parameters, with `xi_sz_cib` and `ksz_norm` pinned at their lower prior bound of 0 (see the implementation notes).
+- **Cold-start u = 0:** 4 iterations. Every other point converged in 2 iterations from a warm start.
+
+| u | −log P | Δχ² (full plik) | Δχ² (lite) |
+|---:|---:|---:|---:|
+| 0 | 1383.600 ± 0.002 | 0 | 0 |
+| 2×10⁻⁵ | 1383.876 | 0.55 | 0.56 |
+| 5×10⁻⁵ | 1384.269 | 1.34 | 1.36 |
+| 10⁻⁴ | 1384.955 | 2.71 | 2.76 |
+| 1.5×10⁻⁴ | 1385.717 | 4.23 | 4.30 |
+| 2×10⁻⁴ | 1386.568 | 5.94 | 6.04 |
+| 3×10⁻⁴ | 1388.617 | 10.03 | 10.18 |
+| 4×10⁻⁴ | 1391.189 | 15.18 | 15.34 |
+
+- **Result:** **u < 1.00×10⁻⁴ at 95% (one-sided, Δχ² = 2.71), i.e. σ/M < 3.7×10⁻⁷ cm²/g and Σ/Q > 2.7×10⁶ g/cm².** The Δχ² = 3.84 crossing is at 1.37×10⁻⁴.
+- **Full against lite:** they agree to within 1.5% in Δχ² at every point, so the pre-marginalised lite likelihood is adequate for this model.
+- **Validation:** at the u = 0 best fit, the full plik χ² is **2344.89**, against 2344.94 at Planck's own best fit (Planck 2018 V, Table 20; that fit also included lensing). Low-ℓ TT gives 23.58 (Planck 23.25).
+  - Best-fit parameters: ω_b = 0.02233, ω_dm = 0.1203, n_s = 0.9639, τ = 0.0541, H0 = 67.21, σ₈ = 0.812.
+  - The pipeline reproduces Planck's ΛCDM fit.
+
+### Problem found and fixed during this run
+
+- **Symptom:** the first VM attempt at u = 2×10⁻⁵ returned −log P = 1400.2 ± 17 from a final fit with residual noise 186 and an indefinite Hessian, even though its iterations had converged to ≈ 1383.875.
+- **Cause:** re-whitening from the noisy fitted Hessian inflated the sampling width along weakly constrained nuisance directions, and points far from the minimum then wrecked the quadratic fit.
+- **Fix** (commit `802ce6a`):
+  - clamp the Hessian eigenvalues to [0.25, 4] when re-whitening;
+  - reject points more than 30 above the sampled minimum;
+  - validate the final fit, falling back to the last converged iteration if it fails.
+- **Clean-up:** the bad point and the contaminated checkpoints were deleted, and the discarded output is kept under `results/likelihood/discarded/` (gitignored). All eight final points have `final_fit_ok = True`.
+
+### Next (queued)
+
+- **NPIPE CamSpec profile:** Planck PR4 high-ℓ, 15 free parameters, with the same u grid. It tests whether the near-linear rise from u = 0, possibly from the 2018 lensing preference, softens with the newer processing.
