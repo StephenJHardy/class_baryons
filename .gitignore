@@ -35,3 +35,5 @@ results/mcmc_watchdog.log
 results/mcmc/*/chain_*
 results/mcmc/*/log_chain_*
 results/mcmc_test/
+results/mix/logs/*.pid
+results/mix/**/checkpoint.json

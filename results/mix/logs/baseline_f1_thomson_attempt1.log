@@ -1,0 +1,17 @@
+f = 0, u = 0, u = 0: start from earlier f=1, u=0 profile solution (LCDM-equivalent)
+  iter 0: step 0.101 sigma, predicted decrease 0.0052, noise 0.115, min sampled 5469.270
+f = 0, u = 0, u = 0: -log P fit = 5468.868 +- 0.017 (regression), direct = 5468.937, converged = True, 1225 evaluations, 14.6 min
+f = 1, u = 0, u = 0: start from u=0 solution of f=0
+f = 1, u = 0, u = 0: start from u=0 solution of f=0
+  iter 0: step 0.085 sigma, predicted decrease 0.0034, noise 0.134, min sampled 5469.271
+f = 1, u = 0, u = 0: -log P fit = 5468.877 +- 0.015 (regression), direct = 5468.925, converged = True, 1225 evaluations, 15.4 min
+f = 1, thomson, u = 0.0001: start from neighbour f=1 kernel=None u=0
+  iter 0: step 2.000 sigma, predicted decrease 3.6741, noise 0.144, min sampled 5472.264
+  iter 1: step 1.107 sigma, predicted decrease 0.4778, noise 0.080, min sampled 5470.918
+  iter 2: step 0.260 sigma, predicted decrease 0.0467, noise 0.211, min sampled 5470.731
+  iter 3: step 0.292 sigma, predicted decrease 0.0282, noise 0.091, min sampled 5470.483
+  iter 4: step 0.534 sigma, predicted decrease 0.0795, noise 0.474, min sampled 5470.523
+  iter 5: step 0.970 sigma, predicted decrease 0.2270, noise 0.124, min sampled 5470.698
+  iter 6: step 2.000 sigma, predicted decrease 1.9670, noise 1.020, min sampled 5470.545
+  iter 7: step 2.000 sigma, predicted decrease 2.1131, noise 0.286, min sampled 5471.273
+  iter 8: step 1.225 sigma, predicted decrease 0.4306, noise 0.087, min sampled 5470.547

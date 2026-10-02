@@ -1,0 +1,433 @@
+{
+  "identity": {
+    "build": "patched",
+    "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+    "classy_version": "v3.4.0",
+    "patch_sha256": "7a83e173a81936450ee58bc46d05c770893d19c785466de208dd672a177c99bd"
+  },
+  "point": {
+    "omega_b": 0.02213001145566199,
+    "omega_dm": 0.11986242239766179,
+    "theta_s_100": 1.0417080727027663,
+    "n_s": 0.961599502994756,
+    "logA": 3.0349633563832326,
+    "tau_reio": 0.05157230753216562,
+    "A_planck": 1.0003711446056651,
+    "amp_143": 19.020131793033727,
+    "amp_217": 12.86332884820966,
+    "amp_143x217": 9.7851507999451,
+    "n_143": 1.0080360739699337,
+    "n_217": 1.413962337561519,
+    "n_143x217": 1.5351649596725332,
+    "calTE": 0.9974316565974126,
+    "calEE": 0.9974329152197389
+  },
+  "rows": [
+    {
+      "label": "lcdm (f=0)",
+      "f_cl": 0.0,
+      "u": 0.0,
+      "kernel": null,
+      "minuslogpost": 5468.938611153867,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.73540513550222,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.17950900859
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680220438674,
+        "sigma8": 0.8063847521171964,
+        "chi2__CMB": 10962.740376136326
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none"
+      }
+    },
+    {
+      "label": "f=1 u=0",
+      "f_cl": 1.0,
+      "u": 0.0,
+      "kernel": null,
+      "minuslogpost": 5468.94564938771,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735431935405586,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.193558676374
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680673967379,
+        "sigma8": 0.8063847702695256,
+        "chi2__CMB": 10962.754452604011
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0
+      }
+    },
+    {
+      "label": "f=0.5 u=0",
+      "f_cl": 0.5,
+      "u": 0.0,
+      "kernel": null,
+      "minuslogpost": 5468.94249979904,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735423290068923,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.187268144371
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680371507417,
+        "sigma8": 0.8063847328847723,
+        "chi2__CMB": 10962.748153426672
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0
+      }
+    },
+    {
+      "label": "f=0.1 u=0",
+      "f_cl": 0.1,
+      "u": 0.0,
+      "kernel": null,
+      "minuslogpost": 5468.940615191752,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735554555253202,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.183367664611
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680105011274,
+        "sigma8": 0.8063847315514306,
+        "chi2__CMB": 10962.744384212096
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0
+      }
+    },
+    {
+      "label": "f=0.03 u=0",
+      "f_cl": 0.03,
+      "u": 0.0,
+      "kernel": null,
+      "minuslogpost": 5468.94163440302,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735406655005193,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.185553987394
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680364018527,
+        "sigma8": 0.8063846887658032,
+        "chi2__CMB": 10962.746422634631
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0
+      }
+    },
+    {
+      "label": "f=0.01 u=0",
+      "f_cl": 0.01,
+      "u": 0.0,
+      "kernel": null,
+      "minuslogpost": 5468.936613153271,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735412251357786,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.175505891542
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680525872826,
+        "sigma8": 0.8063847158584604,
+        "chi2__CMB": 10962.736380135133
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0
+      }
+    },
+    {
+      "label": "f=1 u=1e-4 default",
+      "f_cl": 1.0,
+      "u": 0.0001,
+      "kernel": null,
+      "minuslogpost": 5474.195631348085,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.73992772853262,
+        "planck_2018_lowl.EE": 395.8155052510761,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10553.698983545153
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14522235260347,
+        "sigma8": 0.7659828557139297,
+        "chi2__CMB": 10973.254416524762
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0001,
+        "n_index_idm_g": 0
+      }
+    },
+    {
+      "label": "f=0.1 u=1e-3 default",
+      "f_cl": 0.1,
+      "u": 0.001,
+      "kernel": null,
+      "minuslogpost": 5478.511228075994,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.738958256235037,
+        "planck_2018_lowl.EE": 395.8155052510761,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10562.331146473269
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14522232518475,
+        "sigma8": 0.7822852952409031,
+        "chi2__CMB": 10981.88560998058
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.001,
+        "n_index_idm_g": 0
+      }
+    },
+    {
+      "label": "f=1 u=1e-9 default",
+      "f_cl": 1.0,
+      "u": 1e-09,
+      "kernel": null,
+      "minuslogpost": 5468.941239162673,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735416293805713,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.1847538679
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680564389234,
+        "sigma8": 0.806384215427069,
+        "chi2__CMB": 10962.745632153938
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 1e-09,
+        "n_index_idm_g": 0
+      }
+    },
+    {
+      "label": "f=1 u=1e-4 thomson",
+      "f_cl": 1.0,
+      "u": 0.0001,
+      "kernel": "thomson",
+      "minuslogpost": 5474.195631348085,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.73992772853262,
+        "planck_2018_lowl.EE": 395.8155052510761,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10553.698983545153
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14522235260347,
+        "sigma8": 0.7659828557139297,
+        "chi2__CMB": 10973.254416524762
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0001,
+        "n_index_idm_g": 0,
+        "idm_g_quadrupole_coefficient": 1.0,
+        "idm_g_polarization_coefficient": 1.0
+      }
+    },
+    {
+      "label": "f=1 u=1e-4 isotropic",
+      "f_cl": 1.0,
+      "u": 0.0001,
+      "kernel": "isotropic",
+      "minuslogpost": 5474.092430810426,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.73937020171695,
+        "planck_2018_lowl.EE": 395.8028263555283,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10553.505818892198
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14522235260347,
+        "sigma8": 0.7659828423535353,
+        "chi2__CMB": 10973.048015449443
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.0001,
+        "n_index_idm_g": 0,
+        "idm_g_quadrupole_coefficient": 0.0,
+        "idm_g_polarization_coefficient": 0.0
+      }
+    },
+    {
+      "label": "f=0.1 u=1e-3 thomson",
+      "f_cl": 0.1,
+      "u": 0.001,
+      "kernel": "thomson",
+      "minuslogpost": 5478.511228075994,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.738958256235037,
+        "planck_2018_lowl.EE": 395.8155052510761,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10562.331146473269
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14522232518475,
+        "sigma8": 0.7822852952409031,
+        "chi2__CMB": 10981.88560998058
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.001,
+        "n_index_idm_g": 0,
+        "idm_g_quadrupole_coefficient": 1.0,
+        "idm_g_polarization_coefficient": 1.0
+      }
+    },
+    {
+      "label": "f=0.1 u=1e-3 isotropic",
+      "f_cl": 0.1,
+      "u": 0.001,
+      "kernel": "isotropic",
+      "minuslogpost": 5478.432959398426,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.738397880220873,
+        "planck_2018_lowl.EE": 395.8028263555283,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10562.187848389694
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14522232518475,
+        "sigma8": 0.7822852697935717,
+        "chi2__CMB": 10981.729072625443
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 0.001,
+        "n_index_idm_g": 0,
+        "idm_g_quadrupole_coefficient": 0.0,
+        "idm_g_polarization_coefficient": 0.0
+      }
+    },
+    {
+      "label": "f=1 u=1e-9 thomson",
+      "f_cl": 1.0,
+      "u": 1e-09,
+      "kernel": "thomson",
+      "minuslogpost": 5468.941239162673,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735416293805713,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.1847538679
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680564389234,
+        "sigma8": 0.806384215427069,
+        "chi2__CMB": 10962.745632153938
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 1e-09,
+        "n_index_idm_g": 0,
+        "idm_g_quadrupole_coefficient": 1.0,
+        "idm_g_polarization_coefficient": 1.0
+      }
+    },
+    {
+      "label": "f=1 u=1e-9 isotropic",
+      "f_cl": 1.0,
+      "u": 1e-09,
+      "kernel": "isotropic",
+      "minuslogpost": 5468.944059832967,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735415367752466,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.19039613454
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680564389234,
+        "sigma8": 0.806384177316361,
+        "chi2__CMB": 10962.751273494525
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 1e-09,
+        "n_index_idm_g": 0,
+        "idm_g_quadrupole_coefficient": 0.0,
+        "idm_g_polarization_coefficient": 0.0
+      }
+    },
+    {
+      "label": "f=0.01 u=1e-9 isotropic",
+      "f_cl": 0.01,
+      "u": 1e-09,
+      "kernel": "isotropic",
+      "minuslogpost": 5468.934844932981,
+      "chi2": {
+        "planck_2018_lowl.TT": 23.735440609826696,
+        "planck_2018_lowl.EE": 395.8254619922321,
+        "planck_NPIPE_highl_CamSpec.TTTEEE": 10543.171941092494
+      },
+      "derived": {
+        "A_s": 2.080021569037829e-09,
+        "H0": 67.14680462559765,
+        "sigma8": 0.80638477476617,
+        "chi2__CMB": 10962.732843694554
+      },
+      "classy_path": "/home/stephen/checkouts/class_baryons/build/classy_patched/classy/__init__.py",
+      "classy_extra_args": {
+        "non_linear": "none",
+        "m_idm": 1e+27,
+        "u_idm_g": 1e-09,
+        "n_index_idm_g": 0,
+        "idm_g_quadrupole_coefficient": 0.0,
+        "idm_g_polarization_coefficient": 0.0
+      }
+    }
+  ]
+}
