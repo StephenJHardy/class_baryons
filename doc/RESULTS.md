@@ -20,7 +20,9 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
   - The lite likelihood agrees within 1.5% in Δχ².
   - At u = 0 the pipeline reproduces Planck's own ΛCDM fit (plik χ² 2344.89 against 2344.94).
   - The profile rises almost linearly from u = 0: the data lean mildly against the coupling, possibly from the 2018 spectra's preference for extra lensing.
-  - **Planck PR4 (NPIPE CamSpec) gives u < 1.17×10⁻⁴ (Σ/Q > 2.3×10⁶ g/cm²)**, 17% weaker than plik, with an initial slope ~20% lower. This fits PR4's smaller lensing excess. The headline MCMC on this likelihood set is running.
+  - **Planck PR4 (NPIPE CamSpec) gives u < 1.12×10⁻⁴ (Σ/Q > 2.4×10⁶ g/cm²)** at the nominal Δχ² = 2.71 threshold, about 12% weaker than plik, with an initial slope ~20% lower. This fits PR4's smaller lensing excess.
+    - *Superseded value:* 1.17×10⁻⁴ from the 2026-09-26 profile. The 2026-10 minimiser audit refitted it as (1.12 ± 0.02)×10⁻⁴; the old fits were sensitive to outlying likelihood evaluations. See [the mixture log](experiment_log/2026-10-02_clump_fraction_kernels.md).
+    - The plik profile (1.0×10⁻⁴) was made with the old minimiser and has not been refitted. Its fits had lower noise (~0.03) and passed all checks, but treat it as pre-audit.
   - **Headline Bayesian result (MCMC, PR4 CamSpec + 2018 low-ℓ, flat prior on u):**
     - **u < 1.69×10⁻⁴ at 95% (σ/M < 6.3×10⁻⁷ cm²/g, Σ/Q > 1.6×10⁶ g/cm²)**, close to the published Bayesian limits of 1.55×10⁻⁴ (2018) and 1.58×10⁻⁴ (2015).
     - It is 45% above the profile limit for the same data. That follows from the near-linear Δχ²(u), which makes the likelihood roughly exponential; there is no volume effect.
@@ -29,7 +31,27 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
     - The only Planck 2018 bound found is Zhou et al. 2022 (PRD 105, 103509): u < 1.55×10⁻⁴ (plik-lite, τ fixed, DM mass also free, MCMC). With lensing reconstruction it is u < 1.90×10⁻⁴; that loosening supports the lensing-excess reading of our profile shape.
     - The macro-dark-matter literature already applied the Wilkinson+2014 particle bound to macroscopic objects: Jacobs, Starkman & Lynn 2015 give σ_X/M_X < 4.5×10⁻⁷ cm²/g (68%).
     - No dedicated clump/macro likelihood analysis was found. Picker et al. 2026 (arXiv:2609.05626) explicitly leave cosmological scattering bounds for future work.
-  - Write-up: [doc/report/cmb_bound_report.pdf](report/cmb_bound_report.pdf) (profile results, robustness; MCMC section to follow).
+  - Write-up: [doc/report/cmb_bound_report.pdf](report/cmb_bound_report.pdf) (profile results, robustness, MCMC). The report still quotes the pre-audit CamSpec profile value of 1.17×10⁻⁴.
+- **Mixtures of CDM and clumps (2026-10-02 to 10-05; branch `clump-fraction-kernels`; PR4 CamSpec + 2018 low-ℓ; fixed-fraction profiles, both kernels, no MCMC):**
+  - **Model:** ω_cl = f_cl·ω_dark and ω_CDM = (1 − f_cl)·ω_dark, with ω_dark and ω_b fitted; all 15 parameters free.
+  - **Nominal fixed-fraction thresholds (Δχ² = 2.71 above each profile's own minimum; not joint confidence regions):**
+
+    | f_cl | Thomson u | Isotropic u | Σ/Q min [g/cm²] |
+    |---|---|---|---|
+    | 1 | 1.1×10⁻⁴ | 1.2×10⁻⁴ | 2.4×10⁶ |
+    | 0.5 | 2.7×10⁻⁴ | 2.7×10⁻⁴ | 1.0×10⁶ |
+    | 0.1 | 4.1×10⁻³ | 4.0×10⁻³ | 6.6×10⁴ |
+    | 0.03 | 3.8×10⁻² | 3.8×10⁻² | 7.1×10³ |
+    | 0.01 | 0.15 | not reached by u = 0.2 | 1.8×10³ (Thomson) |
+
+  - **CDM weakens the constraint faster than 1/f_cl:** f_cl·u at the threshold grows 1.2×, 3.6×, 10× and 13× for f_cl = 0.5, 0.1, 0.03 and 0.01.
+  - **Kernel:** it changes the thresholds by ≲ 3% wherever both crossings are reliable. At f_cl ≈ 0.01 and strong coupling it matters (Thomson clump scattering generates polarization), and only Thomson gives a limit in range.
+  - **Dip below ΛCDM:** for f_cl ≤ 0.03 the profile has a minimum at u > 0, Δχ² ≈ −2 to −3 below ΛCDM. It is driven by low-ℓ TT through a higher n_s. With two extra parameters this is not significant; it is a degeneracy with Planck's low-ℓ deficit, not evidence for clumps.
+  - See [the log](experiment_log/2026-10-02_clump_fraction_kernels.md), ![profiles](../figures/mix_profiles_camspec_npipe.png), ![boundary](../figures/mix_boundary_camspec_npipe.png) and ![vs LCDM](../figures/mix_vs_lcdm_camspec_npipe.png).
+  - **Minimiser audit:**
+    - The clipping bug did not affect earlier results; the old best fits were far from the bounds.
+    - The old CamSpec fits were sensitive to heavy-tailed likelihood noise, which moves the CamSpec profile threshold by −4%.
+    - The MCMC result does not depend on the minimiser and stands.
   - See [the likelihood log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) and ![profile](../figures/profile_u_plik_lite.png).
   - Simons Observatory + Planck would reach **u < 1.2×10⁻⁵ (Σ/Q > 2.2×10⁷ g/cm²)**, largely through lensing information in the damping tail.
   - The main degeneracies are with θ_s and ω_b.
@@ -52,7 +74,8 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
 | M6 Experiment B, minimal | ✅ | patched CLASS bit-identical to stock for Thomson; absorber shifts the u threshold by < 1% | [log](experiment_log/2026-09-26_m6_kernel_check.md) |
 | M12 Experiment E, small scales | ✅ | u ≲ 5×10⁻⁹ (Σ/Q ≳ 5×10¹⁰ g/cm²) via WDM half-mode matching; applies if clumps exist by z ~ 10⁷ | [log](experiment_log/2026-09-26_m12_small_scale.md) |
 | M13 Experiment F, energy exchange | ✅ (estimates) | passive clumps: μ ~ 2×10⁻⁸, y ~ 3×10⁻⁹ (≪ FIRAS); no-go on a full Boltzmann treatment; clump survival estimate recorded as a caveat on the premise | [log](experiment_log/2026-09-26_m13_energy_exchange.md) |
-| M7/M8 first step: profile by minimisation | ✅ | Planck 2018 full plik: u < 1.0×10⁻⁴; PR4 CamSpec: u < 1.17×10⁻⁴ (Δχ² = 2.71) | [log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) |
+| M7/M8 first step: profile by minimisation | ✅ | Planck 2018 full plik: u < 1.0×10⁻⁴; PR4 CamSpec: u < 1.17×10⁻⁴ (Δχ² = 2.71); refitted after the minimiser audit: 1.12×10⁻⁴ | [log](experiment_log/2026-09-26_m7_setup_and_published_bound_check.md) |
+| Mixtures f_cl = 1 … 0.01, Thomson and isotropic kernels (profiles) | ✅ (branch) | f_cl·u at Δχ² = 2.71 rises 13× from f_cl = 1 to 0.01; kernel ≲ 3% except at f_cl ≈ 0.01; dip of Δχ² ≈ −2.6 below ΛCDM at f_cl = 0.01 | [log](experiment_log/2026-10-02_clump_fraction_kernels.md) |
 | Headline MCMC (PR4 CamSpec, flat prior) | ✅ | u < 1.69×10⁻⁴ (95%), Σ/Q > 1.6×10⁶ g/cm²; R−1 = 0.02; u–σ8 correlation −0.92 | [log](experiment_log/2026-09-26_headline_mcmc.md) |
 | M9 – M11 | ⏳ | | |
 

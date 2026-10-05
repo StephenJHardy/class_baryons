@@ -144,6 +144,21 @@ Default CLASS v3.4.0 precision is only good to ~10⁻³ in C_ℓ for *relative* 
 - **getdist:** `MCSamples` has `.weights`, not `getWeights()`. `getCombinedSamplesWithSamples` fails on Cobaya's dotted `chi2__planck_...` names, so build the combined `MCSamples` from the arrays (`load_combined` in `mcmc_analyse.py`).
 - **Copying live chains:** rsync while the chains are still writing can in principle catch a partial last line. Check that every row has the same number of fields before analysing.
 
+## Profile minimiser after the 2026-10 audit (`src/quadfit_min.py`)
+
+- **Never clip proposals to the bounds and regress on the unclipped coordinates.** Sample from the truncated Gaussian instead, and minimise the fitted quadratic with the bounds as constraints.
+- **The CamSpec likelihood noise is heavy-tailed.** The rms is ~0.10 in −log P, and a few evaluations per hundred lie 4–5σ out. Use robust refits (drop residuals beyond 4 robust σ).
+- **Tie the convergence tolerance to the regression error of the fitted value.** With a fixed tolerance of 0.01 the centre random-walks, and re-whitening from noisy curvature then inflates the sampling region.
+- **Report the fitted minimum and a direct evaluation at the reported point,** and treat a rejected final fit as not converged.
+- **Run time:** about 1.3 evaluations/s on the 16-thread local machine for CamSpec. 4×4, 8×2, 16×1 and 5×3 worker splits are all equal, so 15–35 min per profile point.
+- **Mirrored kernel fits:** for a kernel comparison, fit the second kernel from the same start, covariance and seed (`profile_mix.py --start mirror`), so the noise is partly common to both fits.
+- **Kernel difference at fixed parameters:** at strong coupling, evaluating the other kernel at a kernel's best fit differs by several χ². The profiles re-fit and differ much less. So the envelope argument is valid only for small kernel effects.
+
+## Long local runs
+
+- **Launch with `scripts/run_detached.sh <log> '<command>'`** (setsid + nohup), never as a child of the interactive session. That way the run survives the session exiting. Every run must be resumable.
+- **To stop runs, kill the PID in `<log>.pid`, or select processes with `ps -eo pid,comm,args` filtered on `comm` (python, bash).** Pattern-based `pkill -f` and `ps | grep | xargs kill` killed the issuing shell again (2026-10-05), because the shell's own command line contained the pattern, in that case through a file path in the same command.
+
 ## Analysis gotchas
 
 - **Peak finding.** Detect the peaks of D_ℓ independently in each model and match them by order. Tracking within a window around the ΛCDM peaks fails once shifts exceed the window (u ≳ 10⁻²). Strongly damped models can have fewer than 7 peaks below ℓ = 2500, so those are padded with NaN. Lensed peak 7 is poorly defined for u ≳ 5×10⁻⁴.

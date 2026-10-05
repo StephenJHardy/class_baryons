@@ -245,7 +245,8 @@ def figures(summary, fractions, likelihoods):
     ax.set_xlabel("clump fraction of the dark component, f_cl", fontsize=9, color=INK)
     ax.set_ylabel("coupling u_cl at the threshold", fontsize=9, color=INK)
     ax.set_title("Nominal fixed-fraction profile thresholds (not a joint confidence contour)\n"
-                 "couplings above each curve exceed the stated Δχ² at that fraction", fontsize=9, color=INK)
+                 "Δχ² above each fraction's own profile minimum; for f_cl ≤ 0.03 that minimum is at u > 0",
+                 fontsize=9, color=INK)
     ax.legend(fontsize=8, frameon=False)
     sec = ax.secondary_yaxis("right", functions=(lambda u: sigma_surface_over_q(np.maximum(u, 1e-12)),
                                                  lambda s: 268.0 / np.maximum(s, 1e-12) * 1.0))
@@ -253,6 +254,29 @@ def figures(summary, fractions, likelihoods):
     sec.tick_params(colors=MUTED, labelsize=8)
     fig.savefig(FIG / f"mix_boundary_{likelihoods}.png", dpi=160)
     fig.savefig(FIG / f"mix_boundary_{likelihoods}.pdf")
+
+    # 2b. all fractions against the common LCDM reference (shows the dip below LCDM at small f_cl)
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4), constrained_layout=True, sharey=True)
+    shades = plt.get_cmap("viridis")(np.linspace(0.0, 0.85, len(fractions)))
+    for ax, k in zip(axes, KERNEL_STYLE):
+        style(ax)
+        for f, col in zip(fractions, shades):
+            p = summary["fractions"][f"{f:g}"].get(k)
+            if not p:
+                continue
+            uu = np.array(p["u"]) * f
+            ax.errorbar(np.maximum(uu, 2e-6) * 1e4, p["delta_chi2_vs_lcdm"], yerr=p["delta_chi2_err"], color=col,
+                        marker="o", ms=3.5, lw=1.4, capsize=1.5, label=f"f_cl = {f:g}")
+        ax.axhline(0, color=MUTED, lw=0.8)
+        ax.set(xscale="log", ylim=(-4, 8))
+        ax.set_title(f"{KERNEL_STYLE[k]['label']} kernel", fontsize=10, color=INK)
+        ax.set_xlabel("f_cl · u  [10⁻⁴]   (u = 0 plotted at the left edge)", fontsize=9, color=INK)
+    axes[0].set_ylabel("Δχ² relative to the ΛCDM fit", fontsize=9, color=INK)
+    axes[0].legend(fontsize=8, frameon=False, loc="upper left")
+    fig.suptitle("Profiles against a common ΛCDM reference: at f_cl ≤ 0.03 the profile dips to Δχ² ≈ −2 to −3 "
+                 "(two extra parameters; not significant)", fontsize=10, color=INK)
+    fig.savefig(FIG / f"mix_vs_lcdm_{likelihoods}.png", dpi=160)
+    fig.savefig(FIG / f"mix_vs_lcdm_{likelihoods}.pdf")
 
     # 3. fitted parameters along the Thomson profiles (small multiples, one parameter per panel)
     shown = [("sigma8", "σ₈", "derived"), ("theta_s_100", "100 θ_s", "best"), ("omega_dm", "ω_dark", "best"),

@@ -1,1 +1,223 @@
 f = 1, thomson, u = 0.0001 [seed1]: start from neighbour f=1 kernel=thomson u=0.0001
+  iter 0: step 0.113 sigma, predicted decrease 0.0057, noise 0.136, min sampled 5470.455
+f = 1, thomson, u = 0.0001 [seed1]: -log P fit = 5470.089 +- 0.010 (regression), direct = 5470.105, converged = True, 1225 evaluations, 17.0 min
+f = 1, thomson, u = 0.0001 [lcdmstart]: start from earlier f=1, u=0 profile solution (LCDM-equivalent)
+  iter 0: step 2.000 sigma, predicted decrease 3.7820, noise 0.101, min sampled 5472.412
+  iter 1: step 1.023 sigma, predicted decrease 0.4210, noise 0.079, min sampled 5470.586
+  iter 2: step 0.139 sigma, predicted decrease 0.0099, noise 0.080, min sampled 5470.462
+f = 1, thomson, u = 0.0001 [lcdmstart]: -log P fit = 5470.070 +- 0.012 (regression), direct = 5470.089, converged = True, 2041 evaluations, 28.0 min
+f = 1, u = 0, u = 0 [seed1]: start from neighbour f=1 kernel=None u=0
+  iter 0: step 0.078 sigma, predicted decrease 0.0028, noise 0.123, min sampled 5469.313
+f = 1, u = 0, u = 0 [seed1]: -log P fit = 5468.888 +- 0.010 (regression), direct = 5468.935, converged = True, 1225 evaluations, 15.5 min
+f = 1, thomson, u = 0.00015 [seed1]: start from neighbour f=1 kernel=thomson u=0.00015
+  iter 0: step 0.112 sigma, predicted decrease 0.0053, noise 0.126, min sampled 5471.186
+f = 1, thomson, u = 0.00015 [seed1]: -log P fit = 5470.761 +- 0.011 (regression), direct = 5470.783, converged = True, 1225 evaluations, 17.0 min
+f = 1, isotropic, u = 5e-05: start from mirror of thomson f=1 u=5e-05
+  iter 0: step 1.548 sigma, predicted decrease 1.1083, noise 0.104, min sampled 5470.404
+  iter 1: step 0.381 sigma, predicted decrease 0.1169, noise 0.199, min sampled 5470.087
+  iter 2: step 0.187 sigma, predicted decrease 0.0234, noise 0.138, min sampled 5470.031
+f = 1, isotropic, u = 5e-05: -log P fit = 5469.440 +- 0.012 (regression), direct = 5469.495, converged = True, 2041 evaluations, 28.0 min
+f = 1, isotropic, u = 0.0001: start from mirror of thomson f=1 u=0.0001
+  iter 0: step 2.000 sigma, predicted decrease 3.5150, noise 0.100, min sampled 5472.279
+  iter 1: step 0.906 sigma, predicted decrease 0.3792, noise 0.087, min sampled 5470.538
+  iter 2: step 0.170 sigma, predicted decrease 0.0144, noise 0.124, min sampled 5470.607
+f = 1, isotropic, u = 0.0001: -log P fit = 5470.057 +- 0.011 (regression), direct = 5470.085, converged = True, 2041 evaluations, 28.4 min
+f = 1, isotropic, u = 0.00012: start from mirror of thomson f=1 u=0.00012
+  iter 0: step 0.657 sigma, predicted decrease 0.2071, noise 0.104, min sampled 5470.875
+  iter 1: step 0.200 sigma, predicted decrease 0.0189, noise 0.114, min sampled 5471.035
+f = 1, isotropic, u = 0.00012: -log P fit = 5470.277 +- 0.014 (regression), direct = 5470.330, converged = True, 1633 evaluations, 22.4 min
+f = 1, isotropic, u = 0.00015: start from mirror of thomson f=1 u=0.00015
+  iter 0: step 0.967 sigma, predicted decrease 0.4668, noise 0.084, min sampled 5471.440
+  iter 1: step 0.128 sigma, predicted decrease 0.0077, noise 0.110, min sampled 5471.361
+f = 1, isotropic, u = 0.00015: -log P fit = 5470.707 +- 0.013 (regression), direct = 5470.752, converged = True, 1633 evaluations, 22.7 min
+f = 1, isotropic, u = 0.0002: start from mirror of thomson f=1 u=0.0002
+  iter 0: step 1.767 sigma, predicted decrease 1.4937, noise 0.105, min sampled 5472.684
+  iter 1: step 0.469 sigma, predicted decrease 0.0800, noise 0.092, min sampled 5472.168
+  iter 2: step 0.281 sigma, predicted decrease 0.0747, noise 0.240, min sampled 5472.071
+f = 1, isotropic, u = 0.0002: -log P fit = 5471.455 +- 0.011 (regression), direct = 5471.490, converged = True, 2041 evaluations, 28.4 min
+f = 0.5, u = 0, u = 0: start from u=0 solution of f=1
+  iter 0: step 0.075 sigma, predicted decrease 0.0028, noise 0.099, min sampled 5469.271
+f = 0.5, u = 0, u = 0: -log P fit = 5468.885 +- 0.013 (regression), direct = 5468.928, converged = True, 1225 evaluations, 15.4 min
+f = 0.5, thomson, u = 0.0001: start from neighbour f=0.5 kernel=None u=0
+  iter 0: step 1.398 sigma, predicted decrease 0.9688, noise 0.091, min sampled 5470.318
+  iter 1: step 0.135 sigma, predicted decrease 0.0093, noise 0.102, min sampled 5470.065
+f = 0.5, thomson, u = 0.0001: -log P fit = 5469.386 +- 0.013 (regression), direct = 5469.454, converged = True, 1633 evaluations, 22.4 min
+f = 0.5, thomson, u = 0.0002: start from neighbour f=0.5 kernel=thomson u=0.0001
+  iter 0: step 1.669 sigma, predicted decrease 1.3760, noise 0.086, min sampled 5470.988
+  iter 1: step 0.211 sigma, predicted decrease 0.0227, noise 0.099, min sampled 5470.518
+f = 0.5, thomson, u = 0.0002: -log P fit = 5469.871 +- 0.015 (regression), direct = 5469.958, converged = True, 1633 evaluations, 22.6 min
+f = 0.5, thomson, u = 0.00027: start from neighbour f=0.5 kernel=thomson u=0.0002
+  iter 0: step 1.328 sigma, predicted decrease 0.8763, noise 0.080, min sampled 5471.092
+  iter 1: step 0.140 sigma, predicted decrease 0.0099, noise 0.109, min sampled 5470.857
+f = 0.5, thomson, u = 0.00027: -log P fit = 5470.260 +- 0.013 (regression), direct = 5470.281, converged = True, 1633 evaluations, 22.6 min
+f = 0.5, thomson, u = 0.00036: start from neighbour f=0.5 kernel=thomson u=0.00027
+  iter 0: step 1.879 sigma, predicted decrease 1.6789, noise 0.106, min sampled 5472.150
+  iter 1: step 0.505 sigma, predicted decrease 0.0866, noise 0.097, min sampled 5471.453
+  iter 2: step 0.301 sigma, predicted decrease 0.0917, noise 0.259, min sampled 5471.380
+f = 0.5, thomson, u = 0.00036: -log P fit = 5470.764 +- 0.012 (regression), direct = 5470.783, converged = True, 2041 evaluations, 28.4 min
+f = 0.1, u = 0, u = 0: start from u=0 solution of f=0.5
+  iter 0: step 0.075 sigma, predicted decrease 0.0029, noise 0.091, min sampled 5469.248
+f = 0.1, u = 0, u = 0: -log P fit = 5468.877 +- 0.013 (regression), direct = 5468.908, converged = True, 1225 evaluations, 15.4 min
+f = 0.1, thomson, u = 0.00045: start from neighbour f=0.1 kernel=None u=0
+  iter 0: step 1.583 sigma, predicted decrease 1.2210, noise 0.090, min sampled 5470.107
+  iter 1: step 0.204 sigma, predicted decrease 0.0211, noise 0.091, min sampled 5469.773
+f = 0.1, thomson, u = 0.00045: -log P fit = 5469.104 +- 0.015 (regression), direct = 5469.204, converged = True, 1633 evaluations, 22.8 min
+f = 0.1, thomson, u = 0.0009: start from neighbour f=0.1 kernel=thomson u=0.00045
+  iter 0: step 2.000 sigma, predicted decrease 2.4259, noise 0.079, min sampled 5471.091
+  iter 1: step 0.365 sigma, predicted decrease 0.0609, noise 0.092, min sampled 5469.802
+  iter 2: step 0.147 sigma, predicted decrease 0.0097, noise 0.129, min sampled 5469.802
+f = 0.1, thomson, u = 0.0009: -log P fit = 5469.253 +- 0.011 (regression), direct = 5469.254, converged = True, 2041 evaluations, 28.8 min
+f = 0.1, thomson, u = 0.00135: start from neighbour f=0.1 kernel=thomson u=0.0009
+  iter 0: step 2.000 sigma, predicted decrease 2.7799, noise 0.111, min sampled 5471.437
+  iter 1: step 0.774 sigma, predicted decrease 0.2084, noise 0.093, min sampled 5470.023
+  iter 2: step 0.363 sigma, predicted decrease 0.1091, noise 0.264, min sampled 5469.954
+  iter 3: step 0.283 sigma, predicted decrease 0.0427, noise 0.123, min sampled 5469.731
+f = 0.1, thomson, u = 0.00135: -log P fit = 5469.282 +- 0.019 (regression), direct = 5469.382, converged = True, 2449 evaluations, 34.7 min
+f = 0.1, thomson, u = 0.0018: start from neighbour f=0.1 kernel=thomson u=0.00135
+  iter 0: step 2.000 sigma, predicted decrease 2.9226, noise 0.085, min sampled 5471.398
+  iter 1: step 0.544 sigma, predicted decrease 0.1346, noise 0.121, min sampled 5469.970
+  iter 2: step 0.194 sigma, predicted decrease 0.0197, noise 0.128, min sampled 5469.964
+f = 0.1, thomson, u = 0.0018: -log P fit = 5469.425 +- 0.012 (regression), direct = 5469.458, converged = True, 2041 evaluations, 29.0 min
+f = 0.03, u = 0, u = 0: start from u=0 solution of f=0.1
+  iter 0: step 0.078 sigma, predicted decrease 0.0031, noise 0.089, min sampled 5469.235
+f = 0.03, u = 0, u = 0: -log P fit = 5468.878 +- 0.013 (regression), direct = 5468.910, converged = True, 1225 evaluations, 15.5 min
+f = 0.03, thomson, u = 0.0015: start from neighbour f=0.03 kernel=None u=0
+  iter 0: step 2.000 sigma, predicted decrease 2.1335, noise 0.089, min sampled 5470.506
+  iter 1: step 0.363 sigma, predicted decrease 0.0536, noise 0.076, min sampled 5469.574
+  iter 2: step 0.212 sigma, predicted decrease 0.0301, noise 0.198, min sampled 5469.526
+f = 0.03, thomson, u = 0.0015: -log P fit = 5468.926 +- 0.010 (regression), direct = 5468.950, converged = True, 2041 evaluations, 28.9 min
+f = 0.03, thomson, u = 0.003: start from neighbour f=0.03 kernel=thomson u=0.0015
+  iter 0: step 2.000 sigma, predicted decrease 2.8927, noise 0.140, min sampled 5470.913
+  iter 1: step 1.095 sigma, predicted decrease 0.3352, noise 0.097, min sampled 5469.366
+  iter 2: step 0.760 sigma, predicted decrease 0.3347, noise 0.378, min sampled 5469.375
+    fit noise anomalous: centre and whitening kept, resampling
+  iter 3: step 0.879 sigma, predicted decrease 0.3997, noise 0.441, min sampled 5469.244
+    fit noise anomalous: centre and whitening kept, resampling
+  iter 4: step 0.723 sigma, predicted decrease 0.3288, noise 0.371, min sampled 5469.336
+  iter 5: step 0.700 sigma, predicted decrease 0.2221, noise 0.085, min sampled 5469.314
+  iter 6: step 0.759 sigma, predicted decrease 0.3307, noise 0.446, min sampled 5469.271
+  iter 7: step 0.531 sigma, predicted decrease 0.2641, noise 0.095, min sampled 5469.534
+  iter 8: step 0.117 sigma, predicted decrease 0.0081, noise 0.142, min sampled 5469.223
+f = 0.03, thomson, u = 0.003: -log P fit = 5468.780 +- 0.009 (regression), direct = 5468.801, converged = True, 4489 evaluations, 64.0 min
+f = 0.03, thomson, u = 0.0045: start from neighbour f=0.03 kernel=thomson u=0.003
+  iter 0: step 2.000 sigma, predicted decrease 2.7909, noise 0.128, min sampled 5470.558
+  iter 1: step 0.821 sigma, predicted decrease 0.2062, noise 0.101, min sampled 5469.148
+  iter 2: step 0.383 sigma, predicted decrease 0.1162, noise 0.269, min sampled 5469.241
+  iter 3: step 0.240 sigma, predicted decrease 0.0338, noise 0.111, min sampled 5468.980
+f = 0.03, thomson, u = 0.0045: -log P fit = 5468.565 +- 0.017 (regression), direct = 5468.659, converged = True, 2449 evaluations, 34.7 min
+f = 0.03, thomson, u = 0.006: start from neighbour f=0.03 kernel=thomson u=0.0045
+  iter 0: step 2.000 sigma, predicted decrease 2.4706, noise 0.078, min sampled 5470.099
+  iter 1: step 0.396 sigma, predicted decrease 0.0680, noise 0.125, min sampled 5469.069
+  iter 2: step 0.152 sigma, predicted decrease 0.0117, noise 0.135, min sampled 5468.978
+f = 0.03, thomson, u = 0.006: -log P fit = 5468.453 +- 0.012 (regression), direct = 5468.494, converged = True, 2041 evaluations, 29.2 min
+f = 0.01, u = 0, u = 0: start from u=0 solution of f=0.03
+  iter 0: step 0.080 sigma, predicted decrease 0.0033, noise 0.089, min sampled 5469.265
+f = 0.01, u = 0, u = 0: -log P fit = 5468.871 +- 0.013 (regression), direct = 5468.934, converged = True, 1225 evaluations, 15.4 min
+f = 0.01, thomson, u = 0.0045: start from neighbour f=0.01 kernel=None u=0
+  iter 0: step 2.000 sigma, predicted decrease 2.5631, noise 0.086, min sampled 5470.445
+  iter 1: step 0.456 sigma, predicted decrease 0.0901, noise 0.085, min sampled 5469.361
+  iter 2: step 0.173 sigma, predicted decrease 0.0154, noise 0.153, min sampled 5469.265
+f = 0.01, thomson, u = 0.0045: -log P fit = 5468.729 +- 0.009 (regression), direct = 5468.764, converged = True, 2041 evaluations, 29.8 min
+f = 0.01, thomson, u = 0.009: start from neighbour f=0.01 kernel=thomson u=0.0045
+  iter 0: step 2.000 sigma, predicted decrease 2.2716, noise 0.121, min sampled 5470.033
+  iter 1: step 0.635 sigma, predicted decrease 0.1299, noise 0.098, min sampled 5469.057
+  iter 2: step 0.409 sigma, predicted decrease 0.1089, noise 0.338, min sampled 5469.102
+f = 0.01, thomson, u = 0.009: -log P fit = 5468.479 +- 0.009 (regression), direct = 5468.514, converged = True, 2041 evaluations, 30.3 min
+f = 0.01, thomson, u = 0.0135: start from neighbour f=0.01 kernel=thomson u=0.009
+  iter 0: step 1.904 sigma, predicted decrease 1.7626, noise 0.127, min sampled 5469.503
+  iter 1: step 0.646 sigma, predicted decrease 0.1279, noise 0.104, min sampled 5468.850
+  iter 2: step 0.378 sigma, predicted decrease 0.1283, noise 0.279, min sampled 5468.856
+  iter 3: step 0.214 sigma, predicted decrease 0.0318, noise 0.117, min sampled 5468.582
+f = 0.01, thomson, u = 0.0135: -log P fit = 5468.237 +- 0.014 (regression), direct = 5468.297, converged = True, 2449 evaluations, 36.7 min
+f = 0.01, thomson, u = 0.018: start from neighbour f=0.01 kernel=thomson u=0.0135
+  iter 0: step 1.705 sigma, predicted decrease 1.3608, noise 0.090, min sampled 5469.101
+  iter 1: step 0.207 sigma, predicted decrease 0.0210, noise 0.110, min sampled 5468.744
+f = 0.01, thomson, u = 0.018: -log P fit = 5468.036 +- 0.016 (regression), direct = 5468.119, converged = True, 1633 evaluations, 24.8 min
+f = 0.5, isotropic, u = 0.0001: start from mirror of thomson f=0.5 u=0.0001
+  iter 0: step 1.392 sigma, predicted decrease 0.9551, noise 0.090, min sampled 5470.323
+  iter 1: step 0.141 sigma, predicted decrease 0.0106, noise 0.098, min sampled 5470.054
+f = 0.5, isotropic, u = 0.0001: -log P fit = 5469.365 +- 0.013 (regression), direct = 5469.436, converged = True, 1633 evaluations, 23.3 min
+f = 0.5, isotropic, u = 0.0002: start from mirror of thomson f=0.5 u=0.0002
+  iter 0: step 1.631 sigma, predicted decrease 1.3351, noise 0.084, min sampled 5470.950
+  iter 1: step 0.219 sigma, predicted decrease 0.0235, noise 0.096, min sampled 5470.496
+f = 0.5, isotropic, u = 0.0002: -log P fit = 5469.843 +- 0.015 (regression), direct = 5469.919, converged = True, 1633 evaluations, 22.3 min
+f = 0.5, isotropic, u = 0.00027: start from mirror of thomson f=0.5 u=0.00027
+  iter 0: step 1.322 sigma, predicted decrease 0.8704, noise 0.080, min sampled 5471.168
+  iter 1: step 0.155 sigma, predicted decrease 0.0122, noise 0.111, min sampled 5470.795
+f = 0.5, isotropic, u = 0.00027: -log P fit = 5470.217 +- 0.013 (regression), direct = 5470.256, converged = True, 1633 evaluations, 22.8 min
+f = 0.5, isotropic, u = 0.00036: start from mirror of thomson f=0.5 u=0.00036
+  iter 0: step 1.888 sigma, predicted decrease 1.6816, noise 0.106, min sampled 5472.217
+  iter 1: step 0.565 sigma, predicted decrease 0.1017, noise 0.094, min sampled 5471.397
+  iter 2: step 0.354 sigma, predicted decrease 0.1274, noise 0.290, min sampled 5471.346
+  iter 3: step 0.270 sigma, predicted decrease 0.0429, noise 0.139, min sampled 5471.104
+f = 0.5, isotropic, u = 0.00036: -log P fit = 5470.702 +- 0.014 (regression), direct = 5470.754, converged = True, 2449 evaluations, 33.8 min
+f = 0.1, isotropic, u = 0.00045: start from mirror of thomson f=0.1 u=0.00045
+  iter 0: step 1.577 sigma, predicted decrease 1.2081, noise 0.090, min sampled 5470.113
+  iter 1: step 0.225 sigma, predicted decrease 0.0262, noise 0.090, min sampled 5469.776
+f = 0.1, isotropic, u = 0.00045: -log P fit = 5469.087 +- 0.016 (regression), direct = 5469.171, converged = True, 1633 evaluations, 22.6 min
+f = 0.1, isotropic, u = 0.0009: start from mirror of thomson f=0.1 u=0.0009
+  iter 0: step 2.000 sigma, predicted decrease 2.4210, noise 0.079, min sampled 5471.105
+  iter 1: step 0.364 sigma, predicted decrease 0.0601, noise 0.102, min sampled 5469.765
+  iter 2: step 0.146 sigma, predicted decrease 0.0091, noise 0.133, min sampled 5469.759
+f = 0.1, isotropic, u = 0.0009: -log P fit = 5469.223 +- 0.011 (regression), direct = 5469.251, converged = True, 2041 evaluations, 28.7 min
+f = 0.1, isotropic, u = 0.00135: start from mirror of thomson f=0.1 u=0.00135
+  iter 0: step 2.000 sigma, predicted decrease 2.7966, noise 0.111, min sampled 5471.481
+  iter 1: step 0.775 sigma, predicted decrease 0.2114, noise 0.094, min sampled 5469.988
+  iter 2: step 0.358 sigma, predicted decrease 0.1064, noise 0.267, min sampled 5469.903
+  iter 3: step 0.305 sigma, predicted decrease 0.0478, noise 0.134, min sampled 5469.691
+f = 0.1, isotropic, u = 0.00135: -log P fit = 5469.265 +- 0.017 (regression), direct = 5469.343, converged = True, 2449 evaluations, 34.6 min
+f = 0.1, isotropic, u = 0.0018: start from mirror of thomson f=0.1 u=0.0018
+  iter 0: step 2.000 sigma, predicted decrease 2.9342, noise 0.082, min sampled 5471.376
+  iter 1: step 0.589 sigma, predicted decrease 0.1533, noise 0.116, min sampled 5469.992
+  iter 2: step 0.188 sigma, predicted decrease 0.0183, noise 0.134, min sampled 5469.924
+f = 0.1, isotropic, u = 0.0018: -log P fit = 5469.386 +- 0.013 (regression), direct = 5469.406, converged = True, 2041 evaluations, 28.7 min
+f = 0.03, isotropic, u = 0.0015: start from mirror of thomson f=0.03 u=0.0015
+  iter 0: step 2.000 sigma, predicted decrease 2.1277, noise 0.089, min sampled 5470.516
+  iter 1: step 0.374 sigma, predicted decrease 0.0575, noise 0.085, min sampled 5469.525
+  iter 2: step 0.209 sigma, predicted decrease 0.0326, noise 0.223, min sampled 5469.487
+f = 0.03, isotropic, u = 0.0015: -log P fit = 5468.919 +- 0.009 (regression), direct = 5468.925, converged = True, 2041 evaluations, 28.9 min
+f = 0.03, isotropic, u = 0.003: start from mirror of thomson f=0.03 u=0.003
+  iter 0: step 2.000 sigma, predicted decrease 2.9134, noise 0.140, min sampled 5470.950
+  iter 1: step 1.144 sigma, predicted decrease 0.3564, noise 0.096, min sampled 5469.319
+  iter 2: step 1.004 sigma, predicted decrease 0.4258, noise 0.423, min sampled 5469.361
+    fit noise anomalous: centre and whitening kept, resampling
+  iter 3: step 2.000 sigma, predicted decrease 0.5904, noise 0.538, min sampled 5469.223
+    fit noise anomalous: centre and whitening kept, resampling
+  iter 4: step 0.980 sigma, predicted decrease 0.3951, noise 0.392, min sampled 5469.280
+  iter 5: step 2.000 sigma, predicted decrease 0.6068, noise 0.083, min sampled 5469.423
+  iter 6: step 2.000 sigma, predicted decrease 9.4293, noise 0.737, min sampled 5469.985
+  iter 7: step 2.000 sigma, predicted decrease 2.3674, noise 0.514, min sampled 5470.270
+  iter 8: step 1.214 sigma, predicted decrease 0.8589, noise 0.236, min sampled 5469.256
+f = 0.03, isotropic, u = 0.003: -log P fit = 5468.749 +- 0.009 (regression), direct = 5468.754, converged = False, 4489 evaluations, 63.9 min
+f = 0.03, isotropic, u = 0.0045: start from mirror of thomson f=0.03 u=0.0045
+  iter 0: step 2.000 sigma, predicted decrease 2.8328, noise 0.123, min sampled 5470.623
+  iter 1: step 0.840 sigma, predicted decrease 0.2087, noise 0.097, min sampled 5469.130
+  iter 2: step 0.436 sigma, predicted decrease 0.1648, noise 0.283, min sampled 5469.174
+  iter 3: step 0.271 sigma, predicted decrease 0.0494, noise 0.122, min sampled 5468.957
+  iter 4: step 0.153 sigma, predicted decrease 0.0139, noise 0.150, min sampled 5468.973
+f = 0.03, isotropic, u = 0.0045: -log P fit = 5468.594 +- 0.010 (regression), direct = 5468.606, converged = True, 2857 evaluations, 40.9 min
+f = 0.03, isotropic, u = 0.006: start from mirror of thomson f=0.03 u=0.006
+  iter 0: step 2.000 sigma, predicted decrease 2.5248, noise 0.083, min sampled 5470.163
+  iter 1: step 0.410 sigma, predicted decrease 0.0737, noise 0.128, min sampled 5469.022
+  iter 2: step 0.146 sigma, predicted decrease 0.0105, noise 0.136, min sampled 5468.957
+f = 0.03, isotropic, u = 0.006: -log P fit = 5468.421 +- 0.012 (regression), direct = 5468.466, converged = True, 2041 evaluations, 28.9 min
+f = 0.01, isotropic, u = 0.0045: start from mirror of thomson f=0.01 u=0.0045
+  iter 0: step 2.000 sigma, predicted decrease 2.5644, noise 0.084, min sampled 5470.468
+  iter 1: step 0.453 sigma, predicted decrease 0.0880, noise 0.082, min sampled 5469.338
+  iter 2: step 0.178 sigma, predicted decrease 0.0164, noise 0.159, min sampled 5469.287
+f = 0.01, isotropic, u = 0.0045: -log P fit = 5468.721 +- 0.009 (regression), direct = 5468.732, converged = True, 2041 evaluations, 29.1 min
+f = 0.01, isotropic, u = 0.009: start from mirror of thomson f=0.01 u=0.009
+  iter 0: step 2.000 sigma, predicted decrease 2.3222, noise 0.122, min sampled 5470.082
+  iter 1: step 0.646 sigma, predicted decrease 0.1346, noise 0.100, min sampled 5469.024
+  iter 2: step 0.323 sigma, predicted decrease 0.0891, noise 0.255, min sampled 5469.060
+f = 0.01, isotropic, u = 0.009: -log P fit = 5468.444 +- 0.011 (regression), direct = 5468.473, converged = True, 2041 evaluations, 29.3 min
+f = 0.01, isotropic, u = 0.0135: start from mirror of thomson f=0.01 u=0.0135
+  iter 0: step 1.979 sigma, predicted decrease 1.8516, noise 0.127, min sampled 5469.439
+  iter 1: step 0.682 sigma, predicted decrease 0.1444, noise 0.102, min sampled 5468.831
+  iter 2: step 0.411 sigma, predicted decrease 0.1533, noise 0.307, min sampled 5468.820
+  iter 3: step 0.235 sigma, predicted decrease 0.0395, noise 0.121, min sampled 5468.562
+f = 0.01, isotropic, u = 0.0135: -log P fit = 5468.204 +- 0.014 (regression), direct = 5468.267, converged = True, 2449 evaluations, 35.0 min
+f = 0.01, isotropic, u = 0.018: start from mirror of thomson f=0.01 u=0.018
+  iter 0: step 1.766 sigma, predicted decrease 1.4572, noise 0.090, min sampled 5469.103
+  iter 1: step 0.216 sigma, predicted decrease 0.0238, noise 0.106, min sampled 5468.712
+f = 0.01, isotropic, u = 0.018: -log P fit = 5468.009 +- 0.015 (regression), direct = 5468.058, converged = True, 1633 evaluations, 23.6 min

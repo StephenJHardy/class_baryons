@@ -96,7 +96,7 @@ def run_point(likelihoods, f_cl, kernel, u, seed=0, tag=None, start_mode="neighb
         print(f"{label}: already done", flush=True)
         return json.load(open(directory / "result.json"))
     x0, cov, mirror_seed, origin = choose_start(likelihoods, f_cl, kernel, u, start_mode)
-    if mirror_seed is not None:
+    if mirror_seed is not None and seed == 0:     # an explicit --seed overrides the mirrored one
         seed = mirror_seed
     if (directory / "checkpoint.json").exists() and start_mode != "mirror":
         ck = json.load(open(directory / "checkpoint.json"))
