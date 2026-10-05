@@ -21,7 +21,7 @@ LIKE = ROOT / "results" / "likelihood"
 FIG = ROOT / "figures"
 PROFILES = [("plik", "Planck 2018 low-ℓ + plik TT,TE,EE", "C0", "o"),
             ("plik_lite", "Planck 2018 low-ℓ + plik-lite TT,TE,EE", "C2", "s"),
-            ("camspec_npipe", "Planck 2018 low-ℓ + PR4 CamSpec TT,TE,EE", "C3", "D")]
+            ("camspec_npipe", "Planck 2018 low-ℓ + PR4 CamSpec TT,TE,EE (refitted)", "C3", "D")]
 PUBLISHED = [("Stadler & Bœhm 2018: Planck 2015 TT,TE,EE", 1.58e-4, "0.3", "--"),
              ("Stadler & Bœhm 2018: Planck 2015 TT", 2.25e-4, "0.3", ":"),
              ("Zhou et al. 2022: Planck 2018 (lite, τ fixed)", 1.55e-4, "C1", "--"),
@@ -30,6 +30,11 @@ FISHER_SIGMA_U = 6.7e-5
 
 
 def load(name):
+    if name == "camspec_npipe":
+        # refitted after the 2026-10 minimiser audit (src/profile_mix.py, f_cl = 1, Thomson kernel)
+        p = json.load(open(ROOT / "results" / "mix" / "camspec_npipe" / "summary.json"))["fractions"]["1"]["thomson"]
+        return (np.array(p["u"]), np.array(p["delta_chi2"]), np.array(p["delta_chi2_err"]),
+                {"u(dchi2=2.71)": p["crossings"]["2.71"]["u"], "u(dchi2=3.84)": p["crossings"]["3.84"]["u"]})
     s = json.load(open(LIKE / name / "profile_summary.json"))
     u = np.array([r["u"] for r in s["rows"]])
     err = np.array([2 * max(r["err"], 0.025) for r in s["rows"]])   # >= fit noise floor
@@ -56,6 +61,7 @@ def profiles():
     for label, val, color, ls in PUBLISHED:
         ax.axvline(val * 1e4, color=color, ls=ls, lw=1.0, label=label)
     ax.set(xlabel="u  [10⁻⁴]", ylabel="Δχ²  (profile)", xlim=(0, 4.2), ylim=(0, 17))
+    ax.set_xlim(0, 4.2)
     ax.legend(fontsize=7.5, loc="upper left")
     fig.savefig(FIG / "report_profiles.pdf")
     fig.savefig(FIG / "report_profiles.png", dpi=150)

@@ -31,7 +31,7 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
     - The only Planck 2018 bound found is Zhou et al. 2022 (PRD 105, 103509): u < 1.55×10⁻⁴ (plik-lite, τ fixed, DM mass also free, MCMC). With lensing reconstruction it is u < 1.90×10⁻⁴; that loosening supports the lensing-excess reading of our profile shape.
     - The macro-dark-matter literature already applied the Wilkinson+2014 particle bound to macroscopic objects: Jacobs, Starkman & Lynn 2015 give σ_X/M_X < 4.5×10⁻⁷ cm²/g (68%).
     - No dedicated clump/macro likelihood analysis was found. Picker et al. 2026 (arXiv:2609.05626) explicitly leave cosmological scattering bounds for future work.
-  - Write-up: [doc/report/cmb_bound_report.pdf](report/cmb_bound_report.pdf) (profile results, robustness, MCMC). The report still quotes the pre-audit CamSpec profile value of 1.17×10⁻⁴.
+  - Write-up: [doc/report/cmb_bound_report.pdf](report/cmb_bound_report.pdf) (profile results, robustness, MCMC, mixtures and kernels; CamSpec profile refitted after the minimiser audit).
 - **Mixtures of CDM and clumps (2026-10-02 to 10-05; branch `clump-fraction-kernels`; PR4 CamSpec + 2018 low-ℓ; fixed-fraction profiles, both kernels, no MCMC):**
   - **Model:** ω_cl = f_cl·ω_dark and ω_CDM = (1 − f_cl)·ω_dark, with ω_dark and ω_b fitted; all 15 parameters free.
   - **Nominal fixed-fraction thresholds (Δχ² = 2.71 above each profile's own minimum; not joint confidence regions):**
