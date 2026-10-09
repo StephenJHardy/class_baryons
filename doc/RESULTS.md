@@ -47,6 +47,10 @@ The project answers a conditional question: *if* compact, pressureless clumps ma
   - **CDM weakens the constraint faster than 1/f_cl:** f_cl·u at the threshold grows 1.2×, 3.6×, 10× and 13× for f_cl = 0.5, 0.1, 0.03 and 0.01.
   - **Kernel:** it changes the thresholds by ≲ 3% wherever both crossings are reliable. At f_cl ≈ 0.01 and strong coupling it matters (Thomson clump scattering generates polarization), and only Thomson gives a limit in range.
   - **Dip below ΛCDM:** for f_cl ≤ 0.03 the profile has a minimum at u > 0, Δχ² ≈ −2 to −3 below ΛCDM. It is driven by low-ℓ TT through a higher n_s. With two extra parameters this is not significant; it is a degeneracy with Planck's low-ℓ deficit, not evidence for clumps.
+  - **2D grid in (f_cl, u)** (to f_cl = 0.001):
+    - With the isotropic kernel the valley is broad: Δχ² ≈ −2.5 to −2.9 relative to ΛCDM for f_cl ≈ 0.003–0.02. That is about 1.2σ with two fitted parameters, or at most 1.7σ if u were fixed in advance.
+    - For f_cl ≤ 0.005 no threshold is reached within the scanned couplings (down to Σ/Q ≈ 1–2×10² g/cm²).
+    - **Walker & Wardle (1998) clouds** (Σ ≈ 3×10²–3×10³ g/cm²) are CMB-allowed for f_cl ≲ 0.01 with the isotropic kernel, assuming they exist through the acoustic epoch. ![contour](../figures/mix_contour_camspec_npipe.png)
   - See [the log](experiment_log/2026-10-02_clump_fraction_kernels.md), ![profiles](../figures/mix_profiles_camspec_npipe.png), ![boundary](../figures/mix_boundary_camspec_npipe.png) and ![vs LCDM](../figures/mix_vs_lcdm_camspec_npipe.png).
   - **Minimiser audit:**
     - The clipping bug did not affect earlier results; the old best fits were far from the bounds.

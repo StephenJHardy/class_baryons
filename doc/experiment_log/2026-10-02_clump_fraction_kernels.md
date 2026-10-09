@@ -231,3 +231,62 @@ At f ≥ 0.5 the coupling acts through σ₈ (from 0.806 to 0.74 at the largest 
 - Single likelihood combination, no lensing reconstruction.
 - Linear theory (`non_linear: none`).
 - The strong-coupling regime (f ≤ 0.03, u ≳ 0.01) is where post-recombination clump scattering becomes comparable to Thomson scattering on the residual free electrons. There the kernel is a real model choice.
+
+## 5. Two-dimensional grid in (f_cl, u) (2026-10-06 to 10-09)
+
+**Purpose:** map the shape of the small-fraction valley without any prior (`scripts/run_mix_grid2d.sh`).
+
+**Grid:**
+- New fractions 0.05, 0.02, 0.005, 0.003 and 0.001, with couplings at f_cl·u = 2, 4, 6, 9 and 13.5 ×10⁻⁴ plus u = 0. f_cl = 0.01 isotropic was extended to u = 0.3 and 0.45.
+- Isotropic first, then Thomson on the same couplings. For f_cl ≤ 0.005 the isotropic grid continues to f_cl·u = 3×10⁻³; the Thomson grid stops at 1.35×10⁻³.
+
+**Fits:** 63 fits, all converged except f_cl = 0.01 isotropic at u = 0.45, which is excluded and not needed because u = 0.3 brackets that threshold.
+
+**Numerical checks at the extreme isotropic points** (f_cl = 0.005 at u = 0.4 and 0.6; 0.003 at 0.67 and 1; 0.001 at 0.9 and 2; `results/mix/validation/strong_coupling_check_grid2d.json`):
+- TCA off early: ≤ 0.02.
+- First-order TCA: −0.05 to −0.12.
+- Precision up: −0.11 to −0.15, the same offset as at ΛCDM (−0.154).
+- The Thomson-minus-isotropic difference at the isotropic best fits is 3–39 in χ², unchanged by these variants. It is physical.
+
+**Results** (Δχ² of the profile minimum relative to the ΛCDM fit, and the nominal fixed-fraction threshold):
+
+| f_cl | Kernel | u at min | Min − ΛCDM | u at Δχ² = 2.71 above own min | Scanned to |
+|---|---|---|---|---|---|
+| 0.05 | Thomson | 0.008 | −0.49 | 1.9×10⁻² | 0.027 |
+| 0.05 | isotropic | 0.008 | −0.27 | 1.8×10⁻² | 0.027 |
+| 0.02 | Thomson | 0.03 | −2.61 | 6.2×10⁻² | 0.0675 |
+| 0.02 | isotropic | 0.03 | −2.64 | 6.6×10⁻² | 0.0675 |
+| 0.01 | isotropic | 0.06 | −2.88 | 0.28 (Σ/Q ≈ 9.6×10² g cm⁻²) | 0.3 |
+| 0.005 | Thomson | 0.08 | −2.08 | not reached | 0.27 |
+| 0.005 | isotropic | 0.4 | −2.75 | not reached | 0.6 |
+| 0.003 | Thomson | 0.133 | −1.53 | not reached | 0.45 |
+| 0.003 | isotropic | 0.67 | −2.48 | not reached | 1 |
+| 0.001 | Thomson | 0.2 | −0.69 | not reached | 1.35 |
+| 0.001 | isotropic | 0.9 | −1.17 | not reached | 3 |
+
+**Shape of the valley.**
+- **Isotropic:** a broad region at Δχ² ≈ −2.5 to −2.9 from f_cl ≈ 0.02 to 0.003. Its best coupling moves to lower Σ/Q as f_cl falls (Σ/Q ≈ 9×10³ at 0.02, ~4×10² at 0.003), and it becomes shallower below f_cl ≈ 0.003.
+- **Thomson:** the valley is narrower and shallower below f_cl = 0.01, because clump-generated polarization penalises strong coupling.
+
+**Limits.**
+- For f_cl ≤ 0.005 neither kernel reaches a threshold within the scanned range. That range runs down to Σ/Q ≈ 1.3×10² (isotropic, f_cl = 0.001) and ≈ 2×10² (Thomson, f_cl = 0.001). No limit is claimed there.
+- Isotropic f_cl = 0.01 now has a threshold at u = 0.28 (it was "not reached" at u ≤ 0.2).
+
+**Significance of the valley** (relative to ΛCDM, Δχ² up to 2.9):
+- **Two fitted parameters:** p ≈ 0.23, about 1.2σ.
+- **If u were fixed in advance (one parameter, boundary at f_cl = 0):** p ≈ 0.044, about 1.7σ. That is an upper bound, since u was in fact searched.
+- The look-elsewhere effect over the valley lowers it further.
+- Not evidence for clumps. It is the degeneracy with the Planck low-ℓ deficit described above.
+
+**Walker & Wardle clouds** (M ≲ 10⁻³ M☉, R ≈ 1–3 AU, so Σ ≈ 3×10²–3×10³ g cm⁻²; Walker & Wardle 1998, ApJ 498, L125):
+- With the isotropic kernel, this band lies in the region fitting as well as or slightly better than ΛCDM for f_cl ≈ 0.001–0.01.
+- It is excluded (beyond the fixed-fraction threshold) only for f_cl ≳ 0.01–0.02.
+- With Thomson, f_cl = 0.01 is excluded below Σ/Q ≈ 1.8×10³. At smaller fractions the band reaches about the ΛCDM level within the computed range.
+- This assumes the clouds exist through the acoustic epoch; formation, survival and BBN are not addressed.
+
+**Figure:** `figures/mix_contour_camspec_npipe.png` (`src/mix_contour.py`).
+- Δχ² relative to ΛCDM in (f_cl, Σ/Q) for both kernels, with ω_cl on the top axis.
+- Marked: the fixed-fraction thresholds, the Walker–Wardle band and the present-day masses in stars and cold gas (approximate shares of the cosmic baryons: 6% and 1.5%).
+- Interpolation runs along lines of constant f_cl·u between fitted fractions. The u = 0 fits are set to Δχ² = 0 (they equal ΛCDM to within ±0.03 numerically). Regions beyond the fitted couplings are blank.
+
+**Next:** an MCMC with free f_cl and u (log priors) to give the posterior shape, planned after this grid, needs the cloud VM and the user's go-ahead.

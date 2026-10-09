@@ -41,7 +41,9 @@ def load():
         r = json.load(open(path))
         if r.get("tag") or not r["converged"] or r["f_cl"] == 0:
             continue
-        d = 2 * (r["minuslogpost_fit"] - lcdm)
+        # u = 0 is the LCDM model exactly (validated); its fits differ from the LCDM fit only by
+        # numerical noise (|d| <= 0.03), so it is set to 0 to keep that noise out of the 0 contour
+        d = 0.0 if r["u"] == 0 else 2 * (r["minuslogpost_fit"] - lcdm)
         kernels = [r["kernel"]] if r["u"] > 0 else list(pts)       # u = 0 is shared by both kernels
         for k in kernels:
             pts[k].append((r["f_cl"], max(r["u"], U_ZERO_PLOT), d))
@@ -145,12 +147,13 @@ def main():
     thr = thresholds()
     cm = cmap()
     norm = BoundaryNorm(LEVELS, cm.N, extend="both")
-    fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.4), constrained_layout=True, sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.8), layout="constrained", sharey=True)
     fig.set_facecolor(SURFACE)
     for ax, kernel in zip(axes, ("isotropic", "thomson")):
         cs = panel(ax, data[kernel], kernel, thr, norm, cm)
     axes[0].set_ylabel("clump surface density Σ/Q  [g cm⁻²]", fontsize=9, color=INK)
-    axes[0].legend(fontsize=7.5, frameon=False, loc="lower left")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, fontsize=8, frameon=False, loc="outside lower center", ncol=3)
     cb = fig.colorbar(cs, ax=axes, shrink=0.85, pad=0.01)
     cb.set_label("Δχ² relative to ΛCDM (profile over all other parameters)", fontsize=9, color=INK)
     cb.ax.tick_params(labelsize=8, colors=MUTED)

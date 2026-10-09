@@ -32,6 +32,11 @@ VARIANTS = {
 }
 
 
+def available(f_cl, u):
+    return [k for k in ("thomson", "isotropic")
+            if (OUT / "camspec_npipe" / f"f{f_cl:g}" / k / f"u{u:.3e}" / "result.json").exists()]
+
+
 def job(args):
     f_cl, u, source, kernel, variant, points = args
     select_class_build("patched")
@@ -51,7 +56,7 @@ def main():
     rng = np.random.default_rng(5)
     jobs = []
     for f_cl, u in POINTS:
-        for source in ("thomson", "isotropic"):          # best fit of this kernel's profile point
+        for source in available(f_cl, u):                # best fit of this kernel's profile point
             r = json.load(open(OUT / "camspec_npipe" / f"f{f_cl:g}" / source / f"u{u:.3e}" / "result.json"))
             names = r["names"]
             L = np.linalg.cholesky(np.array(r["covariance"]))
@@ -67,7 +72,7 @@ def main():
     key = {(r["f_cl"], r["u"], r["points_from"], r["kernel"], r["variant"]): np.array(r["chi2"]) for r in rows}
     summary = []
     for f_cl, u in POINTS:
-        for source in ("thomson", "isotropic"):
+        for source in available(f_cl, u):
             base = key[(f_cl, u, source, source, "default")]
             entry = {"f_cl": f_cl, "u": u, "kernel": source}
             for variant in VARIANTS:
@@ -81,11 +86,15 @@ def main():
             summary.append(entry)
             print(f"f={f_cl:<5g} u={u:<7g} {source:9s} " + "  ".join(
                 f"{k}: {v['mean']:+.3f}+-{v['sem']:.3f}" for k, v in entry.items() if isinstance(v, dict)), flush=True)
-    path = OUT / "validation" / "strong_coupling_check.json"
+    path = OUT / "validation" / ("strong_coupling_check.json" if len(__import__("sys").argv) == 1
+                                 else "strong_coupling_check_grid2d.json")
     with open(path, "w") as fh:
         json.dump({"variants": VARIANTS, "summary": summary, "rows": rows}, fh, indent=1)
 
 
 if __name__ == "__main__":
+    import sys
     select_class_build("patched")
+    if len(sys.argv) > 1:     # e.g. 0.005:0.6 0.001:2 (kernels with a result at that point)
+        POINTS[:] = [(float(a), float(b)) for a, b, *_ in (x.split(":") for x in sys.argv[1:])]
     main()

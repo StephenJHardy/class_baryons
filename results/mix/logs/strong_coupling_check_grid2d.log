@@ -1,0 +1,6 @@
+f=0.005 u=0.4     isotropic tca_off_early: +0.012+-0.012  tca_first_order: -0.092+-0.009  precision_up: -0.137+-0.017  thomson_minus_isotropic: +16.172+-0.930
+f=0.005 u=0.6     isotropic tca_off_early: +0.018+-0.007  tca_first_order: -0.124+-0.012  precision_up: -0.148+-0.015  thomson_minus_isotropic: +35.967+-0.846
+f=0.003 u=0.67    isotropic tca_off_early: -0.013+-0.006  tca_first_order: -0.102+-0.014  precision_up: -0.107+-0.014  thomson_minus_isotropic: +17.772+-1.071
+f=0.003 u=1       isotropic tca_off_early: -0.010+-0.009  tca_first_order: -0.111+-0.021  precision_up: -0.126+-0.011  thomson_minus_isotropic: +38.591+-0.742
+f=0.001 u=0.9     isotropic tca_off_early: -0.006+-0.007  tca_first_order: -0.071+-0.016  precision_up: -0.129+-0.017  thomson_minus_isotropic: +3.443+-0.164
+f=0.001 u=2       isotropic tca_off_early: -0.002+-0.007  tca_first_order: -0.049+-0.009  precision_up: -0.119+-0.031  thomson_minus_isotropic: +19.155+-0.544
