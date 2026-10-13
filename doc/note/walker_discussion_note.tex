@@ -26,7 +26,7 @@ This note summarises what the Planck CMB data say about compact, pressureless cl
 
 \section{The question and the model}
 
-The question is conditional: if clumps exist throughout the epochs that matter for the CMB, how strongly can they be coupled to the radiation? Formation, survival and Big Bang nucleosynthesis (BBN) are separate questions about whether such clumps can exist, and are discussed in Section~\ref{sec:caveats}.
+The question is conditional: if clumps exist throughout the epochs that matter for the CMB, how strongly can they be coupled to the radiation? Formation, survival and Big Bang nucleosynthesis (BBN) are separate questions about whether such clumps can exist, and are discussed in Sections~\ref{sec:thermal}--\ref{sec:caveats}.
 
 The clumps exchange momentum with the photons through a momentum-transfer cross-section $\sigma$. The CMB is sensitive only to the cross-section per unit mass, expressed in \textsc{class} by the dimensionless coupling
 \begin{equation}
@@ -110,10 +110,35 @@ Clouds with $M \lesssim 10^{-3}\,M_\odot$ and radii of a few AU \citep{WalkerWar
 \item $f_\cl \approx 0.003$--$0.01$ corresponds to $\omega_\cl \approx (0.4$--$1.2)\times10^{-3}$, or 1.5--5\% of the cosmic baryons, comparable to the present-day mass in cold gas or in stars. In a Milky-Way halo of $10^{12}\,M_\odot$ it would be $(0.3$--$1)\times10^{10}\,M_\odot$ in clouds.
 \end{itemize}
 
+\section{Thermal state of the clumps}
+\label{sec:thermal}
+
+Before recombination the radiation field is a blackbody at $T_\gamma$, about 3000\,K at recombination, $10^4$\,K at $z \approx 4000$ and $10^5$\,K at $z \approx 4\times10^4$. A passive clump can lose heat only by radiating into this field, so its steady-state temperature is $T_\gamma$. Emissivity, albedo and composition change the time taken to reach it, not the end state. A clump can be colder than the radiation only transiently, while its interior lags, or if it interacts with the radiation so weakly that it is barely heated. The relevant timescales are as follows.
+\begin{itemize}
+\item \emph{Surface.} The surface relaxes to $T_\gamma$ on $t \approx \Sigma c_v/(4caT_\gamma^3)$, short enough that it lags the cooling CMB by about $10^{-8}$ of $T_\gamma$ at the surface densities of interest (explainer, Section~9). Heat capacity and latent heat (dissociation of H$_2$, ionisation of H) lengthen this by at most about ten. Only absorbed photons deposit energy, so a reflective surface heats more slowly by $1/(1-A)$ for albedo $A$, which matters only for $A$ above about $0.999999$.
+\item \emph{Interior.} Radiative diffusion across a cloud takes $t \approx \kappa \Sigma R/c$. For $\Sigma = 10^3\,\mathrm{g\,cm^{-2}}$ and $R = 2$\,AU this is days with electron-scattering opacity and decades with an opacity $10^4$ times larger, compared with $10^4$--$10^5$ years for the age of the universe at these epochs. A cold interior is not maintained.
+\item \emph{Transparent clouds.} A cloud transparent to the ambient radiation, such as dust-free molecular hydrogen in parts of the spectrum, is heated only weakly and could remain cold. The same transparency removes its coupling to the radiation, so it is not the opaque object assumed in the $\Sigma/Q$ mapping, and the drag constraint does not apply to it. The photons that would push a clump are the same photons that heat it.
+\end{itemize}
+
+Whether a heated clump survives depends on what holds it together. Solids sublimate at roughly 1500--3000\,K, so no solid body survives before $z \approx 1000$. Gas at $T_\gamma$ is bound only if $GM\mu m_p/R \gtrsim kT_\gamma$, so composition enters through the mean particle mass $\mu$, and only linearly. For a cloud of $10^{-3}\,M_\odot$ and $R = 2$\,AU the binding temperature is about 100\,K for molecular hydrogen, which allows binding only below $z \approx 50$. A cloud made entirely of iron vapour would gain a factor of about 25, still only reaching $z \approx 1000$. Degenerate or nuclear-density objects are bound independently of temperature and survive. Internal energy sources, such as contraction or nuclear burning, heat the interior and do not help a cold-cloud picture.
+
+Today the background radiation is at 2.7\,K, and clouds such as those of \citet{WalkerWardle1998} can be colder than the surrounding halo gas. That is the regime in which the model was proposed. Before $z \approx 50$ the radiation itself is hotter than the clouds' binding temperature.
+
+\section{Formation: recent work on small-scale baryon structure}
+\label{sec:formation}
+
+Primordial magnetic fields generate baryon density contrasts of order unity on small scales before recombination, which accelerate recombination because the recombination rate depends on the square of the density \citep{JedamzikSaveliev2019}. Simulations combining magnetohydrodynamics, recombination and Lyman-$\alpha$ transfer \citep{Jedamzik2023}, and fits of the resulting recombination histories to Planck, baryon acoustic oscillation and supernova data \citep{Jedamzik2025}, favour present-day field strengths of roughly 5--10\,pG. This work bears on the clump question in three ways.
+\begin{itemize}
+\item \emph{The inhomogeneities are not compact.} They are diffuse fluctuations on scales of order a comoving kiloparsec, a few parsecs physical at $z \sim 1000$, containing of order a solar mass of baryons each by our estimate. Their column densities are of order $10^{-3}\,\mathrm{g\,cm^{-2}}$, nine orders of magnitude below the surface densities discussed above. They remain part of the photon--baryon fluid and are counted in $\omega_b$, so they provide no way to hide baryons from the CMB.
+\item \emph{They provide seeds for later formation.} Overdense regions recombine and decouple from the photons slightly earlier, and at the favoured field strengths magnetic pressure is comparable to gas pressure on small scales. Clouds formed from such seeds after $z \approx 50$ would be drawn from the measured baryon budget: a component of the ordinary baryons, not of the dark matter, and not subject to the drag constraint. Whether field-seeded overdensities can collapse into objects of $10^{-3}\,M_\odot$ and a few AU before $z \sim 20$--50, and what fraction of the baryons could end up in them within the existing field limits ($B \lesssim 50$\,pG; \citealt{JedamzikSaveliev2019}), is a calculation we have not yet made.
+\item \emph{Modified recombination is a separate change to the CMB model.} It shifts the sound horizon and the damping tail, as the clumps at small $f_\cl$ do. A fit with both could move the thresholds and the shallow minimum in Section~\ref{sec:results} in either direction. The published recombination histories could be included in our pipeline.
+\end{itemize}
+Older work on nucleosynthesis with large baryon inhomogeneities, which would be the relevant framework for clumps formed before BBN, concluded as far as we recall that such inhomogeneities do not substantially relax the bound on the total baryon density. This needs to be checked.
+
 \section{Caveats}
 \label{sec:caveats}
 
-\paragraph{Existence through the acoustic epoch.} All of the above assumes the clumps exist, with the stated $\Sigma$, at redshifts of roughly $10^{3}$--$10^{5}$. For clouds like those of \citet{WalkerWardle1998} this assumption fails. A cloud of $10^{-3}\,M_\odot$ and radius 2\,AU has a virial temperature of order 100\,K. Held at the radiation temperature, it can be gravitationally bound only below $z \approx 50$ (the survival estimate in the explainer, Section~9). If such clouds form later, from gas that was diffuse at recombination, the CMB counts that gas as ordinary baryons and the drag constraint does not apply to them at all. The relevant constraint is then the baryon budget: the clouds must come out of the measured $\omega_b$, and so can be at most a fraction of the ordinary baryons, not a separate dark component.
+\paragraph{Existence through the acoustic epoch.} All of the above assumes the clumps exist, with the stated $\Sigma$, at redshifts of roughly $10^{3}$--$10^{5}$. For clouds like those of \citet{WalkerWardle1998} this assumption fails: such a cloud can be gravitationally bound only below $z \approx 50$ (Section~\ref{sec:thermal}). If such clouds form later, from gas that was diffuse at recombination, the CMB counts that gas as ordinary baryons and the drag constraint does not apply to them at all. The relevant constraint is then the baryon budget: the clouds must come out of the measured $\omega_b$, and so can be at most a fraction of the ordinary baryons, not a separate dark component.
 
 \paragraph{Nucleosynthesis.} Clumps formed after BBN are counted as baryons by the light-element abundances, while the CMB counts them as dark matter. The agreement of the BBN and CMB baryon densities leaves room for an extra component of only a few per cent of $\omega_b$, which corresponds to $f_\cl \lesssim 0.01$. This figure depends on the nuclear reaction rates adopted and should be checked.
 
@@ -124,13 +149,22 @@ Clouds with $M \lesssim 10^{-3}\,M_\odot$ and radii of a few AU \citep{WalkerWar
 \section{Points for discussion}
 
 \begin{enumerate}
-\item At what redshift do the clouds need to exist in the proposed scenario, and from what material do they form?
+\item At what redshift do the clouds need to exist in the proposed scenario, and from what material do they form? Could small-scale structure seeded by primordial magnetic fields (Section~\ref{sec:formation}) form them after $z \approx 50$?
 \item Is the intended cloud population within the baryon budget fixed by BBN and the CMB, or in addition to it?
 \item Does the scattering-event model fix the cloud surface density independently? If so, the CMB constraint on $f_\cl$ at that fixed $\Sigma$ becomes a one-parameter test.
 \item Which angular law is appropriate for photon interactions with the clouds at the relevant epochs: absorption and isotropic re-emission, or something closer to reflection?
 \end{enumerate}
 
 \begin{thebibliography}{9}
+\bibitem[Jedamzik \& Saveliev(2019)]{JedamzikSaveliev2019}
+Jedamzik K., Saveliev A., 2019, \emph{Stringent limit on primordial magnetic fields from the cosmic microwave background radiation}, Phys.\ Rev.\ Lett.\ 123, 021301.
+
+\bibitem[Jedamzik et~al.(2023)]{Jedamzik2023}
+Jedamzik K., Abel T., Ali-Ha\"imoud Y., 2023, \emph{Cosmic recombination in the presence of primordial magnetic fields}, arXiv:2312.11448.
+
+\bibitem[Jedamzik et~al.(2025)]{Jedamzik2025}
+Jedamzik K., Pogosian L., Abel T., 2025, \emph{Hints of primordial magnetic fields at recombination and implications for the Hubble tension}, Nature Astronomy, arXiv:2503.09599.
+
 \bibitem[Walker \& Wardle(1998)]{WalkerWardle1998}
 Walker M., Wardle M., 1998, \emph{Extreme scattering events and Galactic dark matter}, ApJ 498, L125.
 \end{thebibliography}
