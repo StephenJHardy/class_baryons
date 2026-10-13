@@ -37,3 +37,6 @@ results/mcmc/*/log_chain_*
 results/mcmc_test/
 results/mix/logs/*.pid
 results/mix/**/checkpoint.json
+doc/note/*.aux
+doc/note/*.log
+doc/note/*.out
